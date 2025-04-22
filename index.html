@@ -63,6 +63,13 @@
       text-shadow: 0 0 6px #00ffff;
     }
 
+    .uc-gift {
+      margin-top: 5px;
+      font-size: 0.9rem;
+      color: #ffd700;
+      font-weight: bold;
+    }
+
     .order-popup {
       position: fixed;
       bottom: 20px;
@@ -106,32 +113,38 @@
 <body>
   <a class="support" href="https://t.me/+RMFj5dO1Iis5ZWVi" target="_blank">Dəstək</a>
   <header>NICE – PUBG UC-də Keyfiyyət və Etibar!</header>
-  <div class="bonus">NICE-də sadəcə UC yox, BONUS da var — fərqi hiss et!</div>
+  <div class="bonus">NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</div>
 
   <div class="uc-list">
     <div class="uc-item" onclick="buyUC('30 UC')">
       <div class="uc-title">30 UC</div>
       <div class="uc-price">0.80 AZN</div>
+      <div class="uc-gift">+2 UC hədiyyə</div>
     </div>
     <div class="uc-item" onclick="buyUC('60 UC')">
       <div class="uc-title">60 UC</div>
       <div class="uc-price">1.60 AZN</div>
+      <div class="uc-gift">+3 UC hədiyyə</div>
     </div>
     <div class="uc-item" onclick="buyUC('300 UC')">
       <div class="uc-title">300 UC</div>
       <div class="uc-price">7.70 AZN</div>
+      <div class="uc-gift">+40 UC hədiyyə</div>
     </div>
     <div class="uc-item" onclick="buyUC('600 UC')">
       <div class="uc-title">600 UC</div>
       <div class="uc-price">15.40 AZN</div>
+      <div class="uc-gift">+90 UC hədiyyə</div>
     </div>
     <div class="uc-item" onclick="buyUC('1500 UC')">
       <div class="uc-title">1500 UC</div>
       <div class="uc-price">38.30 AZN</div>
+      <div class="uc-gift">+375 UC hədiyyə</div>
     </div>
     <div class="uc-item" onclick="buyUC('3000 UC')">
       <div class="uc-title">3000 UC</div>
       <div class="uc-price">76.60 AZN</div>
+      <div class="uc-gift">+1000 UC hədiyyə</div>
     </div>
   </div>
 
@@ -148,8 +161,19 @@
     }
 
     const usernames = [
-      "Azad 60 UC aldı", "Murad 300 UC aldı", "Aysu 600 UC aldı", "Tunar 1500 UC aldı", 
-      "Leyla 3000 UC aldı", "Nihat 60 UC aldı", "Könül 30 UC aldı", "Emil 600 UC aldı"
+      "Azad 60 UC aldı", "Murad 300 UC aldı", "Aysu 600 UC aldı", "Tunar 1500 UC aldı",
+      "Leyla 3000 UC aldı", "Nihat 60 UC aldı", "Könül 30 UC aldı", "Emil 600 UC aldı",
+      "Lamiye 1500 UC aldı", "Sahil 60 UC aldı", "Zaur 300 UC aldı", "Günay 600 UC aldı",
+      "Vüsal 30 UC aldı", "Fatime 60 UC aldı", "Turan 1500 UC aldı", "Nicat 600 UC aldı",
+      "Zəhra 3000 UC aldı", "Orxan 60 UC aldı", "Əli 60 UC aldı", "Cavid 30 UC aldı",
+      "Elmir 600 UC aldı", "Səbinə 300 UC aldı", "Məryəm 1500 UC aldı", "İbrahim 3000 UC aldı",
+      "Lale 60 UC aldı", "Anar 1500 UC aldı", "Səid 30 UC aldı", "Şəms 600 UC aldı",
+      "Kamran 300 UC aldı", "Zamiq 60 UC aldı", "Nuran 3000 UC aldı", "Amin 1500 UC aldı",
+      "Gülşən 600 UC aldı", "Samir 60 UC aldı", "Arzu 30 UC aldı", "Fərid 300 UC aldı",
+      "Rauf 600 UC aldı", "Nərgiz 1500 UC aldı", "Ülvi 3000 UC aldı", "Sevinc 30 UC aldı",
+      "Səma 60 UC aldı", "Əsmər 600 UC aldı", "Cəlal 300 UC aldı", "Elçin 1500 UC aldı",
+      "Əlvin 3000 UC aldı", "Sərxan 60 UC aldı", "Rəna 60 UC aldı", "Turqut 300 UC aldı",
+      "Xədicə 600 UC aldı", "Nurlan 30 UC aldı"
     ];
 
     let index = 0;
@@ -160,7 +184,7 @@
       popup.style.display = "block";
       setTimeout(() => { popup.style.display = "none"; }, 5000);
       index = (index + 1) % usernames.length;
-    }, 20000);
+    }, 10000); // hər 10 saniyədə bir göstər
   </script>
 </body>
 </html>
