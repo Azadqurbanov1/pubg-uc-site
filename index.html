@@ -1,23 +1,25 @@
-let currentUser = "";
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG UC Sistemi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PUBG UC Sistemi</h1>
+        <div class="login-box">
+            <input type="text" id="username" placeholder="İstifadəçi adınızı daxil edin">
+            <button onclick="login()">Giriş et</button>
+        </div>
+        <div id="user-panel" class="hidden">
+            <h2>Xoş gəlmisən, <span id="user-name"></span>!</h2>
+            <p>Balans: <span id="balance">0</span> UC</p>
+            <button onclick="addUC()">+100 UC əlavə et</button>
+        </div>
+    </div>
 
-function login() { const username = document.getElementById("username").value.trim(); if (username === "") { alert("Zəhmət olmasa istifadəçi adınızı daxil edin!"); return; }
-
-currentUser = username;
-localStorage.setItem("pubg_user", username);
-
-let balance = localStorage.getItem(`balance_${username}`);
-if (balance === null) {
-    localStorage.setItem(`balance_${username}`, "0");
-    balance = "0";
-}
-
-document.getElementById("user-name").innerText = username;
-document.getElementById("balance").innerText = balance;
-document.querySelector(".login-box").classList.add("hidden");
-document.getElementById("user-panel").classList.remove("hidden");
-
-}
-
-function addUC() { if (currentUser === "") return; let balance = parseInt(localStorage.getItem(balance_${currentUser})); balance += 100; localStorage.setItem(balance_${currentUser}, balance); document.getElementById("balance").innerText = balance; }
-
-// Sayt açıldıqda əvvəlki istifadəçini göstər window.onload = () => { const savedUser = localStorage.getItem("pubg_user"); if (savedUser) { document.getElementById("username").value = savedUser; login(); } };
+    <script src="script.js"></script>
+</body>
+</html>
