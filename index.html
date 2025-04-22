@@ -1,202 +1,93 @@
-<!DOCTYPE html>
-<html lang="az">
+<!DOCTYPE html><html lang="az">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NICE UC Satışı</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NICE – PUBG UC Satışı</title>
   <style>
-    * {
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0a0a0a;
+      color: white;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-      color: #fff;
-      padding: 20px;
+      text-align: center;
     }
     header {
-      text-align: center;
-      margin-bottom: 40px;
+      background: linear-gradient(90deg, #0077ff, #00c3ff);
+      padding: 1rem;
+      font-size: 1.4rem;
+      font-weight: bold;
     }
-    header h1 {
-      font-size: 36px;
-      color: #00bfff;
-      text-shadow: 0 0 10px #00bfff;
+    .bonus {
+      margin: 10px 0;
+      color: #00ffea;
     }
-    header p {
-      margin-top: 10px;
-      font-size: 18px;
-      color: #aaa;
+    .uc-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      padding: 2rem;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #1e1e1e;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
-    }
-    .package-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      margin-bottom: 40px;
-    }
-    .package {
-      background: #2a2a2a;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      width: 140px;
-      box-shadow: 0 0 10px #005c99;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-    }
-    .package:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px #00bfff;
-    }
-    .package h3 {
-      font-size: 20px;
-      color: #00bfff;
-      margin-bottom: 10px;
-    }
-    .package p {
-      font-size: 16px;
-      color: #ccc;
-    }
-
-    .form-section {
-      text-align: center;
-    }
-    .form-section h2 {
-      color: #00bfff;
-      margin-bottom: 15px;
-    }
-    .form-section form {
-      max-width: 500px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    input, select {
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      font-size: 16px;
-    }
-    button {
-      padding: 12px;
-      background: #00bfff;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 18px;
+    .uc-item {
+      background-color: #111;
+      border: 2px solid #005eff;
+      border-radius: 12px;
+      padding: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: 0.3s;
     }
-    button:hover {
-      background: #0099cc;
+    .uc-item:hover {
+      background-color: #003366;
     }
-
+    .uc-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .uc-price {
+      font-size: 1rem;
+      color: #00ffea;
+    }
     footer {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 14px;
-      color: #666;
-    }
-
-    .bank-info {
-      margin-top: 20px;
-      background: #2e2e2e;
-      padding: 15px;
-      border-radius: 8px;
-      color: #ccc;
-    }
-    .bank-info strong {
-      color: #00bfff;
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #111;
+      color: #888;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>NICE UC Satışı</h1>
-    <p>UCUZ • GÜVƏNLİ • SÜRƏTLİ XİDMƏT</p>
-  </header>
-
-  <div class="container">
-    <section class="package-list">
-      <div class="package">
-        <h3>30 UC</h3>
-        <p>0.80 AZN</p>
-      </div>
-      <div class="package">
-        <h3>60 UC</h3>
-        <p>1.60 AZN</p>
-      </div>
-      <div class="package">
-        <h3>300 UC</h3>
-        <p>7.70 AZN</p>
-      </div>
-      <div class="package">
-        <h3>600 UC</h3>
-        <p>15.40 AZN</p>
-      </div>
-      <div class="package">
-        <h3>1500 UC</h3>
-        <p>38.30 AZN</p>
-      </div>
-      <div class="package">
-        <h3>3000 UC</h3>
-        <p>76.60 AZN</p>
-      </div>
-    </section>
-
-    <section class="form-section">
-      <h2>SİFARİŞ FORMU</h2>
-      <form id="orderForm">
-        <select name="paket" required>
-          <option value="">UC Paketini seç</option>
-          <option value="30 UC">30 UC – 0.80 AZN</option>
-          <option value="60 UC">60 UC – 1.60 AZN</option>
-          <option value="300 UC">300 UC – 7.70 AZN</option>
-          <option value="600 UC">600 UC – 15.40 AZN</option>
-          <option value="1500 UC">1500 UC – 38.30 AZN</option>
-          <option value="3000 UC">3000 UC – 76.60 AZN</option>
-        </select>
-        <input type="text" name="ad" placeholder="Adınız" required>
-        <input type="text" name="pubg_id" placeholder="PUBG ID-niz" required>
-        <input type="text" name="wp" placeholder="WhatsApp nömrəniz" required>
-        <button type="submit">Sifarişi tamamla</button>
-      </form>
-
-      <div class="bank-info">
-        <p>Balans artırmaq üçün:</p>
-        <p><strong>LEO Kart:</strong> 4098 5844 6528 0079</p>
-        <p>Ödəniş etdikdən sonra çekin şəklini WhatsApp ilə göndərin.</p>
-      </div>
-    </section>
-  </div>
-
-  <footer>
-    © 2025 NICE UC • Bütün hüquqlar qorunur.
-  </footer>
-
-  <script>
-    document.getElementById("orderForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const paket = this.paket.value;
-      const ad = this.ad.value;
-      const pubg_id = this.pubg_id.value;
-      const wp = this.wp.value;
-      alert(`Təşəkkürlər ${ad}! Sifarişiniz alındı:\n${paket}, PUBG ID: ${pubg_id}`);
-    });
-  </script>
-
-</body>
+  <header>NICE – PUBG UC-də Keyfiyyət və Etibar!</header>
+  <div class="bonus">NICE-də sadəcə UC yox, BONUS da var — fərqi hiss et!</div>  <div class="uc-list">
+    <div class="uc-item" onclick="buyUC('30 UC')">
+      <div class="uc-title">30 UC</div>
+      <div class="uc-price">0.80 AZN</div>
+    </div>
+    <div class="uc-item" onclick="buyUC('60 UC')">
+      <div class="uc-title">60 UC</div>
+      <div class="uc-price">1.60 AZN</div>
+    </div>
+    <div class="uc-item" onclick="buyUC('300 UC')">
+      <div class="uc-title">300 UC</div>
+      <div class="uc-price">7.70 AZN</div>
+    </div>
+    <div class="uc-item" onclick="buyUC('600 UC')">
+      <div class="uc-title">600 UC</div>
+      <div class="uc-price">15.40 AZN</div>
+    </div>
+    <div class="uc-item" onclick="buyUC('1500 UC')">
+      <div class="uc-title">1500 UC</div>
+      <div class="uc-price">38.30 AZN</div>
+    </div>
+    <div class="uc-item" onclick="buyUC('3000 UC')">
+      <div class="uc-title">3000 UC</div>
+      <div class="uc-price">76.60 AZN</div>
+    </div>
+  </div>  <footer>&copy; 2025 NICE – Bütün hüquqlar qorunur.</footer>  <script>
+    function buyUC(packageName) {
+      const phone = '994513239857';
+      const msg = `Salam, ${packageName} almaq istəyirəm`;
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+  </script></body>
 </html>
