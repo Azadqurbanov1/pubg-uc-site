@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="az">
 <head>
   <meta charset="UTF-8">
-  <title>UC Satışı - Güvenli ve Hızlı</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="UC Satışı - Güvenli ve Hızlı UC al, Güvenli ödeme yöntemleriyle!">
-  <meta name="keywords" content="UC satışı, PUBG UC, güvenli ödeme, hızlı teslimat">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NICE UC Satışı</title>
   <style>
     * {
       margin: 0;
@@ -13,253 +11,191 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Arial', sans-serif;
-      background: #fff;
-      color: #333;
-      line-height: 1.6;
-      padding: 0;
-      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: #fff;
+      padding: 20px;
     }
     header {
       text-align: center;
-      padding: 80px 20px;
-      color: #fff;
-      font-size: 3.5em;
-      text-shadow: 0 0 20px #00e5ff, 0 0 30px #00e5ff;
-      background: linear-gradient(90deg, #00bcd4, #00e5ff);
-      border-bottom: 3px solid #00e5ff;
+      margin-bottom: 40px;
+    }
+    header h1 {
+      font-size: 36px;
+      color: #00bfff;
+      text-shadow: 0 0 10px #00bfff;
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #aaa;
     }
     .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.9);
+      max-width: 900px;
+      margin: 0 auto;
+      background: #1e1e1e;
+      padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
     }
-    .uc-card {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 40px;
-      margin-top: 40px;
+    .package-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 40px;
     }
-    .uc-card a {
-      display: block;
-      background: linear-gradient(145deg, #00bcd4, #0097a7);
-      color: white;
-      padding: 40px;
+    .package {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 10px;
       text-align: center;
-      border-radius: 20px;
-      font-size: 1.5em;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
-      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      width: 140px;
+      box-shadow: 0 0 10px #005c99;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
-    .uc-card a:hover {
-      transform: scale(1.1);
-      box-shadow: 0 4px 40px rgba(0, 188, 212, 0.8);
-      background: linear-gradient(145deg, #0097a7, #007c8c);
+    .package:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px #00bfff;
     }
-    .uc-card a p {
-      font-size: 1.1em;
-      color: #f0f0f0;
-      margin-top: 10px;
+    .package h3 {
+      font-size: 20px;
+      color: #00bfff;
       margin-bottom: 10px;
     }
-    .uc-card a span {
-      font-size: 1.4em;
-      font-weight: bold;
-      color: #fff;
-    }
-    .uc-button {
-      display: block;
-      background: #00bcd4;
-      color: white;
-      padding: 18px;
-      margin: 25px 0;
-      text-decoration: none;
-      font-size: 1.4em;
-      font-weight: bold;
-      text-align: center;
-      border-radius: 12px;
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    .uc-button:hover {
-      background: #0097a7;
-      box-shadow: 0 0 25px #00e5ff;
-    }
-    .form-container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 40px;
-      border-radius: 20px;
-      margin-top: 50px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    }
-    .form-container h3 {
-      margin-bottom: 30px;
-      text-align: center;
-      color: #00e5ff;
-      font-size: 2.5em;
-    }
-    input[type="text"], select {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-      font-size: 1.2em;
-      transition: border 0.3s;
-    }
-    input[type="text"]:focus, select:focus {
-      border: 1px solid #00bcd4;
-      outline: none;
-    }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 30px;
-    }
-    .social-icons a {
-      font-size: 2.8em;
-      color: #333;
-      transition: color 0.3s;
-    }
-    .social-icons a:hover {
-      color: #00bcd4;
-    }
-    footer {
-      text-align: center;
-      padding: 25px;
-      font-size: 1.2em;
-      background: rgba(0, 0, 0, 0.1);
+    .package p {
+      font-size: 16px;
       color: #ccc;
-      border-radius: 10px;
-      margin-top: 50px;
-    }
-    .countdown {
-      text-align: center;
-      font-size: 2.2em;
-      margin-top: 30px;
-      color: #ff4081;
     }
 
-    /* Animasyonlar ve detaylar */
-    .uc-card a {
-      position: relative;
-      overflow: hidden;
+    .form-section {
+      text-align: center;
     }
-    .uc-card a::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 300%;
-      height: 300%;
-      background: rgba(255, 255, 255, 0.2);
-      transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
+    .form-section h2 {
+      color: #00bfff;
+      margin-bottom: 15px;
     }
-    .uc-card a:hover::before {
-      width: 0;
-      height: 0;
-      top: 50%;
-      left: 50%;
+    .form-section form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input, select {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px;
+      background: #00bfff;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #0099cc;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .bank-info {
+      margin-top: 20px;
+      background: #2e2e2e;
+      padding: 15px;
+      border-radius: 8px;
+      color: #ccc;
+    }
+    .bank-info strong {
+      color: #00bfff;
     }
   </style>
 </head>
 <body>
 
-  <header>UC Satışı - Güvenli ve Hızlı</header>
+  <header>
+    <h1>NICE UC Satışı</h1>
+    <p>UCUZ • GÜVƏNLİ • SÜRƏTLİ XİDMƏT</p>
+  </header>
 
   <div class="container">
+    <section class="package-list">
+      <div class="package">
+        <h3>30 UC</h3>
+        <p>0.80 AZN</p>
+      </div>
+      <div class="package">
+        <h3>60 UC</h3>
+        <p>1.60 AZN</p>
+      </div>
+      <div class="package">
+        <h3>300 UC</h3>
+        <p>7.70 AZN</p>
+      </div>
+      <div class="package">
+        <h3>600 UC</h3>
+        <p>15.40 AZN</p>
+      </div>
+      <div class="package">
+        <h3>1500 UC</h3>
+        <p>38.30 AZN</p>
+      </div>
+      <div class="package">
+        <h3>3000 UC</h3>
+        <p>76.60 AZN</p>
+      </div>
+    </section>
 
-    <div class="uc-card">
-      <a href="https://wa.me/994513239857?text=30%20UC%20almak%20istiyorum">
-        30 UC
-        <p>En uygun fiyatlarla 30 UC paketini hemen alabilirsiniz.</p>
-        <span>0.80 AZN</span>
-      </a>
-      <a href="https://wa.me/994513239857?text=60%20UC%20almak%20istiyorum">
-        60 UC
-        <p>Hızlı teslimat ve güvenli ödeme ile 60 UC paketini alın.</p>
-        <span>1.60 AZN</span>
-      </a>
-      <a href="https://wa.me/994513239857?text=300%20UC%20almak%20istiyorum">
-        300 UC
-        <p>300 UC ile oyun deneyiminizi hemen artırın. Kampanya fiyatı!</p>
-        <span>7.70 AZN</span>
-      </a>
-      <a href="https://wa.me/994513239857?text=600%20UC%20almak%20istiyorum">
-        600 UC
-        <p>Yüksek UC almak isteyenler için mükemmel fiyat! Hemen sipariş verin.</p>
-        <span>15.40 AZN</span>
-      </a>
-      <a href="https://wa.me/994513239857?text=1500%20UC%20almak%20istiyorum">
-        1500 UC
-        <p>En çok tercih edilen paket! Yüksek avantajlar için hemen alın.</p>
-        <span>38.30 AZN</span>
-      </a>
-      <a href="https://wa.me/994513239857?text=3000%20UC%20almak%20istiyorum">
-        3000 UC
-        <p>En büyük paketi alarak oyun keyfinizi zirveye taşıyın!</p>
-        <span>76.60 AZN</span>
-      </a>
-    </div>
-
-    <div class="form-container">
-      <h3>Sipariş Ver</h3>
-      <form action="" method="POST">
-        <label for="uc-package">Paket Seçin:</label>
-        <select id="uc-package" name="uc-package">
-          <option value="30 UC">30 UC</option>
-          <option value="60 UC">60 UC</option>
-          <option value="300 UC">300 UC</option>
-          <option value="600 UC">600 UC</option>
-          <option value="1500 UC">1500 UC</option>
-          <option value="3000 UC">3000 UC</option>
-        </select><br><br>
-        <label for="name">Adınız:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="whatsapp">WhatsApp Numaranız:</label><br>
-        <input type="text" id="whatsapp" name="whatsapp" required><br><br>
-        <input type="submit" value="Siparişi Gönder" class="uc-button">
+    <section class="form-section">
+      <h2>SİFARİŞ FORMU</h2>
+      <form id="orderForm">
+        <select name="paket" required>
+          <option value="">UC Paketini seç</option>
+          <option value="30 UC">30 UC – 0.80 AZN</option>
+          <option value="60 UC">60 UC – 1.60 AZN</option>
+          <option value="300 UC">300 UC – 7.70 AZN</option>
+          <option value="600 UC">600 UC – 15.40 AZN</option>
+          <option value="1500 UC">1500 UC – 38.30 AZN</option>
+          <option value="3000 UC">3000 UC – 76.60 AZN</option>
+        </select>
+        <input type="text" name="ad" placeholder="Adınız" required>
+        <input type="text" name="pubg_id" placeholder="PUBG ID-niz" required>
+        <input type="text" name="wp" placeholder="WhatsApp nömrəniz" required>
+        <button type="submit">Sifarişi tamamla</button>
       </form>
-    </div>
 
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-    </div>
-
-    <div class="countdown">
-      Kampanya Süresi: <span id="timer"></span>
-    </div>
-
+      <div class="bank-info">
+        <p>Balans artırmaq üçün:</p>
+        <p><strong>LEO Kart:</strong> 4098 5844 6528 0079</p>
+        <p>Ödəniş etdikdən sonra çekin şəklini WhatsApp ilə göndərin.</p>
+      </div>
+    </section>
   </div>
 
   <footer>
-    &copy; 2025 UC Satışı | Tüm Hakları Saklıdır
+    © 2025 NICE UC • Bütün hüquqlar qorunur.
   </footer>
 
   <script>
-    // Zamanlayıcı (kampanya süresi)
-    var deadline = new Date().getTime() + 3600 * 1000 * 24; // 24 saatlik bir süre
-    var x = setInterval(function() {
-      var now = new Date().getTime();
-      var distance = deadline - now;
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      document.getElementById("timer").innerHTML = hours + "s " + minutes + "d " + seconds + "s ";
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("timer").innerHTML = "Kampanya Sona Erdi";
-      }
-    }, 1000);
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const paket = this.paket.value;
+      const ad = this.ad.value;
+      const pubg_id = this.pubg_id.value;
+      const wp = this.wp.value;
+      alert(`Təşəkkürlər ${ad}! Sifarişiniz alındı:\n${paket}, PUBG ID: ${pubg_id}`);
+    });
   </script>
 
 </body>
