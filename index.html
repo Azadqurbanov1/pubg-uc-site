@@ -17,14 +17,17 @@
       background: #fff;
       color: #333;
       line-height: 1.6;
+      padding: 0;
+      margin: 0;
     }
     header {
       text-align: center;
       padding: 80px 20px;
-      color: #333;
+      color: #fff;
       font-size: 3.5em;
       text-shadow: 0 0 20px #00e5ff, 0 0 30px #00e5ff;
       background: linear-gradient(90deg, #00bcd4, #00e5ff);
+      border-bottom: 3px solid #00e5ff;
     }
     .container {
       max-width: 1200px;
@@ -36,36 +39,36 @@
     }
     .uc-card {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 40px;
       margin-top: 40px;
     }
     .uc-card a {
       display: block;
-      background: #00bcd4;
+      background: linear-gradient(145deg, #00bcd4, #0097a7);
       color: white;
-      padding: 30px;
+      padding: 40px;
       text-align: center;
-      border-radius: 15px;
-      font-size: 1.3em;
+      border-radius: 20px;
+      font-size: 1.5em;
       font-weight: bold;
       text-decoration: none;
       box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
       transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     }
     .uc-card a:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
       box-shadow: 0 4px 40px rgba(0, 188, 212, 0.8);
-      background: #0097a7;
+      background: linear-gradient(145deg, #0097a7, #007c8c);
     }
     .uc-card a p {
-      font-size: 1em;
+      font-size: 1.1em;
       color: #f0f0f0;
       margin-top: 10px;
       margin-bottom: 10px;
     }
     .uc-card a span {
-      font-size: 1.2em;
+      font-size: 1.4em;
       font-weight: bold;
       color: #fff;
     }
@@ -73,13 +76,13 @@
       display: block;
       background: #00bcd4;
       color: white;
-      padding: 15px;
-      margin: 20px 0;
+      padding: 18px;
+      margin: 25px 0;
       text-decoration: none;
-      font-size: 1.3em;
+      font-size: 1.4em;
       font-weight: bold;
       text-align: center;
-      border-radius: 10px;
+      border-radius: 12px;
       transition: background 0.3s, box-shadow 0.3s;
     }
     .uc-button:hover {
@@ -88,13 +91,13 @@
     }
     .form-container {
       background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
+      padding: 40px;
       border-radius: 20px;
       margin-top: 50px;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
     .form-container h3 {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       text-align: center;
       color: #00e5ff;
       font-size: 2.5em;
@@ -102,10 +105,15 @@
     input[type="text"], select {
       width: 100%;
       padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
+      margin-bottom: 20px;
+      border-radius: 12px;
       border: 1px solid #ddd;
-      font-size: 1.1em;
+      font-size: 1.2em;
+      transition: border 0.3s;
+    }
+    input[type="text"]:focus, select:focus {
+      border: 1px solid #00bcd4;
+      outline: none;
     }
     .social-icons {
       display: flex;
@@ -114,27 +122,51 @@
       margin-top: 30px;
     }
     .social-icons a {
-      font-size: 2.5em;
+      font-size: 2.8em;
       color: #333;
       transition: color 0.3s;
     }
     .social-icons a:hover {
       color: #00bcd4;
     }
-    .countdown {
-      text-align: center;
-      font-size: 2em;
-      margin-top: 30px;
-      color: #ff4081;
-    }
     footer {
       text-align: center;
       padding: 25px;
-      font-size: 1em;
+      font-size: 1.2em;
       background: rgba(0, 0, 0, 0.1);
       color: #ccc;
       border-radius: 10px;
       margin-top: 50px;
+    }
+    .countdown {
+      text-align: center;
+      font-size: 2.2em;
+      margin-top: 30px;
+      color: #ff4081;
+    }
+
+    /* Animasyonlar ve detaylar */
+    .uc-card a {
+      position: relative;
+      overflow: hidden;
+    }
+    .uc-card a::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300%;
+      height: 300%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .uc-card a:hover::before {
+      width: 0;
+      height: 0;
+      top: 50%;
+      left: 50%;
     }
   </style>
 </head>
@@ -229,5 +261,6 @@
       }
     }, 1000);
   </script>
+
 </body>
 </html>
