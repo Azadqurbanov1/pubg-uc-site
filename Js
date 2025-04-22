@@ -1,0 +1,11 @@
+// Firebase-dən balans çəkmək üçün JS kod (nümunə)
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    document.getElementById("username").innerText = user.displayName;
+    const uid = user.uid;
+    firebase.database().ref('users/' + uid + '/balance').once('value').then(snapshot => {
+      const balance = snapshot.val() || 0;
+      document.getElementById("user-balance").innerText = balance + " AZN";
+    });
+  }
+});
