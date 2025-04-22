@@ -1,57 +1,131 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-    overflow-x: hidden;
-}
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Satışı - NICE</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
 
-.container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-}
+    .container {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
 
-h1 {
-    text-align: center;
-    color: #00bfff;
-    margin-bottom: 30px;
-}
+    h1 {
+      text-align: center;
+      color: #00bfff;
+      margin-bottom: 20px;
+    }
 
-/* UC Kartları */
-.uc-card {
-    background: #121212;
-    border: 1px solid #00bfff;
-    border-radius: 12px;
-    padding: 20px;
-    margin: 10px;
-    text-align: center;
-    transition: 0.3s;
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
-}
+    .balance-info {
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border: 1px solid #00bfff;
+    }
 
-.uc-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
-    cursor: pointer;
-}
+    .uc-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
 
-/* Mavi toxunma effekti */
-.uc-card:active {
-    box-shadow: 0 0 25px #00bfff;
-}
+    .uc-card {
+      background: #121212;
+      border: 1px solid #00bfff;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+    }
 
-/* Scrollbar dizaynı */
-::-webkit-scrollbar {
-    width: 8px;
-}
+    .uc-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+      cursor: pointer;
+    }
 
-::-webkit-scrollbar-track {
-    background: #0f0f0f;
-}
+    .btn-order {
+      margin-top: 10px;
+      background: #00bfff;
+      color: black;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
 
-::-webkit-scrollbar-thumb {
-    background: #00bfff;
-    border-radius: 4px;
-}
+    .btn-order:hover {
+      background: #0099cc;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>UC Satışı - NICE</h1>
+
+    <div class="balance-info">
+      <p><strong>Balans artırmaq üçün kart nömrəsi:</strong></p>
+      <p>LEO 4098 5844 6528 0079</p>
+      <p>Zəhmət olmasa ödəniş etdikdən sonra çek şəklini göndərin.</p>
+    </div>
+
+    <div class="uc-list">
+      <div class="uc-card">
+        <p><strong>30+2 UC</strong></p>
+        <p>0.80 AZN</p>
+        <button class="btn-order">Sifariş et</button>
+      </div>
+      <div class="uc-card">
+        <p><strong>60+3 UC</strong></p>
+        <p>1.60 AZN</p>
+        <button class="btn-order">Sifariş et</button>
+      </div>
+      <div class="uc-card">
+        <p><strong>300+40 UC</strong></p>
+        <p>7.70 AZN</p>
+        <button class="btn-order">Sifariş et</button>
+      </div>
+      <div class="uc-card">
+        <p><strong>600+90 UC</strong></p>
+        <p>15.40 AZN</p>
+        <button class="btn-order">Sifariş et</button>
+      </div>
+      <div class="uc-card">
+        <p><strong>1500+375 UC</strong></p>
+        <p>38.30 AZN</p>
+        <button class="btn-order">Sifariş et</button>
+      </div>
+      <div class="uc-card">
+        <p><strong>3000+1000 UC</strong></p>
+        <p>76.60 AZN</p>
+        <button class="btn-order">Sifariş et</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      © 2025 NICE UC Satışı. Bütün hüquqlar qorunur.
+    </div>
+  </div>
+
+</body>
+</html>
