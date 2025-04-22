@@ -1,25 +1,57 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG UC Sistemi</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>UC Satışı</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #b3e5fc, #e1f5fe);
+      color: #000;
+    }
+
+    .glow {
+      text-align: center;
+      font-size: 2em;
+      color: #00bcd4;
+      text-shadow: 0 0 5px #00bcd4, 0 0 10px #00bcd4, 0 0 20px #00bcd4;
+      margin-top: 30px;
+    }
+
+    .content {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 188, 212, 0.4);
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>PUBG UC Sistemi</h1>
-        <div class="login-box">
-            <input type="text" id="username" placeholder="İstifadəçi adınızı daxil edin">
-            <button onclick="login()">Giriş et</button>
-        </div>
-        <div id="user-panel" class="hidden">
-            <h2>Xoş gəlmisən, <span id="user-name"></span>!</h2>
-            <p>Balans: <span id="balance">0</span> UC</p>
-            <button onclick="addUC()">+100 UC əlavə et</button>
-        </div>
-    </div>
 
-    <script src="script.js"></script>
+  <div class="glow">PUBG Mobile UC Satışı</div>
+
+  <div class="content">
+    <ul>
+      <li>60 UC - 20 TL</li>
+      <li>325 UC - 85 TL</li>
+      <li>660 UC - 160 TL</li>
+      <li>1800 UC - 400 TL</li>
+      <li>3850 UC - 750 TL</li>
+    </ul>
+  </div>
+
 </body>
 </html>
