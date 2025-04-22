@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UC Satışı | NICE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>UC Satışı - NICE</h1>
+    <p>Balansınız: <span id="balance">20.00</span> AZN</p>
+  </header>
+
+  <section class="packages">
+    <div class="package">
+      <h3>30+2 UC</h3>
+      <p>Qiymət: 0.80 AZN</p>
+      <button onclick="orderUC('30+2 UC', 0.80)">Sifariş et</button>
+    </div>
+    <div class="package">
+      <h3>60+3 UC</h3>
+      <p>Qiymət: 1.60 AZN</p>
+      <button onclick="orderUC('60+3 UC', 1.60)">Sifariş et</button>
+    </div>
+    <div class="package">
+      <h3>300+40 UC</h3>
+      <p>Qiymət: 7.70 AZN</p>
+      <button onclick="orderUC('300+40 UC', 7.70)">Sifariş et</button>
+    </div>
+  </section>
+
+  <section class="card-info">
+    <h4>Balans artırmaq üçün:</h4>
+    <p><strong>Kart nömrəsi:</strong> LEO 4098 5844 6528 0079</p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
