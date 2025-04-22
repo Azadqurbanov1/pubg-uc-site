@@ -5,37 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NICE – PUBG UC Satışı</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: linear-gradient(to bottom, #000010, #001133);
       font-family: Arial, sans-serif;
       color: white;
-      margin: 0;
-      padding: 0;
-      text-align: center;
       overflow-x: hidden;
+      text-align: center;
     }
-
+    .intro-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom right, #000010, #001133);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      animation: fadeOut 1s forwards;
+      animation-delay: 0.5s;
+    }
+    .intro-logo {
+      font-size: 2.5rem;
+      color: #00ccff;
+      text-shadow: 0 0 20px #00ffff;
+      margin-bottom: 1rem;
+    }
+    .intro-text {
+      font-size: 1.2rem;
+      color: #ffffffcc;
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
     header {
       background: linear-gradient(90deg, #0077ff, #00c3ff);
       padding: 1rem;
       font-size: 1.4rem;
       font-weight: bold;
     }
-
     .bonus {
       color: #33ccff;
       font-size: 1.2rem;
       text-shadow: 0 0 8px #00ffff;
       margin: 15px 0;
     }
-
     .uc-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 1rem;
       padding: 2rem;
     }
-
     .uc-item {
       background-color: rgba(0, 0, 50, 0.4);
       border: 2px solid #00ccff;
@@ -45,31 +69,26 @@
       cursor: pointer;
       box-shadow: 0 0 10px #0077ff;
     }
-
     .uc-item:hover {
       background-color: #003366;
     }
-
     .uc-title {
       font-size: 1.2rem;
       font-weight: bold;
       color: #00ccff;
     }
-
     .uc-price {
       font-size: 1rem;
       color: #00e1ff;
       font-weight: bold;
       text-shadow: 0 0 6px #00ffff;
     }
-
     .uc-gift {
       margin-top: 5px;
       font-size: 0.9rem;
       color: #ffd700;
       font-weight: bold;
     }
-
     .order-popup {
       position: fixed;
       bottom: 20px;
@@ -84,14 +103,12 @@
       font-size: 0.95rem;
       text-shadow: 0 0 6px #00ffff;
     }
-
     footer {
       margin-top: 2rem;
       padding: 1rem;
       background: #111;
       color: #888;
     }
-
     .support {
       position: fixed;
       top: 10px;
@@ -104,13 +121,17 @@
       font-weight: bold;
       box-shadow: 0 0 10px #0088cc;
     }
-
     .support:hover {
       background-color: #00aaff;
     }
   </style>
 </head>
 <body>
+  <div class="intro-screen">
+    <div class="intro-logo">NICE UC</div>
+    <div class="intro-text">PUBG UC Satışına Xoş Gəldin!</div>
+  </div>
+
   <a class="support" href="https://t.me/+RMFj5dO1Iis5ZWVi" target="_blank">Dəstək</a>
   <header>NICE – PUBG UC-də Keyfiyyət və Etibar!</header>
   <div class="bonus">NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</div>
@@ -148,7 +169,7 @@
     </div>
   </div>
 
-  <div class="order-popup" id="orderPopup">Azad 60 UC aldı!</div>
+  <div class="order-popup" id="orderPopup">Murad 60 UC aldı!</div>
 
   <footer>&copy; 2025 NICE – Bütün hüquqlar qorunur.</footer>
 
@@ -161,30 +182,53 @@
     }
 
     const usernames = [
-      "Azad 60 UC aldı", "Murad 300 UC aldı", "Aysu 600 UC aldı", "Tunar 1500 UC aldı",
-      "Leyla 3000 UC aldı", "Nihat 60 UC aldı", "Könül 30 UC aldı", "Emil 600 UC aldı",
-      "Lamiye 1500 UC aldı", "Sahil 60 UC aldı", "Zaur 300 UC aldı", "Günay 600 UC aldı",
-      "Vüsal 30 UC aldı", "Fatime 60 UC aldı", "Turan 1500 UC aldı", "Nicat 600 UC aldı",
-      "Zəhra 3000 UC aldı", "Orxan 60 UC aldı", "Əli 60 UC aldı", "Cavid 30 UC aldı",
-      "Elmir 600 UC aldı", "Səbinə 300 UC aldı", "Məryəm 1500 UC aldı", "İbrahim 3000 UC aldı",
-      "Lale 60 UC aldı", "Anar 1500 UC aldı", "Səid 30 UC aldı", "Şəms 600 UC aldı",
-      "Kamran 300 UC aldı", "Zamiq 60 UC aldı", "Nuran 3000 UC aldı", "Amin 1500 UC aldı",
-      "Gülşən 600 UC aldı", "Samir 60 UC aldı", "Arzu 30 UC aldı", "Fərid 300 UC aldı",
-      "Rauf 600 UC aldı", "Nərgiz 1500 UC aldı", "Ülvi 3000 UC aldı", "Sevinc 30 UC aldı",
-      "Səma 60 UC aldı", "Əsmər 600 UC aldı", "Cəlal 300 UC aldı", "Elçin 1500 UC aldı",
-      "Əlvin 3000 UC aldı", "Sərxan 60 UC aldı", "Rəna 60 UC aldı", "Turqut 300 UC aldı",
-      "Xədicə 600 UC aldı", "Nurlan 30 UC aldı"
+      "Murad 60 UC aldı", "Aysu 300 UC aldı", "Tunar 600 UC aldı", "Leyla 1500 UC aldı",
+      "Nihat 3000 UC aldı", "Emil 60 UC aldı", "Sahil 300 UC aldı", "Vüsal 600 UC aldı",
+      "Fatime 1500 UC aldı", "Zamiq 30 UC aldı", "Cavid 600 UC aldı", "Nərgiz 3000 UC aldı"
     ];
-
     let index = 0;
     const popup = document.getElementById('orderPopup');
-
     setInterval(() => {
       popup.textContent = usernames[index];
       popup.style.display = "block";
       setTimeout(() => { popup.style.display = "none"; }, 5000);
       index = (index + 1) % usernames.length;
-    }, 10000); // hər 10 saniyədə bir göstər
+    }, 10000);
+  </script>
+
+  <section style="padding: 20px; background-color: #1e1e1e; color: white;">
+    <h2>Tez-tez verilən suallar</h2>
+    <div>
+      <h4>UC necə alım?</h4>
+      <p>Sadəcə balans artır və admin təsdiqlədikdən sonra UC balansından çıxılır.</p>
+      <h4>Puan nədir?</h4>
+      <p>Puan sistem tərəfindən və ya admin tərəfindən verilən bonusdur. Müxtəlif kampaniyalarda istifadə olunur.</p>
+      <h4>Balansımı necə artırım?</h4>
+      <p>Saytda göstərilən karta ödəniş edib çeki sistemə yüklə.</p>
+    </div>
+  </section>
+
+  <section style="padding: 20px; background-color: #111; color: #00bfff; text-align: center;">
+    <h2>Son UC Alanlar</h2>
+    <div id="ucBuyers" style="font-size: 1.2em; margin-top: 10px;"></div>
+  </section>
+
+  <script>
+    const ucData = [
+      "Murad 660 UC aldı",
+      "Zaur 3000 UC aldı",
+      "Aysel 60 UC aldı",
+      "Nicat 1320 UC aldı",
+      "Elvin 1800 UC aldı",
+      "Leman 3850 UC aldı"
+    ];
+    let idx = 0;
+    function rotateUC() {
+      document.getElementById('ucBuyers').innerText = ucData[idx];
+      idx = (idx + 1) % ucData.length;
+    }
+    setInterval(rotateUC, 15000);
+    rotateUC();
   </script>
 </body>
 </html>
