@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>UC Satışı</title>
+  <title>UC Satışı - Güvenli ve Hızlı</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="UC Satışı - Güvenli ve Hızlı UC al, Güvenli ödeme yöntemleriyle!">
   <meta name="keywords" content="UC satışı, PUBG UC, güvenli ödeme, hızlı teslimat">
@@ -13,36 +14,34 @@
     }
     body {
       font-family: 'Arial', sans-serif;
-      background: url('https://example.com/godzilla_background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
+      background: #fff;
+      color: #333;
       line-height: 1.6;
     }
     header {
       text-align: center;
-      padding: 70px 20px;
-      color: #fff;
-      font-size: 3em;
+      padding: 80px 20px;
+      color: #333;
+      font-size: 3.5em;
       text-shadow: 0 0 20px #00e5ff, 0 0 30px #00e5ff;
+      background: linear-gradient(90deg, #00bcd4, #00e5ff);
     }
     .container {
       max-width: 1200px;
       margin: auto;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
     .uc-card {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 20px;
       margin-top: 40px;
     }
     .uc-card a {
       display: block;
-      width: calc(33.33% - 20px);
       background: #00bcd4;
       color: white;
       padding: 30px;
@@ -52,11 +51,23 @@
       font-weight: bold;
       text-decoration: none;
       box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     }
     .uc-card a:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 40px rgba(0, 188, 212, 0.8);
+      background: #0097a7;
+    }
+    .uc-card a p {
+      font-size: 1em;
+      color: #f0f0f0;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .uc-card a span {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #fff;
     }
     .uc-button {
       display: block;
@@ -76,17 +87,17 @@
       box-shadow: 0 0 25px #00e5ff;
     }
     .form-container {
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       padding: 30px;
       border-radius: 20px;
       margin-top: 50px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
     .form-container h3 {
       margin-bottom: 20px;
       text-align: center;
       color: #00e5ff;
-      font-size: 2em;
+      font-size: 2.5em;
     }
     input[type="text"], select {
       width: 100%;
@@ -104,7 +115,7 @@
     }
     .social-icons a {
       font-size: 2.5em;
-      color: #fff;
+      color: #333;
       transition: color 0.3s;
     }
     .social-icons a:hover {
@@ -120,55 +131,89 @@
       text-align: center;
       padding: 25px;
       font-size: 1em;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.1);
       color: #ccc;
       border-radius: 10px;
       margin-top: 50px;
     }
   </style>
 </head>
-<body>  <header>UC Satışı - Güvenli ve Hızlı</header>  <div class="container"><div class="uc-card">
-  <a class="uc-button" href="https://wa.me/994513239857?text=30%20UC%20almak%20istiyorum">30 UC – 0.80 AZN</a>
-  <a class="uc-button" href="https://wa.me/994513239857?text=60%20UC%20almak%20istiyorum">60 UC – 1.60 AZN</a>
-  <a class="uc-button" href="https://wa.me/994513239857?text=300%20UC%20almak%20istiyorum">300 UC – 7.70 AZN</a>
-  <a class="uc-button" href="https://wa.me/994513239857?text=600%20UC%20almak%20istiyorum">600 UC – 15.40 AZN</a>
-  <a class="uc-button" href="https://wa.me/994513239857?text=1500%20UC%20almak%20istiyorum">1500 UC – 38.30 AZN</a>
-  <a class="uc-button" href="https://wa.me/994513239857?text=3000%20UC%20almak%20istiyorum">3000 UC – 76.60 AZN</a>
-</div>
+<body>
 
-<div class="form-container">
-  <h3>Sipariş Ver</h3>
-  <form action="" method="POST">
-    <label for="uc-package">Paket Seçin:</label>
-    <select id="uc-package" name="uc-package">
-      <option value="30 UC">30 UC</option>
-      <option value="60 UC">60 UC</option>
-      <option value="300 UC">300 UC</option>
-      <option value="600 UC">600 UC</option>
-      <option value="1500 UC">1500 UC</option>
-      <option value="3000 UC">3000 UC</option>
-    </select><br><br>
-    <label for="name">Adınız:</label><br>
-    <input type="text" id="name" name="name" required><br><br>
-    <label for="whatsapp">WhatsApp Numaranız:</label><br>
-    <input type="text" id="whatsapp" name="whatsapp" required><br><br>
-    <input type="submit" value="Siparişi Gönder" class="uc-button">
-  </form>
-</div>
+  <header>UC Satışı - Güvenli ve Hızlı</header>
 
-<div class="social-icons">
-  <a href="#"><i class="fab fa-facebook"></i></a>
-  <a href="#"><i class="fab fa-instagram"></i></a>
-  <a href="#"><i class="fab fa-twitter"></i></a>
-</div>
+  <div class="container">
 
-<div class="countdown">
-  Kampanya Süresi: <span id="timer"></span>
-</div>
+    <div class="uc-card">
+      <a href="https://wa.me/994513239857?text=30%20UC%20almak%20istiyorum">
+        30 UC
+        <p>En uygun fiyatlarla 30 UC paketini hemen alabilirsiniz.</p>
+        <span>0.80 AZN</span>
+      </a>
+      <a href="https://wa.me/994513239857?text=60%20UC%20almak%20istiyorum">
+        60 UC
+        <p>Hızlı teslimat ve güvenli ödeme ile 60 UC paketini alın.</p>
+        <span>1.60 AZN</span>
+      </a>
+      <a href="https://wa.me/994513239857?text=300%20UC%20almak%20istiyorum">
+        300 UC
+        <p>300 UC ile oyun deneyiminizi hemen artırın. Kampanya fiyatı!</p>
+        <span>7.70 AZN</span>
+      </a>
+      <a href="https://wa.me/994513239857?text=600%20UC%20almak%20istiyorum">
+        600 UC
+        <p>Yüksek UC almak isteyenler için mükemmel fiyat! Hemen sipariş verin.</p>
+        <span>15.40 AZN</span>
+      </a>
+      <a href="https://wa.me/994513239857?text=1500%20UC%20almak%20istiyorum">
+        1500 UC
+        <p>En çok tercih edilen paket! Yüksek avantajlar için hemen alın.</p>
+        <span>38.30 AZN</span>
+      </a>
+      <a href="https://wa.me/994513239857?text=3000%20UC%20almak%20istiyorum">
+        3000 UC
+        <p>En büyük paketi alarak oyun keyfinizi zirveye taşıyın!</p>
+        <span>76.60 AZN</span>
+      </a>
+    </div>
 
-  </div>  <footer>
+    <div class="form-container">
+      <h3>Sipariş Ver</h3>
+      <form action="" method="POST">
+        <label for="uc-package">Paket Seçin:</label>
+        <select id="uc-package" name="uc-package">
+          <option value="30 UC">30 UC</option>
+          <option value="60 UC">60 UC</option>
+          <option value="300 UC">300 UC</option>
+          <option value="600 UC">600 UC</option>
+          <option value="1500 UC">1500 UC</option>
+          <option value="3000 UC">3000 UC</option>
+        </select><br><br>
+        <label for="name">Adınız:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="whatsapp">WhatsApp Numaranız:</label><br>
+        <input type="text" id="whatsapp" name="whatsapp" required><br><br>
+        <input type="submit" value="Siparişi Gönder" class="uc-button">
+      </form>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+
+    <div class="countdown">
+      Kampanya Süresi: <span id="timer"></span>
+    </div>
+
+  </div>
+
+  <footer>
     &copy; 2025 UC Satışı | Tüm Hakları Saklıdır
-  </footer>  <script>
+  </footer>
+
+  <script>
     // Zamanlayıcı (kampanya süresi)
     var deadline = new Date().getTime() + 3600 * 1000 * 24; // 24 saatlik bir süre
     var x = setInterval(function() {
@@ -183,5 +228,6 @@
         document.getElementById("timer").innerHTML = "Kampanya Sona Erdi";
       }
     }, 1000);
-  </script></body>
+  </script>
+</body>
 </html>
