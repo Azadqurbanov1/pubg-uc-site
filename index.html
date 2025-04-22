@@ -1,63 +1,114 @@
-<!DOCTYPE html><html lang="az">
+<!DOCTYPE html>
+<html lang="az">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NICE – PUBG UC Satışı</title>
   <style>
     body {
+      background: linear-gradient(to bottom, #000010, #001133);
       font-family: Arial, sans-serif;
-      background-color: #0a0a0a;
       color: white;
       margin: 0;
       padding: 0;
       text-align: center;
+      overflow-x: hidden;
     }
+
     header {
       background: linear-gradient(90deg, #0077ff, #00c3ff);
       padding: 1rem;
       font-size: 1.4rem;
       font-weight: bold;
     }
+
     .bonus {
-      margin: 10px 0;
-      color: #00ffea;
+      color: #33ccff;
+      font-size: 1.2rem;
+      text-shadow: 0 0 8px #00ffff;
+      margin: 15px 0;
     }
+
     .uc-list {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 1rem;
       padding: 2rem;
     }
+
     .uc-item {
-      background-color: #111;
-      border: 2px solid #005eff;
+      background-color: rgba(0, 0, 50, 0.4);
+      border: 2px solid #00ccff;
       border-radius: 12px;
       padding: 1rem;
-      cursor: pointer;
       transition: 0.3s;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0077ff;
     }
+
     .uc-item:hover {
       background-color: #003366;
     }
+
     .uc-title {
       font-size: 1.2rem;
       font-weight: bold;
+      color: #00ccff;
     }
+
     .uc-price {
       font-size: 1rem;
-      color: #00ffea;
+      color: #00e1ff;
+      font-weight: bold;
+      text-shadow: 0 0 6px #00ffff;
     }
+
+    .order-popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 255, 255, 0.1);
+      color: #00ffff;
+      padding: 10px 20px;
+      border: 1px solid #00ffff;
+      border-radius: 10px;
+      display: none;
+      font-size: 0.95rem;
+      text-shadow: 0 0 6px #00ffff;
+    }
+
     footer {
       margin-top: 2rem;
       padding: 1rem;
       background: #111;
       color: #888;
     }
+
+    .support {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #0088cc;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px #0088cc;
+    }
+
+    .support:hover {
+      background-color: #00aaff;
+    }
   </style>
 </head>
 <body>
+  <a class="support" href="https://t.me/+RMFj5dO1Iis5ZWVi" target="_blank">Dəstək</a>
   <header>NICE – PUBG UC-də Keyfiyyət və Etibar!</header>
-  <div class="bonus">NICE-də sadəcə UC yox, BONUS da var — fərqi hiss et!</div>  <div class="uc-list">
+  <div class="bonus">NICE-də sadəcə UC yox, BONUS da var — fərqi hiss et!</div>
+
+  <div class="uc-list">
     <div class="uc-item" onclick="buyUC('30 UC')">
       <div class="uc-title">30 UC</div>
       <div class="uc-price">0.80 AZN</div>
@@ -82,12 +133,34 @@
       <div class="uc-title">3000 UC</div>
       <div class="uc-price">76.60 AZN</div>
     </div>
-  </div>  <footer>&copy; 2025 NICE – Bütün hüquqlar qorunur.</footer>  <script>
+  </div>
+
+  <div class="order-popup" id="orderPopup">Azad 60 UC aldı!</div>
+
+  <footer>&copy; 2025 NICE – Bütün hüquqlar qorunur.</footer>
+
+  <script>
     function buyUC(packageName) {
       const phone = '994513239857';
       const msg = `Salam, ${packageName} almaq istəyirəm`;
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
     }
-  </script></body>
+
+    const usernames = [
+      "Azad 60 UC aldı", "Murad 300 UC aldı", "Aysu 600 UC aldı", "Tunar 1500 UC aldı", 
+      "Leyla 3000 UC aldı", "Nihat 60 UC aldı", "Könül 30 UC aldı", "Emil 600 UC aldı"
+    ];
+
+    let index = 0;
+    const popup = document.getElementById('orderPopup');
+
+    setInterval(() => {
+      popup.textContent = usernames[index];
+      popup.style.display = "block";
+      setTimeout(() => { popup.style.display = "none"; }, 5000);
+      index = (index + 1) % usernames.length;
+    }, 20000);
+  </script>
+</body>
 </html>
