@@ -1,49 +1,52 @@
 body {
-  margin: 0;
-  font-family: sans-serif;
-  background-color: #0b0f1a;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-header {
-  background-color: #101e35;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+.container {
+    text-align: center;
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    width: 90%;
+    max-width: 400px;
 }
 
-.packages {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+input {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-.package {
-  background-color: #1c2a40;
-  padding: 15px;
-  border-radius: 10px;
-  width: 200px;
-  box-shadow: 0 0 10px #00bfff;
+button {
+    padding: 10px 20px;
+    background-color: #facc15;
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.package button {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #00bfff;
-  border: none;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
+button:hover {
+    background-color: #eab308;
 }
 
-.package button:hover {
-  background-color: #0095cc;
+.hidden {
+    display: none;
 }
 
-.card-info {
-  margin-top: 30px;
+#user-panel {
+    margin-top: 20px;
 }
