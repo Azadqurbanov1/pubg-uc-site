@@ -6,65 +6,91 @@
   <title>NICE – PUBG UC Satışı</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       background: url('godzilla-bg.jpg') no-repeat center center fixed;
       background-size: cover;
-      animation: bgZoom 30s infinite alternate ease-in-out;
       font-family: 'Poppins', sans-serif;
       color: white;
       text-align: center;
       overflow-x: hidden;
     }
-
-    @keyframes bgZoom {
-      0% { background-size: 100%; }
-      100% { background-size: 110%; }
+    header {
+      background: linear-gradient(90deg, #0077ff, #00c3ff);
+      padding: 1rem;
+      font-size: 1.4rem;
+      font-weight: bold;
     }
-
-    .uc-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-      padding: 2rem;
+    button {
+      padding: 8px 16px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00c6ff;
     }
-
+    button:hover {
+      opacity: 0.9;
+    }
     .uc-item {
-      background-color: rgba(0, 0, 50, 0.5);
+      background-color: rgba(0, 0, 50, 0.4);
       border: 2px solid #00ccff;
       border-radius: 12px;
       padding: 1rem;
-      cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 0 10px #00ccff;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0077ff;
     }
-
     .uc-item:hover {
       transform: scale(1.05);
-      background-color: #002244;
+      box-shadow: 0 0 20px #00ccff;
+      background-color: #003366;
     }
-
     .uc-title {
       font-size: 1.2rem;
       font-weight: bold;
       color: #00ccff;
     }
-
     .uc-price {
       font-size: 1rem;
       color: #00e1ff;
       font-weight: bold;
+      text-shadow: 0 0 6px #00ffff;
     }
-
     .uc-gift {
+      margin-top: 5px;
       font-size: 0.9rem;
       color: #ffd700;
       font-weight: bold;
     }
   </style>
-</head>
-<body>
+</head><body>
 
-<h1>NICE – PUBG UC Satışı</h1>
+<!-- Dil seçim düymələri -->
+<div style="position:fixed; top:10px; left:10px; z-index:999;">
+  <button onclick="setLang('az')">AZ</button>
+  <button onclick="setLang('tr')">TR</button>
+</div>
+
+<!-- Intro ekran -->
+<div class="intro-screen">
+  <div class="intro-logo">NICE UC</div>
+  <div class="intro-text">PUBG UC Satışına Xoş Gəldin!</div>
+</div>
+
+<!-- Başlıq -->
+<header id="headerText">NICE – PUBG UC-də Keyfiyyət və Etibar!</header>
+
+<!-- Bonus mətni -->
+<div class="bonus" id="bonusText">NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</div>
+
+<!-- UC Paketləri -->
 <div class="uc-list">
   <div class="uc-item" onclick="buyUC('30 UC')">
     <div class="uc-title">30 UC</div>
@@ -76,7 +102,8 @@
     <div class="uc-price">1.60 AZN</div>
     <div class="uc-gift">+3 UC hədiyyə</div>
   </div>
-  <div class="uc-item" onclick="buyUC('300 UC')">
+  <div class="uc-item" onclick="buyUC('300 UC')" style="position:relative;">
+    <div class="uc-badge">Ən çox alınan</div>
     <div class="uc-title">300 UC</div>
     <div class="uc-price">7.70 AZN</div>
     <div class="uc-gift">+40 UC hədiyyə</div>
@@ -97,15 +124,3 @@
     <div class="uc-gift">+1000 UC hədiyyə</div>
   </div>
 </div>
-
-<script>
-  function buyUC(packageName) {
-    const phone = '994513239857';
-    const msg = `Salam, ${packageName} almaq istəyirəm`;
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
-  }
-</script>
-
-</body>
-</html>
