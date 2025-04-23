@@ -293,9 +293,9 @@
       document.getElementById("welcomeMsg").innerText = "XoÅŸ gÉ™ldin, " + email;
       
       addToRegistered(email);
-      // Ä°stifadÉ™Ã§i balans sisteminÉ™ É™lavÉ™ olunsun
       if (!users[email]) {
         users[email] = 0.00;
+        displayUserList();
       }
     
     }
