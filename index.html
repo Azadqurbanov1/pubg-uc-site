@@ -1,86 +1,124 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NICE – PUBG UC Satışı</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(to bottom, #000010, #001133);
-      font-family: 'Poppins', sans-serif;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    .uc-item {
-      background: #002244;
-      border: 2px solid #00ccff;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 10px auto;
-      width: 220px;
-    }
-    .uc-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #00ccff;
-    }
-    .uc-price {
-      font-size: 1rem;
-      color: #00e1ff;
-    }
-    .uc-gift {
-      color: #ffd700;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-    button {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      border: none;
-      border-radius: 8px;
-      color: white;
-      padding: 10px 20px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-  </style>
+  <!-- HEAD CONTENT (fonts, metadata, styles, animations) -->
 </head>
 <body>
-
-  <h1>NICE – PUBG UC Satışı</h1>
-  <p>NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</p>
-
-  <div class="uc-item">
-    <div class="uc-title">60 UC</div>
-    <div class="uc-price">1.60 AZN</div>
-    <div class="uc-gift">+3 UC hədiyyə</div>
-    <button onclick="buyUC('60 UC')">Sifariş Et</button>
+  <!-- DİL SEÇİMİ -->
+  <div style="position:fixed; top:10px; left:10px; z-index:999;">
+    <button onclick="setLang('az')">AZ</button>
+    <button onclick="setLang('tr')">TR</button>
   </div>
+  <script>
+    function setLang(lang) {
+      const az = { "headerText": "NICE – PUBG UC-də Keyfiyyət və Etibar!", "bonusText": "NICE-də sadəcə UC yox, BONUS da var — fərqi hiss et!", "faqTitle": "Tez-tez verilən suallar" };
+      const tr = { "headerText": "NICE – PUBG UC'de Kalite ve Güven!", "bonusText": "NICE'de sadece UC değil, BONUS da var — farkı hissedin!", "faqTitle": "Sıkça Sorulan Sorular" };
+      const data = lang === 'tr' ? tr : az;
+      for (const id in data) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = data[id];
+      }
+    }
+  </script>
 
-  <div class="uc-item">
-    <div class="uc-title">300 UC</div>
-    <div class="uc-price">7.70 AZN</div>
-    <div class="uc-gift">+40 UC hədiyyə</div>
-    <button onclick="buyUC('300 UC')">Sifariş Et</button>
+  <!-- AUDIO PLAYER -->
+  <audio id="bgMusic" autoplay loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
+  <audio id="ucSound"><source src="click.mp3" type="audio/mpeg"></audio>
+  <script>
+    document.addEventListener("click", () => {
+      const bg = document.getElementById("bgMusic");
+      if (bg && bg.paused) bg.play();
+    }, { once: true });
+  </script>
+
+  <!-- BONUS POPUP -->
+  <div id="bonusPopup" style="...">Bu gün 660 UC alan hər kəsə <u>+20 UC BONUS!</u></div>
+  <script>
+    setTimeout(() => {
+      const popup = document.getElementById("bonusPopup");
+      if (popup) popup.style.display = "none";
+    }, 7000);
+  </script>
+
+  <!-- GİRİŞ/QEYDİYYAT MODALLARI -->
+  <div id="loginModal" style="display:none; ...">...</div>
+  <div id="signupModal" style="display:none; ...">...</div>
+
+  <!-- UC PAKETLƏRİ və ALIŞ FUNKSİYASI -->
+  <div class="uc-list">
+    <div class="uc-item" onclick="buyUC('30 UC')">...</div>
+    <div class="uc-item" onclick="buyUC('60 UC')">...</div>
+    <!-- digərləri... -->
   </div>
-
-  <div class="uc-item">
-    <div class="uc-title">1500 UC</div>
-    <div class="uc-price">38.30 AZN</div>
-    <div class="uc-gift">+375 UC hədiyyə</div>
-    <button onclick="buyUC('1500 UC')">Sifariş Et</button>
-  </div>
-
   <script>
     function buyUC(packageName) {
-      const phone = '994513239857'; // WhatsApp nömrən buraya
+      const sound = document.getElementById('ucSound');
+      if (sound) { sound.currentTime = 0; sound.play(); }
+      const phone = '994513239857';
       const msg = `Salam, ${packageName} almaq istəyirəm`;
       const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
     }
   </script>
+
+  <!-- İSTİFADƏÇİ RƏYLƏRİ -->
+  <section>...</section>
+  <script>
+    const reviews = [...];
+    let rIndex = 0;
+    function showReview() { ... }
+    setInterval(showReview, 5000);
+    showReview();
+  </script>
+
+  <!-- SİFARİŞ TARİXİ -->
+  <section>...</section>
+  <script>
+    const orders = [...];
+    let oIdx = 0;
+    function showOrder() { ... }
+    setInterval(showOrder, 5000);
+    showOrder();
+  </script>
+
+  <!-- SON UC ALANLAR -->
+  <section>...</section>
+  <script>
+    const ucData = [...];
+    let idx = 0;
+    function rotateUC() { ... }
+    setInterval(rotateUC, 15000);
+    rotateUC();
+  </script>
+
+  <!-- PARTICLE BACKGROUND (Canvas) -->
+  <canvas id="bgCanvas"></canvas>
+  <script>
+    const canvas = document.getElementById("bgCanvas");
+    const ctx = canvas.getContext("2d");
+    let w, h, particles;
+    function resize() { ... }
+    function Particle() { ... }
+    function initParticles() { ... }
+    function animate() { ... }
+    window.addEventListener("resize", resize);
+    resize();
+    initParticles();
+    animate();
+  </script>
+
+  <!-- BADGE DƏYİŞMƏ ANİMASİYASI -->
+  <script>
+    const badgeSequence = ["300 UC", "60 UC", "30 UC"];
+    let badgeIndex = 0;
+    function updateBadge() { ... }
+    setInterval(updateBadge, 30000);
+    updateBadge();
+  </script>
+
+  <!-- WhatsApp Chat Widget -->
+  <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+  <div class="elfsight-app-dc730d9a-8251-4e4b-b7e5-f1aa3b2e9887"></div>
 
 </body>
 </html>
