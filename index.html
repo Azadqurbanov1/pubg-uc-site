@@ -5,26 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NICE – PUBG UC Satışı</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: linear-gradient(to bottom, #000010, #001133);
       font-family: Arial, sans-serif;
       color: white;
       overflow-x: hidden;
       text-align: center;
-    }
-    #bgCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(#000010, #000020);
     }
     .intro-screen {
       position: fixed;
@@ -50,10 +37,7 @@
       color: #ffffffcc;
     }
     @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
+      to { opacity: 0; visibility: hidden; }
     }
     header {
       background: linear-gradient(90deg, #0077ff, #00c3ff);
@@ -116,35 +100,6 @@
       font-size: 0.95rem;
       text-shadow: 0 0 6px #00ffff;
     }
-    .faq-item {
-      margin-bottom: 10px;
-      border-bottom: 1px solid #00ccff;
-    }
-    .faq-question {
-      width: 100%;
-      background-color: #111;
-      color: #00ccff;
-      text-align: left;
-      padding: 10px 15px;
-      font-size: 1rem;
-      cursor: pointer;
-      border: none;
-      outline: none;
-    }
-    .faq-answer {
-      padding: 10px 15px;
-      display: none;
-      background-color: #1a1a1a;
-      color: #ccc;
-      animation: fadeIn 0.4s ease-in-out;
-    }
-    .faq-question.active + .faq-answer {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
     footer {
       margin-top: 2rem;
       padding: 1rem;
@@ -166,6 +121,15 @@
     .support:hover {
       background-color: #00aaff;
     }
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(#000010, #000020);
+    }
   </style>
 </head>
 <body>
@@ -181,36 +145,115 @@
 <div class="bonus">NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</div>
 
 <div class="uc-list">
-  <div class="uc-item" onclick="buyUC('30 UC')">
-    <div class="uc-title">30 UC</div>
-    <div class="uc-price">0.80 AZN</div>
-    <div class="uc-gift">+2 UC hədiyyə</div>
-  </div>
-  <div class="uc-item" onclick="buyUC('60 UC')">
-    <div class="uc-title">60 UC</div>
-    <div class="uc-price">1.60 AZN</div>
-    <div class="uc-gift">+3 UC hədiyyə</div>
-  </div>
-  <div class="uc-item" onclick="buyUC('300 UC')">
-    <div class="uc-title">300 UC</div>
-    <div class="uc-price">7.70 AZN</div>
-    <div class="uc-gift">+40 UC hədiyyə</div>
-  </div>
-  <div class="uc-item" onclick="buyUC('600 UC')">
-    <div class="uc-title">600 UC</div>
-    <div class="uc-price">15.40 AZN</div>
-    <div class="uc-gift">+90 UC hədiyyə</div>
-  </div>
-  <div class="uc-item" onclick="buyUC('1500 UC')">
-    <div class="uc-title">1500 UC</div>
-    <div class="uc-price">38.30 AZN</div>
-    <div class="uc-gift">+375 UC hədiyyə</div>
-  </div>
-  <div class="uc-item" onclick="buyUC('3000 UC')">
-    <div class="uc-title">3000 UC</div>
-    <div class="uc-price">76.60 AZN</div>
-    <div class="uc-gift">+1000 UC hədiyyə</div>
-  </div>
+  <div class="uc-item" onclick="buyUC('30 UC')"><div class="uc-title">30 UC</div><div class="uc-price">0.80 AZN</div><div class="uc-gift">+2 UC hədiyyə</div></div>
+  <div class="uc-item" onclick="buyUC('60 UC')"><div class="uc-title">60 UC</div><div class="uc-price">1.60 AZN</div><div class="uc-gift">+3 UC hədiyyə</div></div>
+  <div class="uc-item" onclick="buyUC('300 UC')"><div class="uc-title">300 UC</div><div class="uc-price">7.70 AZN</div><div class="uc-gift">+40 UC hədiyyə</div></div>
+  <div class="uc-item" onclick="buyUC('600 UC')"><div class="uc-title">600 UC</div><div class="uc-price">15.40 AZN</div><div class="uc-gift">+90 UC hədiyyə</div></div>
+  <div class="uc-item" onclick="buyUC('1500 UC')"><div class="uc-title">1500 UC</div><div class="uc-price">38.30 AZN</div><div class="uc-gift">+375 UC hədiyyə</div></div>
+  <div class="uc-item" onclick="buyUC('3000 UC')"><div class="uc-title">3000 UC</div><div class="uc-price">76.60 AZN</div><div class="uc-gift">+1000 UC hədiyyə</div></div>
 </div>
 
 <div class="order-popup" id="orderPopup">Murad 60 UC aldı!</div>
+
+<footer>&copy; 2025 NICE – Bütün hüquqlar qorunur.</footer>
+
+<script>
+  function buyUC(packageName) {
+    const phone = '994513239857';
+    const msg = `Salam, ${packageName} almaq istəyirəm`;
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  const usernames = [
+    "Murad 60 UC aldı", "Aysu 300 UC aldı", "Tunar 600 UC aldı", "Leyla 1500 UC aldı",
+    "Nihat 3000 UC aldı", "Emil 60 UC aldı", "Sahil 300 UC aldı", "Vüsal 600 UC aldı",
+    "Fatime 1500 UC aldı", "Zamiq 30 UC aldı", "Cavid 600 UC aldı", "Nərgiz 3000 UC aldı"
+  ];
+  let index = 0;
+  const popup = document.getElementById('orderPopup');
+  setInterval(() => {
+    popup.textContent = usernames[index];
+    popup.style.display = "block";
+    setTimeout(() => { popup.style.display = "none"; }, 5000);
+    index = (index + 1) % usernames.length;
+  }, 10000);
+</script>
+
+<section id="faq" style="padding: 20px; background-color: #1e1e1e; color: white;">
+  <h2>Tez-tez verilən suallar</h2>
+  <div>
+    <h4>Necə qeydiyyatdan keçim?</h4>
+    <p>Facebook və ya Gmail hesabınızla asanlıqla qeydiyyatdan keçə bilərsiniz.</p>
+    <h4>UC nə qədər müddətə gəlir?</h4>
+    <p>Ödəniş təsdiqləndikdən sonra 5 dəqiqə ərzində UC-lər hesabınıza əlavə olunur.</p>
+  </div>
+</section>
+
+<section id="uc-rotator" style="padding: 20px; background-color: #111; color: #00bfff; text-align: center;">
+  <h2>Son UC Alanlar</h2>
+  <div id="ucBuyers" style="font-size: 1.2em; margin-top: 10px;"></div>
+</section>
+<script>
+  const ucData = [
+    "Murad 660 UC aldı", "Zaur 3000 UC aldı", "Aysel 60 UC aldı",
+    "Nicat 1320 UC aldı", "Elvin 1800 UC aldı", "Leman 3850 UC aldı"
+  ];
+  let idx = 0;
+  function rotateUC() {
+    document.getElementById('ucBuyers').innerText = ucData[idx];
+    idx = (idx + 1) % ucData.length;
+  }
+  setInterval(rotateUC, 15000);
+  rotateUC();
+</script>
+
+<script>
+  const canvas = document.getElementById("bgCanvas");
+  const ctx = canvas.getContext("2d");
+  let w, h, particles;
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+  function Particle() {
+    this.x = Math.random() * w;
+    this.y = Math.random() * h;
+    this.radius = Math.random() * 2 + 1;
+    this.dx = Math.random() * 0.6 - 0.3;
+    this.dy = Math.random() * 0.6 - 0.3;
+    this.opacity = Math.random();
+    this.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+      ctx.fillStyle = "rgba(0, 204, 255," + this.opacity + ")";
+      ctx.fill();
+    };
+    this.update = function() {
+      this.x += this.dx;
+      this.y += this.dy;
+      if (this.x > w || this.x < 0) this.dx *= -1;
+      if (this.y > h || this.y < 0) this.dy *= -1;
+      this.draw();
+    };
+  }
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 200; i++) {
+      particles.push(new Particle());
+    }
+  }
+  function animate() {
+    ctx.fillStyle = "rgba(0, 0, 30, 0.1)";
+    ctx.fillRect(0, 0, w, h);
+    particles.forEach(p => p.update());
+    requestAnimationFrame(animate);
+  }
+  initParticles();
+  animate();
+</script>
+
+</body>
+</html>
