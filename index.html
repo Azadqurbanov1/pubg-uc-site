@@ -1,234 +1,64 @@
-<!DOCTYPE html>
-<html lang="az">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NICE – PUBG UC Satışı</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: linear-gradient(to bottom, #000010, #001133);
-      font-family: Arial, sans-serif;
-      color: white;
-      overflow-x: hidden;
-      text-align: center;
-    }
-    .intro-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to bottom right, #000010, #001133);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      animation: fadeOut 1s forwards;
-      animation-delay: 0.5s;
-    }
-    .intro-logo {
-      font-size: 2.5rem;
-      color: #00ccff;
-      text-shadow: 0 0 20px #00ffff;
-      margin-bottom: 1rem;
-    }
-    .intro-text {
-      font-size: 1.2rem;
-      color: #ffffffcc;
-    }
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-    header {
-      background: linear-gradient(90deg, #0077ff, #00c3ff);
-      padding: 1rem;
-      font-size: 1.4rem;
-      font-weight: bold;
-    }
-    .bonus {
-      color: #33ccff;
-      font-size: 1.2rem;
-      text-shadow: 0 0 8px #00ffff;
-      margin: 15px 0;
-    }
-    .uc-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-      padding: 2rem;
-    }
-    .uc-item {
-      background-color: rgba(0, 0, 50, 0.4);
-      border: 2px solid #00ccff;
-      border-radius: 12px;
-      padding: 1rem;
-      transition: 0.3s;
-      cursor: pointer;
-      box-shadow: 0 0 10px #0077ff;
-    }
-    .uc-item:hover {
-      background-color: #003366;
-    }
-    .uc-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #00ccff;
-    }
-    .uc-price {
-      font-size: 1rem;
-      color: #00e1ff;
-      font-weight: bold;
-      text-shadow: 0 0 6px #00ffff;
-    }
-    .uc-gift {
-      margin-top: 5px;
-      font-size: 0.9rem;
-      color: #ffd700;
-      font-weight: bold;
-    }
-    .order-popup {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 255, 255, 0.1);
-      color: #00ffff;
-      padding: 10px 20px;
-      border: 1px solid #00ffff;
-      border-radius: 10px;
-      display: none;
-      font-size: 0.95rem;
-      text-shadow: 0 0 6px #00ffff;
-    }
-    footer {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #111;
-      color: #888;
-    }
-    .support {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background-color: #0088cc;
-      color: white;
-      padding: 8px 14px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      box-shadow: 0 0 10px #0088cc;
-    }
-    .support:hover {
-      background-color: #00aaff;
-    }
-  </style>
-</head>
-<body>
-  <div class="intro-screen">
-    <div class="intro-logo">NICE UC</div>
-    <div class="intro-text">PUBG UC Satışına Xoş Gəldin!</div>
+<section id="adminPanel" style="display: none; padding: 20px; background-color: #222; color: white;">
+  <h2>Admin Paneli</h2>
+  <div>
+    <label for="username">İstifadəçi adı:</label>
+    <input type="text" id="username" placeholder="Ad daxil et" style="padding: 5px; margin: 10px;">
   </div>
-
-  <a class="support" href="https://t.me/+RMFj5dO1Iis5ZWVi" target="_blank">Dəstək</a>
-  <header>NICE – PUBG UC-də Keyfiyyət və Etibar!</header>
-  <div class="bonus">NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</div>
-
-  <div class="uc-list">
-    <div class="uc-item" onclick="buyUC('30 UC')">
-      <div class="uc-title">30 UC</div>
-      <div class="uc-price">0.80 AZN</div>
-      <div class="uc-gift">+2 UC hədiyyə</div>
-    </div>
-    <div class="uc-item" onclick="buyUC('60 UC')">
-      <div class="uc-title">60 UC</div>
-      <div class="uc-price">1.60 AZN</div>
-      <div class="uc-gift">+3 UC hədiyyə</div>
-    </div>
-    <div class="uc-item" onclick="buyUC('300 UC')">
-      <div class="uc-title">300 UC</div>
-      <div class="uc-price">7.70 AZN</div>
-      <div class="uc-gift">+40 UC hədiyyə</div>
-    </div>
-    <div class="uc-item" onclick="buyUC('600 UC')">
-      <div class="uc-title">600 UC</div>
-      <div class="uc-price">15.40 AZN</div>
-      <div class="uc-gift">+90 UC hədiyyə</div>
-    </div>
-    <div class="uc-item" onclick="buyUC('1500 UC')">
-      <div class="uc-title">1500 UC</div>
-      <div class="uc-price">38.30 AZN</div>
-      <div class="uc-gift">+375 UC hədiyyə</div>
-    </div>
-    <div class="uc-item" onclick="buyUC('3000 UC')">
-      <div class="uc-title">3000 UC</div>
-      <div class="uc-price">76.60 AZN</div>
-      <div class="uc-gift">+1000 UC hədiyyə</div>
-    </div>
+  <div>
+    <label for="amount">Məbləğ:</label>
+    <input type="number" id="amount" placeholder="AZN" style="padding: 5px; margin: 10px;">
   </div>
+  <button onclick="addBalance()">+ Əlavə et</button>
+  <button onclick="subtractBalance()">- Çıxar</button>
 
-  <div class="order-popup" id="orderPopup">Murad 60 UC aldı!</div>
+  <h3 style="margin-top: 20px;">İstifadəçi Balansları</h3>
+  <div id="userList"></div>
+</section>
 
-  <footer>&copy; 2025 NICE – Bütün hüquqlar qorunur.</footer>
+<script>
+  const users = {
+    "Murad": 60.00,
+    "Aysu": 300.00,
+    "Tunar": 600.00
+  };
 
-  <script>
-    function buyUC(packageName) {
-      const phone = '994513239857';
-      const msg = `Salam, ${packageName} almaq istəyirəm`;
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
+  function addBalance() {
+    const user = document.getElementById("username").value;
+    const amount = parseFloat(document.getElementById("amount").value);
+    if (users[user] !== undefined && !isNaN(amount)) {
+      users[user] += amount;
+      alert(`${user} balansına +${amount.toFixed(2)} AZN əlavə olundu.`);
+      displayUserList();
     }
+  }
 
-    const usernames = [
-      "Murad 60 UC aldı", "Aysu 300 UC aldı", "Tunar 600 UC aldı", "Leyla 1500 UC aldı",
-      "Nihat 3000 UC aldı", "Emil 60 UC aldı", "Sahil 300 UC aldı", "Vüsal 600 UC aldı",
-      "Fatime 1500 UC aldı", "Zamiq 30 UC aldı", "Cavid 600 UC aldı", "Nərgiz 3000 UC aldı"
-    ];
-    let index = 0;
-    const popup = document.getElementById('orderPopup');
-    setInterval(() => {
-      popup.textContent = usernames[index];
-      popup.style.display = "block";
-      setTimeout(() => { popup.style.display = "none"; }, 5000);
-      index = (index + 1) % usernames.length;
-    }, 10000);
-  </script>
-
-  <section style="padding: 20px; background-color: #1e1e1e; color: white;">
-    <h2>Tez-tez verilən suallar</h2>
-    <div>
-      <h4>UC necə alım?</h4>
-      <p>Sadəcə balans artır və admin təsdiqlədikdən sonra UC balansından çıxılır.</p>
-      <h4>Puan nədir?</h4>
-      <p>Puan sistem tərəfindən və ya admin tərəfindən verilən bonusdur. Müxtəlif kampaniyalarda istifadə olunur.</p>
-      <h4>Balansımı necə artırım?</h4>
-      <p>Saytda göstərilən karta ödəniş edib çeki sistemə yüklə.</p>
-    </div>
-  </section>
-
-  <section style="padding: 20px; background-color: #111; color: #00bfff; text-align: center;">
-    <h2>Son UC Alanlar</h2>
-    <div id="ucBuyers" style="font-size: 1.2em; margin-top: 10px;"></div>
-  </section>
-
-  <script>
-    const ucData = [
-      "Murad 660 UC aldı",
-      "Zaur 3000 UC aldı",
-      "Aysel 60 UC aldı",
-      "Nicat 1320 UC aldı",
-      "Elvin 1800 UC aldı",
-      "Leman 3850 UC aldı"
-    ];
-    let idx = 0;
-    function rotateUC() {
-      document.getElementById('ucBuyers').innerText = ucData[idx];
-      idx = (idx + 1) % ucData.length;
+  function subtractBalance() {
+    const user = document.getElementById("username").value;
+    const amount = parseFloat(document.getElementById("amount").value);
+    if (users[user] !== undefined && !isNaN(amount)) {
+      users[user] -= amount;
+      if (users[user] < 0) users[user] = 0;
+      alert(`${user} balansından -${amount.toFixed(2)} AZN çıxarıldı.`);
+      displayUserList();
     }
-    setInterval(rotateUC, 15000);
-    rotateUC();
-  </script>
-</body>
-</html>
+  }
+
+  function displayUserList() {
+    const userList = document.getElementById("userList");
+    userList.innerHTML = "";
+    for (let user in users) {
+      userList.innerHTML += `<p>${user}: ${users[user].toFixed(2)} AZN</p>`;
+    }
+  }
+
+  function checkAdminAccess() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAdmin = urlParams.get('admin');
+    if (isAdmin === 'leparolam') {
+      document.getElementById("adminPanel").style.display = "block";
+      displayUserList();
+    }
+  }
+
+  window.onload = checkAdminAccess;
+</script>
