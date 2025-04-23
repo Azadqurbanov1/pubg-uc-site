@@ -132,6 +132,13 @@
   </style>
 </head>
 <body>
+<div id="loginPanel" style="padding: 20px; background-color: #111; color: white;">
+  <h2>GiriÅŸ Paneli</h2>
+  <input type="email" id="userEmail" placeholder="Gmail daxil et" style="padding: 5px; margin: 10px;">
+  <button onclick="loginUser()" style="padding: 8px 16px; background-color: #00ccff; color: white;">Daxil ol</button>
+</div>
+<div id="welcomeMsg" style="display:none; margin: 10px; font-size: 1.2rem; color: #00ffcc;"></div>
+
   <div class="intro-screen">
     <div class="intro-logo">NICE UC</div>
     <div class="intro-text">PUBG UC SatÄ±ÅŸÄ±na XoÅŸ GÉ™ldin!</div>
@@ -253,6 +260,8 @@
 
 <section id="adminPanel" style="display: none; padding: 20px; background-color: #222; color: white;">
   <h2>Admin Paneli</h2>
+  <h4>Qeydiyyatdan keÃ§miÅŸ istifadÉ™Ã§ilÉ™r:</h4>
+  <div id="registeredUsers" style="margin-bottom: 15px;"></div>
   <div>
     <label for="username">Ä°stifadÉ™Ã§i adÄ±:</label>
     <input type="text" id="username" placeholder="Ad daxil et" style="padding: 5px; margin: 10px;">
@@ -269,11 +278,36 @@
 </section>
 
 <script>
-  const users = {
+  let users = {
     "Murad": 60.00,
     "Aysu": 300.00,
     "Tunar": 600.00
   };
+
+  function loginUser() {
+    const email = document.getElementById("userEmail").value;
+    if (email) {
+      localStorage.setItem("loggedUser", email);
+      document.getElementById("loginPanel").style.display = "none";
+      document.getElementById("welcomeMsg").style.display = "block";
+      document.getElementById("welcomeMsg").innerText = "XoÅŸ gÉ™ldin, " + email;
+      addToRegistered(email);
+    }
+  }
+
+  function addToRegistered(email) {
+    let registered = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    if (!registered.includes(email)) {
+      registered.push(email);
+      localStorage.setItem("registeredUsers", JSON.stringify(registered));
+    }
+  }
+
+  function loadRegisteredUsers() {
+    const div = document.getElementById("registeredUsers");
+    const data = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    div.innerHTML = data.map(e => `<div>${e}</div>`).join("");
+  }
 
   function addBalance() {
     const user = document.getElementById("username").value;
@@ -309,9 +343,21 @@
     const isAdmin = urlParams.get('admin');
     if (isAdmin === 'leparolam') {
       document.getElementById("adminPanel").style.display = "block";
+      loadRegisteredUsers();
       displayUserList();
     }
   }
+
+  window.onload = function() {
+    displayUserBalance();
+    checkAdminAccess();
+    const logged = localStorage.getItem("loggedUser");
+    if (logged) {
+      document.getElementById("loginPanel").style.display = "none";
+      document.getElementById("welcomeMsg").style.display = "block";
+      document.getElementById("welcomeMsg").innerText = "XoÅŸ gÉ™ldin, " + logged;
+    }
+  };
 
   function displayUserBalance() {
     const balanceElement = document.getElementById("balanceAmount");
@@ -319,11 +365,6 @@
       balanceElement.textContent = "0.00";
     }
   }
-
-  window.onload = function() {
-    displayUserBalance();
-    checkAdminAccess();
-  };
 </script>
 
 </body>
