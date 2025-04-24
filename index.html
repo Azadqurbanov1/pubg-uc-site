@@ -147,7 +147,7 @@ body {
     }
     .order-popup {
       position: fixed;
-      bottom: 20px;
+      top: 80px;
       left: 50%;
       transform: translateX(-50%);
       background-color: rgba(0, 255, 255, 0.1);
@@ -184,29 +184,104 @@ body {
 </style>
 </head>
 <div style="position:fixed; top:10px; left:10px; z-index:999;">
-<button onclick="setLang('az')">AZ</button>
-<button onclick="setLang('tr')">TR</button>
+
+
 </div>
+
+<body>
+<!-- Giriş Animasiyası -->
+<div class="intro-screen" id="introScreen">
+<div class="intro-logo" style="animation: zoomIn 2s ease-out forwards;">NICE UC</div>
+<div class="intro-sub" id="introType"></div>
+</div>
+<style>
+@keyframes zoomIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes floatUC {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+.uc-float {
+  position: absolute;
+  bottom: 0;
+  width: 30px;
+  animation: floatUC 3s ease-in forwards;
+}
+.intro-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, #000010, #001133);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+.intro-logo {
+  font-size: 2.8rem;
+  color: #00ccff;
+  font-weight: bold;
+  text-shadow: 0 0 30px #00ffff;
+  margin-bottom: 1rem;
+}
+.intro-sub {
+  font-size: 1.1rem;
+  color: #ffffffcc;
+  font-style: italic;
+}
+</style>
+
 <script>
-  function setLang(lang) {
-    const az = {
-      "headerText": "NICE – PUBG UC-də Keyfiyyət və Etibar!",
-      "bonusText": "NICE-də sadəcə UC yox, BONUS da var — fərqi hiss et!",
-      "faqTitle": "Tez-tez verilən suallar"
-    };
-    const tr = {
-      "headerText": "NICE – PUBG UC'de Kalite ve Güven!",
-      "bonusText": "NICE'de sadece UC değil, BONUS da var — farkı hissedin!",
-      "faqTitle": "Sıkça Sorulan Sorular"
-    };
-    const data = lang === 'tr' ? tr : az;
-    for (const id in data) {
-      const el = document.getElementById(id);
-      if (el) el.innerText = data[id];
-    }
+  if (!sessionStorage.getItem("introSeen")) {
+    sessionStorage.setItem("introSeen", "true");
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      const intro = document.getElementById("introScreen");
+      if (intro) intro.style.display = "none";
+    });
   }
 </script>
-<body><canvas id="backgroundCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1;"></canvas>
+<script>
+  // Typing Effekt
+const typeText = "PUBG UC dünyasına xoş gəlmisiniz...";
+let tIndex = 0;
+function typeIntro() {
+  const target = document.getElementById("introType");
+  if (tIndex <= typeText.length) {
+    target.innerHTML = typeText.substring(0, tIndex);
+    tIndex++;
+    setTimeout(typeIntro, 60);
+  }
+}
+typeIntro();
+
+// UC ikonları uçar
+for (let i = 0; i < 10; i++) {
+  const ucImg = document.createElement("img");
+  ucImg.src = "https://cdn-icons-png.flaticon.com/512/3602/3602145.png";
+  ucImg.className = "uc-float";
+  ucImg.style.left = Math.random() * 100 + "vw";
+  ucImg.style.animationDelay = Math.random() * 2 + "s";
+  document.getElementById("introScreen").appendChild(ucImg);
+}
+
+// Giriş ekranı gizlənsin
+
+if (!sessionStorage.getItem("introSeen")) {
+  setTimeout(() => {
+    document.getElementById("introScreen").style.display = "none";
+    sessionStorage.setItem("introSeen", "true");
+  }, 5000);
+} else {
+  document.getElementById("introScreen").style.display = "none";
+}
+
+</script>
+<canvas id="backgroundCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1;"></canvas>
 <audio autoplay="" id="bgMusic" loop="">
 <source src="bg-music.mp3" type="audio/mpeg"/>
 </audio>
@@ -236,7 +311,9 @@ body {
     if (popup) popup.style.display = "none";
   }, 7000);
 </script>
-<div style="position: fixed; top: 10px; left: 10px;">
+<div style="text-align: center; margin-top: 20px;"><button id="userBalance" style="background:#002244; color:#00ffcc; border:1px solid #00ccff;
+    border-radius:10px; padding:6px 12px; font-weight:bold; margin-bottom:10px; box-shadow:0 0 6px #00ccff;">
+    Balans: 0.00 AZN</button>
 <button onclick="document.getElementById('loginModal').style.display='block'" style="margin-right: 8px;">Daxil ol</button>
 <button onclick="document.getElementById('signupModal').style.display='block'">Qeydiyyat</button>
 </div>
@@ -246,7 +323,22 @@ body {
 <h3>Hesabına Daxil ol</h3>
 <input name="email" placeholder="E-poçt" required="" type="email"/><br/><br/>
 <input name="password" placeholder="Şifrə" required="" type="password"/><br/><br/>
-<button>Giriş</button>
+<button onclick="loginUser()">Giriş</button>
+<script>
+function loginUser() {
+  const email = document.querySelector('#loginModal input[name=email]').value;
+  const password = document.querySelector('#loginModal input[name=password]').value;
+  const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+  const user = users.find(u => u.email === email);
+  if (user) {
+    sessionStorage.setItem("loggedInUser", user.email);
+    alert("Giriş uğurludur!");
+    location.reload();
+  } else {
+    alert("İstifadəçi tapılmadı!");
+  }
+}
+</script>
 <button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
 </div>
 </div>
@@ -267,7 +359,19 @@ body {
 <div class="intro-text">PUBG UC Satışına Xoş Gəldin!</div>
 </div>
 <a class="support" href="https://t.me/+RMFj5dO1Iis5ZWVi" target="_blank">Dəstək</a>
-<header id="headerText">NICE – PUBG UC-də Keyfiyyət və Etibar!</header>
+<header id="typingHeader" style="background: linear-gradient(90deg, #0077ff, #00c3ff); padding: 1rem; font-size: 1.4rem; font-weight: bold;"></header>
+<script>
+const text = "NICE – PUBG UC Satışında Keyfiyyət və Etibar...";
+let i = 0;
+function typeWriter() {
+  if (i <= text.length) {
+    document.getElementById("typingHeader").innerHTML = text.substring(0, i) + '<span style="border-right:2px solid white;"></span>';
+    i++;
+    setTimeout(typeWriter, 80);
+  }
+}
+typeWriter();
+</script>
 <div class="bonus" id="bonusText">NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</div>
 <div class="uc-list">
 <div class="uc-item" onclick="buyUC('30 UC')">
@@ -402,17 +506,22 @@ body {
 </div>
 </footer>
 <script>
-    function buyUC(packageName) {
-  const sound = document.getElementById('ucSound');
-  if (sound) {
-    sound.currentTime = 0;
-    sound.play();
-  }
-  const phone = '994513239857';
-  const msg = `Salam, ${packageName} almaq istəyirəm`;
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
+    
+function buyUC(packageName) {
+  const price = {
+    "30 UC": "0.80 AZN",
+    "60 UC": "1.60 AZN",
+    "300 UC": "7.70 AZN",
+    "600 UC": "15.40 AZN",
+    "1500 UC": "38.30 AZN",
+    "3000 UC": "76.60 AZN"
+  };
+  selectedUcPackage = packageName;
+  const modal = document.getElementById("ucOrderModal");
+  document.getElementById("ucOrderTitle").innerText = packageName + " – " + price[packageName];
+  modal.style.display = "flex";
 }
+
 
     const usernames = [
       "Murad 60 UC aldı", "Aysu 300 UC aldı", "Tunar 600 UC aldı", "Leyla 1500 UC aldı",
@@ -504,7 +613,6 @@ body {
   height: 100%;
   background: radial-gradient(circle at center, #000010, #000022);
 }</style>
-
 <script>
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
@@ -543,17 +651,6 @@ let sparks = Array.from({ length: 80 }, () => ({
   color: 'rgba(255, 165, 0, 0.7)'
 }));
 
-function drawMatrix() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-  ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = "#0F0";
-  ctx.font = fontSize + "px monospace";
-  for (let i = 0; i < drops.length; i++) {
-    const text = String.fromCharCode(0x30A0 + Math.random() * 96);
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-    if (drops[i] * fontSize > h && Math.random() > 0.975) drops[i] = 0;
-    drops[i]++;
-  }
 }
 
 function drawStars() {
@@ -574,16 +671,50 @@ function drawStars() {
 }
 
 
-function drawSparks() {
-  sparks.forEach(sp => {
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+  drawStars();
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+<canvas id="backgroundCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1;"></canvas>
+<script>
+const canvas = document.getElementById('backgroundCanvas');
+const ctx = canvas.getContext('2d');
+let w, h;
+
+function resizeCanvas() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+let stars = Array.from({ length: 150 }, () => ({
+  x: Math.random() * w,
+  y: Math.random() * h,
+  r: Math.random() * 1.5 + 0.5,
+  dx: (Math.random() - 0.5) * 0.5,
+  dy: (Math.random() - 0.5) * 0.5
+}));
+
+function drawStars() {
+  ctx.fillStyle = "rgba(0, 0, 30, 0.15)";
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = "white";
+  stars.forEach(s => {
     ctx.beginPath();
-    ctx.arc(sp.x, sp.y, sp.size, 0, 2 * Math.PI);
-    ctx.fillStyle = sp.color;
+    ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
     ctx.fill();
-    sp.y += sp.speedY;
-    if (sp.y < 0) {
-      sp.x = Math.random() * w;
-      sp.y = h;
+    s.x += s.dx;
+    s.y += s.dy;
+    if (s.x < 0 || s.x > w || s.y < 0 || s.y > h) {
+      s.x = Math.random() * w;
+      s.y = Math.random() * h;
     }
   });
 }
@@ -591,9 +722,124 @@ function drawSparks() {
 function animate() {
   ctx.clearRect(0, 0, w, h);
   drawStars();
-  drawMatrix();drawSparks();
   requestAnimationFrame(animate);
 }
 animate();
-</script></body>
+</script>
+<div id="onlineUsers" style="position:fixed; bottom:15px; right:15px; background:#0077ff; color:white; padding:6px 10px;
+border-radius:16px; font-weight:500; font-size:0.75rem; box-shadow:0 0 6px #00aaff; z-index:999;">
+12 nəfər indi UC axtarır
+</div>
+<script>
+const onlineDiv = document.getElementById("onlineUsers");
+let fakeUsers = 10 + Math.floor(Math.random() * 10);
+
+setInterval(() => {
+  fakeUsers = 10 + Math.floor(Math.random() * 20);
+  onlineDiv.innerText = `${fakeUsers} nəfər indi UC axtarır`;
+}, 5000);
+</script>
+<script>
+  const signupForm = document.querySelector('#signupModal form');
+  if (signupForm) {
+    signupForm.addEventListener('submit', () => {
+      const fullname = signupForm.fullname.value;
+      const email = signupForm.email.value;
+      const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+      users.push({ fullname, email });
+      localStorage.setItem("registeredUsers", JSON.stringify(users));
+    });
+  }
+</script>
+<script>
+  function showUserBalance() {
+    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    const currentEmail = sessionStorage.getItem("loggedInUser");
+    const user = users.find(u => u.email === currentEmail);
+    if (user) {
+      const balance = user.balance || 0;
+      document.getElementById("userBalance").innerText = balance.toFixed(2) + " AZN";
+    }
+  }
+  window.onload = showUserBalance;
+</script>
+
+
+
+
+<script>
+  setInterval(() => {
+    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    const currentEmail = sessionStorage.getItem("loggedInUser");
+    const user = users.find(u => u.email === currentEmail);
+    if (user && document.getElementById("userBalance")) {
+      document.getElementById("userBalance").innerText = "Balans: " + (user.balance || 0).toFixed(2) + " AZN";
+    }
+  }, 5000);
+</script>
+
+
+
+
+
+
+
+<div id="ucOrderModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#111; padding:20px; border-radius:10px; text-align:center; color:white; width:300px;">
+    <h3 id="ucOrderTitle">UC Paketi</h3>
+    <input type="text" id="pubgIdInput" placeholder="PUBG Mobile ID" style="width:100%; padding:10px; margin:15px 0; border-radius:5px; border:none;" />
+    <button onclick="confirmUcOrder()" style="margin-top:10px;">Təsdiqlə</button><br><br>
+    <button onclick="document.getElementById('ucOrderModal').style.display='none'">Bağla</button>
+  </div>
+</div>
+
+<script>
+  let selectedUcPackage = "";
+
+  function buyUC(packageName) {
+    const price = {
+      "30 UC": "0.80 AZN",
+      "60 UC": "1.60 AZN",
+      "300 UC": "7.70 AZN",
+      "600 UC": "15.40 AZN",
+      "1500 UC": "38.30 AZN",
+      "3000 UC": "76.60 AZN"
+    };
+    selectedUcPackage = packageName;
+    const modal = document.getElementById("ucOrderModal");
+    document.getElementById("ucOrderTitle").innerText = packageName + " – " + price[packageName];
+    modal.style.display = "flex";
+  }
+
+  function confirmUcOrder() {
+    const pubgId = document.getElementById("pubgIdInput").value.trim();
+    if (!pubgId) return alert("Zəhmət olmasa PUBG ID daxil edin.");
+    const currentEmail = sessionStorage.getItem("loggedInUser");
+    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    const user = users.find(u => u.email === currentEmail);
+    if (!user) return alert("İstifadəçi tapılmadı.");
+
+    const now = new Date().toLocaleString("az-AZ");
+    const history = JSON.parse(localStorage.getItem("ucOrders") || "[]");
+    history.unshift(`${user.fullname} – ${selectedUcPackage} – PUBG ID: ${pubgId} – ${now}`);
+    localStorage.setItem("ucOrders", JSON.stringify(history));
+
+    document.getElementById("ucOrderModal").style.display = "none";
+    alert("Sifariş qeydə alındı!");
+
+    if (typeof displayOrderHistory === "function") {
+      displayOrderHistory();
+    }
+  }
+
+  function displayOrderHistory() {
+    const history = JSON.parse(localStorage.getItem("ucOrders") || "[]");
+    document.getElementById("orderHistory").innerHTML = history.slice(0, 10).join("<br>");
+  }
+
+  document.addEventListener("DOMContentLoaded", displayOrderHistory);
+</script>
+
+</body>
 </html>
