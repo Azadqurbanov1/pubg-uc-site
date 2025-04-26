@@ -1,26 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="az">
 <head>
 <meta charset="UTF-8">
 <title>NICE – PUBG UC Satışı</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
-  authDomain: "niceuc-28b6d.firebaseapp.com",
-  databaseURL: "https://niceuc-28b6d-default-rtdb.firebaseio.com",
-  projectId: "niceuc-28b6d",
-  storageBucket: "niceuc-28b6d.appspot.com",
-  messagingSenderId: "968041426898",
-  appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
-};
-firebase.initializeApp(firebaseConfig);
-</script>
 <style>
 body {
   background: radial-gradient(circle at center, #001133, #000010);
@@ -66,15 +52,20 @@ button {
 <button id="userBalance">Balans: 0.00 AZN</button>
 <br/>
 <button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
-<button onclick="askAdminPassword()">Admin Panel</button>
 
 <div class="uc-list">
-  <div class="uc-item">30 UC - 0.80 AZN</div>
-  <div class="uc-item">60 UC - 1.60 AZN</div>
-  <div class="uc-item">300 UC - 7.70 AZN</div>
-  <div class="uc-item">600 UC - 15.40 AZN</div>
-  <div class="uc-item">1500 UC - 38.30 AZN</div>
-  <div class="uc-item">3000 UC - 76.60 AZN</div>
+  <div class="uc-item" onclick="selectUC(60, '1.60')">60 UC - 1.60 AZN</div>
+  <div class="uc-item" onclick="selectUC(300, '7.70')">300 UC - 7.70 AZN</div>
+  <div class="uc-item" onclick="selectUC(600, '15.40')">600 UC - 15.40 AZN</div>
+  <div class="uc-item" onclick="selectUC(1500, '38.30')">1500 UC - 38.30 AZN</div>
+  <div class="uc-item" onclick="selectUC(3000, '76.60')">3000 UC - 76.60 AZN</div>
+</div>
+
+<!-- Order Form -->
+<div id="orderForm" style="display:none; margin-top: 20px;">
+  <h2 id="ucInfo">UC Seçin</h2>
+  <input type="text" id="pubgId" placeholder="PUBG ID daxil edin"><br>
+  <button type="button" onclick="sendOrder()">Sifariş et</button>
 </div>
 
 <!-- Login Modal -->
@@ -93,6 +84,48 @@ button {
 </div>
 
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
+  authDomain: "niceuc-28b6d.firebaseapp.com",
+  databaseURL: "https://niceuc-28b6d-default-rtdb.firebaseio.com",
+  projectId: "niceuc-28b6d",
+  storageBucket: "niceuc-28b6d.appspot.com",
+  messagingSenderId: "968041426898",
+  appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
+};
+firebase.initializeApp(firebaseConfig);
+
+let selectedUC = "";
+let selectedPrice = "";
+
+function selectUC(uc, price) {
+  selectedUC = uc;
+  selectedPrice = price;
+  document.getElementById('ucInfo').innerText = uc + " UC - " + price + " AZN";
+  document.getElementById('orderForm').style.display = 'block';
+}
+
+function sendOrder() {
+  const pubgId = document.getElementById('pubgId').value.trim();
+  if (!pubgId) {
+    alert("PUBG ID daxil edin!");
+    return;
+  }
+  const now = new Date();
+  const order = {
+    name: sessionStorage.getItem('loggedInUserName') || "Anonim",
+    pubgId: pubgId,
+    ucAmount: selectedUC,
+    price: selectedPrice,
+    time: now.toLocaleString()
+  };
+  firebase.database().ref('orders').push(order, () => {
+    alert("Sifariş göndərildi!");
+    document.getElementById('orderForm').reset();
+    document.getElementById('orderForm').style.display = 'none';
+  });
+}
+
 function loginUser() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
@@ -148,15 +181,6 @@ function saveUser(user) {
     alert("Giriş uğurludur!");
     location.reload();
   });
-}
-
-function askAdminPassword() {
-  const pass = prompt("Admin şifrəsini daxil edin:");
-  if (pass === "0001") {
-    alert("Admin Panel Açılacaq (hazırda demo rejimdə)");
-  } else {
-    alert("Şifrə yalnışdır!");
-  }
 }
 
 const userId = sessionStorage.getItem("loggedInUserId");
