@@ -54,6 +54,7 @@ button {
 <button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
 
 <div class="uc-list">
+  <div class="uc-item" onclick="selectUC(30, '0.80')">30 UC - 0.80 AZN</div>
   <div class="uc-item" onclick="selectUC(60, '1.60')">60 UC - 1.60 AZN</div>
   <div class="uc-item" onclick="selectUC(300, '7.70')">300 UC - 7.70 AZN</div>
   <div class="uc-item" onclick="selectUC(600, '15.40')">600 UC - 15.40 AZN</div>
@@ -77,13 +78,13 @@ button {
 <button onclick="loginUser()">Giriş</button>
 <hr style="margin:10px 0;">
 <button onclick="googleLogin()">Google ilə Daxil Ol</button>
-<button onclick="facebookLogin()">Facebook ilə Daxil Ol</button>
 <br/><br/>
 <button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
 </div>
 </div>
 
 <script>
+// Firebase konfiqurasiyası
 const firebaseConfig = {
   apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
   authDomain: "niceuc-28b6d.firebaseapp.com",
@@ -93,11 +94,14 @@ const firebaseConfig = {
   messagingSenderId: "968041426898",
   appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
 };
+
 firebase.initializeApp(firebaseConfig);
 
+// Seçilən UC
 let selectedUC = "";
 let selectedPrice = "";
 
+// UC seçimi
 function selectUC(uc, price) {
   selectedUC = uc;
   selectedPrice = price;
@@ -105,6 +109,7 @@ function selectUC(uc, price) {
   document.getElementById('orderForm').style.display = 'block';
 }
 
+// Sifariş göndərmək
 function sendOrder() {
   const pubgId = document.getElementById('pubgId').value.trim();
   if (!pubgId) {
@@ -121,11 +126,12 @@ function sendOrder() {
   };
   firebase.database().ref('orders').push(order, () => {
     alert("Sifariş göndərildi!");
-    document.getElementById('orderForm').reset();
+    document.getElementById('pubgId').value = '';
     document.getElementById('orderForm').style.display = 'none';
   });
 }
 
+// Manual email login (Firebase Realtime Database user yoxlama)
 function loginUser() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
@@ -145,26 +151,18 @@ function loginUser() {
   });
 }
 
+// Google login
 function googleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider)
     .then(result => {
       saveUser(result.user);
     }).catch(error => {
-      alert("Xəta baş verdi: " + error.message);
+      alert("Xəta: " + error.message);
     });
 }
 
-function facebookLogin() {
-  const provider = new firebase.auth.FacebookAuthProvider();
-  firebase.auth().signInWithPopup(provider)
-    .then(result => {
-      saveUser(result.user);
-    }).catch(error => {
-      alert("Xəta baş verdi: " + error.message);
-    });
-}
-
+// Yeni istifadəçi save etmək
 function saveUser(user) {
   if (!user.email) return;
   firebase.database().ref('users').orderByChild('email').equalTo(user.email).once('value', snapshot => {
@@ -183,6 +181,7 @@ function saveUser(user) {
   });
 }
 
+// Balansı göstərmək
 const userId = sessionStorage.getItem("loggedInUserId");
 const userName = sessionStorage.getItem("loggedInUserName");
 if (userName) {
