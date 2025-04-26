@@ -2,7 +2,7 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<title>NICE – PUBG UC Satışı</title>
+<title>NICE – PUBG UC Satışı və Balans Artırma</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
@@ -16,7 +16,7 @@ body {
 }
 button {
   margin: 10px;
-  padding: 10px 20px;
+  padding: 8px 16px;
   background: linear-gradient(90deg, #0077ff, #00ccff);
   border: none;
   border-radius: 8px;
@@ -43,13 +43,45 @@ button {
   transform: scale(1.05);
   background: #003366;
 }
+#addBalanceForm {
+  background: #002244;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+  display: none;
+}
+input, label {
+  margin: 5px;
+}
+#balanceContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
 </style>
 </head>
 <body>
 
 <h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
-<button id="userBalance">Balans: 0.00 AZN</button>
+<div id="balanceContainer">
+  <span id="userBalance" style="font-size: 18px;">Balans: 0.00 AZN</span>
+  <button onclick="showAddBalanceForm()" style="font-size: 18px; padding: 2px 10px; background: #00ccff; color: black; border: none; border-radius: 50%;">+</button>
+</div>
+
+<!-- Balans artır formu -->
+<div id="addBalanceForm">
+  <h2>Balans Artır</h2>
+  <p><b>Kart sahibi:</b> Azad Qurbanov</p>
+  <p><b>Kart nömrəsi:</b> 4098 5844 6528 0079</p>
+  <input type="number" id="paymentAmount" placeholder="Göndərdiyin məbləğ (AZN)"><br>
+  <input type="file" id="paymentScreenshot"><br>
+  <button onclick="sendPayment()">Pul Göndərdim</button><br><br>
+  <button onclick="closeAddBalanceForm()">Bağla</button>
+</div>
+
 <br/>
 <button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
 
@@ -73,7 +105,7 @@ button {
 <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000a; justify-content:center; align-items:center;">
 <div style="background:#111; padding:20px; border-radius:10px;">
 <h2>Hesabına Daxil Ol</h2>
-<input type="email" id="loginEmail" placeholder="Email" style="margin-bottom:10px;"><br/>
+<input type="email" id="loginEmail" placeholder="Email"><br/>
 <input type="password" id="loginPassword" placeholder="Şifrə"><br/><br/>
 <button onclick="loginUser()">Giriş</button>
 <hr style="margin:10px 0;">
@@ -94,7 +126,6 @@ const firebaseConfig = {
   messagingSenderId: "968041426898",
   appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
 };
-
 firebase.initializeApp(firebaseConfig);
 
 // Seçilən UC
@@ -131,7 +162,7 @@ function sendOrder() {
   });
 }
 
-// Manual email login (Firebase Realtime Database user yoxlama)
+// Manual login
 function loginUser() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
@@ -162,7 +193,7 @@ function googleLogin() {
     });
 }
 
-// Yeni istifadəçi save etmək
+// Yeni istifadəçi qeydiyyatı
 function saveUser(user) {
   if (!user.email) return;
   firebase.database().ref('users').orderByChild('email').equalTo(user.email).once('value', snapshot => {
@@ -196,6 +227,40 @@ if (userId) {
   });
 } else {
   document.getElementById('userBalance').innerText = "Balans: 0.00 AZN";
+}
+
+// Balans artırma formu açmaq
+function showAddBalanceForm() {
+  document.getElementById('addBalanceForm').style.display = 'block';
+}
+function closeAddBalanceForm() {
+  document.getElementById('addBalanceForm').style.display = 'none';
+}
+
+// Pul göndərmək (balans artırmaq)
+function sendPayment() {
+  const paymentAmount = document.getElementById('paymentAmount').value.trim();
+  const fileInput = document.getElementById('paymentScreenshot');
+  if (!paymentAmount || !fileInput.files[0]) {
+    alert("Məbləğ və şəkil əlavə edin!");
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const paymentData = {
+      name: sessionStorage.getItem('loggedInUserName') || "Anonim",
+      amount: paymentAmount,
+      screenshot: event.target.result,
+      time: new Date().toLocaleString()
+    };
+    firebase.database().ref('payments').push(paymentData, () => {
+      alert("Ödəniş göndərildi! Admin təsdiqləyəcək.");
+      document.getElementById('addBalanceForm').style.display = 'none';
+      document.getElementById('paymentAmount').value = '';
+      document.getElementById('paymentScreenshot').value = '';
+    });
+  };
+  reader.readAsDataURL(fileInput.files[0]);
 }
 </script>
 
