@@ -1,844 +1,133 @@
-
 <!DOCTYPE html>
-
 <html lang="az">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&amp;display=swap" rel="stylesheet"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="UTF-8">
 <title>NICE – PUBG UC Satışı</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
+  authDomain: "niceuc-28b6d.firebaseapp.com",
+  databaseURL: "https://niceuc-28b6d-default-rtdb.firebaseio.com",
+  projectId: "niceuc-28b6d",
+  storageBucket: "niceuc-28b6d.appspot.com",
+  messagingSenderId: "968041426898",
+  appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
+};
+firebase.initializeApp(firebaseConfig);
+</script>
 <style>
-.heading-line {
-  height: 3px;
-  width: 100px;
-  margin: 10px auto 30px auto;
-  background: linear-gradient(90deg, #00ccff, #0077ff, #00ccff);
-  background-size: 200% auto;
-  animation: shimmer 2s infinite linear;
-}
-@keyframes shimmer {
-  0% { background-position: 0% }
-  100% { background-position: 200% }
-}
-
-  .uc-badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: gold;
-    color: black;
-    padding: 3px 6px;
-    border-radius: 10px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    box-shadow: 0 0 5px #fff;
-  }
-    button {
-      padding: 8px 16px;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      border: none;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 0 10px #00c6ff;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
 body {
-  background: radial-gradient(circle at center, #001133 0%, #000010 100%);
-  animation: pulseGlow 10s infinite alternate;
+  background: radial-gradient(circle at center, #001133, #000010);
   font-family: 'Poppins', sans-serif;
   color: white;
-  overflow-x: hidden;
   text-align: center;
 }
-
-@keyframes pulseGlow {
-  0% { background-color: #000010; }
-  100% { background-color: #001133; }
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #0077ff, #00ccff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0077ff;
 }
-
-    .intro-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to bottom right, #000010, #001133);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      animation: fadeOut 3s forwards;
-      animation-delay: 2.5s;
-    }
-    .intro-logo {
-      font-size: 2.5rem;
-      color: #00ccff;
-      text-shadow: 0 0 20px #00ffff;
-      margin-bottom: 1rem;
-    }
-    .intro-text {
-      font-size: 1.2rem;
-      color: #ffffffcc;
-    }
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-    header {
-      background: linear-gradient(90deg, #0077ff, #00c3ff);
-      padding: 1rem;
-      font-size: 1.4rem;
-      font-weight: bold;
-    }
-    .bonus {
-      color: #33ccff;
-      font-size: 1.2rem;
-      text-shadow: 0 0 8px #00ffff;
-      margin: 15px 0;
-    }
-    .uc-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-      padding: 2rem;
-    }
-    .uc-item {
-      background-color: rgba(0, 0, 50, 0.4);
-      border: 2px solid #00ccff;
-      border-radius: 12px;
-      padding: 1rem;
-      transition: 0.3s;
-      cursor: pointer;
-      box-shadow: 0 0 10px #0077ff;
-    }
-    .uc-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00ccff;
-
-      background-color: #003366;
-    }
-    .uc-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #00ccff;
-    }
-    .uc-price {
-      font-size: 1rem;
-      color: #00e1ff;
-      font-weight: bold;
-      text-shadow: 0 0 6px #00ffff;
-    }
-    .uc-gift {
-      margin-top: 5px;
-      font-size: 0.9rem;
-      color: #ffd700;
-      font-weight: bold;
-    }
-    .order-popup {
-      position: fixed;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 255, 255, 0.1);
-      color: #00ffff;
-      padding: 10px 20px;
-      border: 1px solid #00ffff;
-      border-radius: 10px;
-      display: none;
-      font-size: 0.95rem;
-      text-shadow: 0 0 6px #00ffff;
-    }
-    footer {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #111;
-      color: #888;
-    }
-    .support {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background-color: #0088cc;
-      color: white;
-      padding: 8px 14px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      box-shadow: 0 0 10px #0088cc;
-    }
-    .support:hover {
-      background-color: #00aaff;
-    }
-  
+.uc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+  padding: 10px;
+}
+.uc-item {
+  background: #001f4d;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ccff;
+  transition: 0.3s;
+}
+.uc-item:hover {
+  transform: scale(1.05);
+  background: #003366;
+}
 </style>
 </head>
-<div style="position:fixed; top:10px; left:10px; z-index:999;">
-
-
-</div>
-
 <body>
-<!-- Giriş Animasiyası -->
-<div class="intro-screen" id="introScreen">
-<div class="intro-logo" style="animation: zoomIn 2s ease-out forwards;">NICE UC</div>
-<div class="intro-sub" id="introType"></div>
+
+<h1>NICE UC - Balans Sistemi</h1>
+
+<button id="userBalance">Balans: 0.00 AZN</button>
+
+<br/>
+<button onclick="document.getElementById('loginModal').style.display='block'">Daxil ol</button>
+<button onclick="askAdminPassword()">Admin Panel</button>
+
+<div class="uc-list">
+  <div class="uc-item">30 UC - 0.80 AZN</div>
+  <div class="uc-item">60 UC - 1.60 AZN</div>
+  <div class="uc-item">300 UC - 7.70 AZN</div>
+  <div class="uc-item">600 UC - 15.40 AZN</div>
+  <div class="uc-item">1500 UC - 38.30 AZN</div>
+  <div class="uc-item">3000 UC - 76.60 AZN</div>
 </div>
-<style>
-@keyframes zoomIn {
-  0% { transform: scale(0.5); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-@keyframes floatUC {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-100px); opacity: 0; }
-}
-.uc-float {
-  position: absolute;
-  bottom: 0;
-  width: 30px;
-  animation: floatUC 3s ease-in forwards;
-}
-.intro-screen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle, #000010, #001133);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  overflow: hidden;
-}
-.intro-logo {
-  font-size: 2.8rem;
-  color: #00ccff;
-  font-weight: bold;
-  text-shadow: 0 0 30px #00ffff;
-  margin-bottom: 1rem;
-}
-.intro-sub {
-  font-size: 1.1rem;
-  color: #ffffffcc;
-  font-style: italic;
-}
-</style>
 
-<script>
-  if (!sessionStorage.getItem("introSeen")) {
-    sessionStorage.setItem("introSeen", "true");
-  } else {
-    document.addEventListener("DOMContentLoaded", () => {
-      const intro = document.getElementById("introScreen");
-      if (intro) intro.style.display = "none";
-    });
-  }
-</script>
-<script>
-  // Typing Effekt
-const typeText = "PUBG UC dünyasına xoş gəlmisiniz...";
-let tIndex = 0;
-function typeIntro() {
-  const target = document.getElementById("introType");
-  if (tIndex <= typeText.length) {
-    target.innerHTML = typeText.substring(0, tIndex);
-    tIndex++;
-    setTimeout(typeIntro, 60);
-  }
-}
-typeIntro();
-
-// UC ikonları uçar
-for (let i = 0; i < 10; i++) {
-  const ucImg = document.createElement("img");
-  ucImg.src = "https://cdn-icons-png.flaticon.com/512/3602/3602145.png";
-  ucImg.className = "uc-float";
-  ucImg.style.left = Math.random() * 100 + "vw";
-  ucImg.style.animationDelay = Math.random() * 2 + "s";
-  document.getElementById("introScreen").appendChild(ucImg);
-}
-
-// Giriş ekranı gizlənsin
-
-if (!sessionStorage.getItem("introSeen")) {
-  setTimeout(() => {
-    document.getElementById("introScreen").style.display = "none";
-    sessionStorage.setItem("introSeen", "true");
-  }, 5000);
-} else {
-  document.getElementById("introScreen").style.display = "none";
-}
-
-</script>
-<canvas id="backgroundCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1;"></canvas>
-<audio autoplay="" id="bgMusic" loop="">
-<source src="bg-music.mp3" type="audio/mpeg"/>
-</audio>
-<audio id="ucSound">
-<source src="click.mp3" type="audio/mpeg"/>
-</audio>
-<script>
-  document.addEventListener("click", () => {
-    const bg = document.getElementById("bgMusic");
-    if (bg && bg.paused) bg.play();
-  }, { once: true });
-</script>
-<script>
-  document.addEventListener("click", () => {
-    const audio = document.getElementById("bgMusic");
-    if (audio && audio.paused) audio.play();
-  }, { once: true });
-</script>
-<div id="bonusPopup" style="position:fixed; top:20px; left:50%; transform:translateX(-50%);
- background:#111; color:#00ffcc; padding:15px 25px; border:2px solid #00ffcc; border-radius:10px;
- z-index:1000; font-weight:bold; text-align:center; box-shadow: 0 0 15px #00ffcc;">
-  Bu gün 660 UC alan hər kəsə <u>+20 UC BONUS!</u>
-</div>
-<script>
-  setTimeout(() => {
-    const popup = document.getElementById("bonusPopup");
-    if (popup) popup.style.display = "none";
-  }, 7000);
-</script>
-<div style="text-align: center; margin-top: 20px;"><button id="userBalance" style="background:#002244; color:#00ffcc; border:1px solid #00ccff;
-    border-radius:10px; padding:6px 12px; font-weight:bold; margin-bottom:10px; box-shadow:0 0 6px #00ccff;">
-    Balans: 0.00 AZN</button>
-<button onclick="document.getElementById('loginModal').style.display='block'" style="margin-right: 8px;">Daxil ol</button>
-<button onclick="document.getElementById('signupModal').style.display='block'">Qeydiyyat</button>
-</div>
-<!-- Daxil ol Modalı -->
-<div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000aa; justify-content:center; align-items:center;">
+<!-- Login Modal -->
+<div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000a; justify-content:center; align-items:center;">
 <div style="background:#111; padding:20px; border-radius:10px;">
-<h3>Hesabına Daxil ol</h3>
-<input name="email" placeholder="E-poçt" required="" type="email"/><br/><br/>
-<input name="password" placeholder="Şifrə" required="" type="password"/><br/><br/>
+<h2>Hesabına Daxil Ol</h2>
+<input type="email" id="loginEmail" placeholder="Email" style="margin-bottom:10px;"><br/>
+<input type="password" id="loginPassword" placeholder="Şifrə"><br/><br/>
 <button onclick="loginUser()">Giriş</button>
-<script>
-function loginUser() {
-  const email = document.querySelector('#loginModal input[name=email]').value;
-  const password = document.querySelector('#loginModal input[name=password]').value;
-  const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-  const user = users.find(u => u.email === email);
-  if (user) {
-    sessionStorage.setItem("loggedInUser", user.email);
-    alert("Giriş uğurludur!");
-    location.reload();
-  } else {
-    alert("İstifadəçi tapılmadı!");
-  }
-}
-</script>
 <button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
 </div>
 </div>
-<!-- Qeydiyyat Modalı -->
-<div id="signupModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000aa; justify-content:center; align-items:center;">
-<div style="background:#111; padding:20px; border-radius:10px;">
-<h3>Qeydiyyat</h3>
-<form onsubmit="event.preventDefault(); alert('Qeydiyyat uğurla alındı');">
-<input name="fullname" placeholder="Ad Soyad" required="" type="text"/><br/><br/>
-<input name="email" placeholder="E-poçt" required="" type="email"/><br/><br/>
-<input name="password" placeholder="Şifrə" required="" type="password"/><br/><br/>
-<button type="submit">Qeydiyyat</button></form>
-<button onclick="document.getElementById('signupModal').style.display='none'">Bağla</button>
-</div>
-</div>
-<div class="intro-screen">
-<div class="intro-logo">NICE UC</div>
-<div class="intro-text">PUBG UC Satışına Xoş Gəldin!</div>
-</div>
-<a class="support" href="https://t.me/+RMFj5dO1Iis5ZWVi" target="_blank">Dəstək</a>
-<header id="typingHeader" style="background: linear-gradient(90deg, #0077ff, #00c3ff); padding: 1rem; font-size: 1.4rem; font-weight: bold;"></header>
+
 <script>
-const text = "NICE – PUBG UC Satışında Keyfiyyət və Etibar...";
-let i = 0;
-function typeWriter() {
-  if (i <= text.length) {
-    document.getElementById("typingHeader").innerHTML = text.substring(0, i) + '<span style="border-right:2px solid white;"></span>';
-    i++;
-    setTimeout(typeWriter, 80);
-  }
-}
-typeWriter();
-</script>
-<div class="bonus" id="bonusText">NICE-də sadəcə UC yox, <b>BONUS</b> da var — fərqi hiss et!</div>
-<div class="uc-list">
-<div class="uc-item" onclick="buyUC('30 UC')">
-<div class="uc-title">30 UC</div>
-<div class="uc-price">0.80 AZN</div>
-<div class="uc-gift">+2 UC hədiyyə</div>
-</div>
-<div class="uc-item" onclick="buyUC('60 UC')">
-<div class="uc-title">60 UC</div>
-<div class="uc-price">1.60 AZN</div>
-<div class="uc-gift">+3 UC hədiyyə</div>
-</div>
-<div class="uc-item" onclick="buyUC('300 UC')" style="position:relative;">
-<div class="uc-badge">Ən çox alınan</div>
-<div class="uc-title">300 UC</div>
-<div class="uc-price">7.70 AZN</div>
-<div class="uc-gift">+40 UC hədiyyə</div>
-</div>
-<div class="uc-item" onclick="buyUC('600 UC')">
-<div class="uc-title">600 UC</div>
-<div class="uc-price">15.40 AZN</div>
-<div class="uc-gift">+90 UC hədiyyə</div>
-</div>
-<div class="uc-item" onclick="buyUC('1500 UC')">
-<div class="uc-title">1500 UC</div>
-<div class="uc-price">38.30 AZN</div>
-<div class="uc-gift">+375 UC hədiyyə</div>
-</div>
-<div class="uc-item" onclick="buyUC('3000 UC')">
-<div class="uc-title">3000 UC</div>
-<div class="uc-price">76.60 AZN</div>
-<div class="uc-gift">+1000 UC hədiyyə</div>
-</div>
-</div>
-<div class="order-popup" id="orderPopup">Murad 60 UC aldı!</div>
-<section style="padding: 30px; background-color: #0a0a1a; color: white; text-align: center;">
-<h2 style="color: #00ccff; margin-bottom: 10px;">İstifadəçi Rəyləri</h2><div class="heading-line"></div>
-<div id="reviewText" style="max-width: 600px; margin: 0 auto; font-style: italic; font-size: 1.1rem;"></div>
-</section>
-<script>
-  const reviews = [
-    "NICE-dən aldım, 3 dəqiqəyə UC gəldi! – Elvin",
-    "Həm ucuz, həm də sürətlidir! – Aysel",
-    "Dəstək komandası çox yardimçıdır, təşəkkürlər! – Nicat",
-    "Sürətli xidmət və bonuslar – Leyla",
-    "Möhtəşəm dizayn, peşəkar yanaşma – Rəşad",
-    "Balans artırma çox rahatdır – Tunar",
-    "Ən ucuz UC bura daxildir – Samir",
-    "Sistem tam işlək və etibarlı – Elnur",
-    "Sifarişdən 2 dəqiqə sonra UC gəldi – Fidan",
-    "Dostlarıma da tövsiyə edirəm – Sevda",
-    "Admin çox yardımçı oldu – Əli",
-    "Telegram dəstəyi əladır – Zamiq",
-    "BONUS kampaniyaları çox cazibəlidir – Emil",
-    "Müştəri paneli sadə və aydındır – Fərid",
-    "İlk sifarişimdə hədiyyə gəldi – Nərgiz",
-    "Təhlükəsizlik yüksək səviyyədədir – İlkin",
-    "Sayt çox şıq hazırlanıb – Gülnar",
-    "RP sezonu üçün burdan alıram – Tamerlan",
-    "Hər zaman aktiv və sürətli – Sona",
-    "Ən real qiymət burdadır – Rəfail",
-    "Tövsiyə edirəm, razı qalacaqsız – Ləman",
-    "WhatsApp bot çox rahatdır – Rəşid",
-    "Sayt göz oxşayır – Jalə",
-    "Hər şey şəffaf və açıqdır – Murad",
-    "1 dəqiqədə UC gəldi – Sübhan",
-    "Sürətli cavab, peşəkar yanaşma – Aynur",
-    "UC balansı dərhal artırıldı – Kamal",
-    "Ən son RP kampaniyasını burdan almışam – Cavid",
-    "Qəbz yükləmə çox sadədir – Ayxan",
-    "Mobil baxışda əla işləyir – Xədicə",
-    "İnteraktiv sayt – Zaur",
-    "Yeni istifadəçiyə BONUS verdilər – Elnaz",
-    "Yüksək keyfiyyət – Nail",
-    "Əməkdaşlıq təklifi aldım – Rüfət",
-    "Telegram kanalı da aktivdir – Vüsal",
-    "100% güvən – Lamiya",
-    "Sistemdə heç bir donma yoxdur – Xəyal",
-    "İlk alışda endirim aldım – Ramin",
-    "Promo kodlar çox sərfəlidir – Sevinc",
-    "Sayt daim yenilənir – Nihad",
-    "Hazır paketlər aydındır – Günel",
-    "Ödənişdən dərhal sonra təsdiq – Mətləb",
-    "Ən etibarlı UC satış yeridir – Zəminə",
-    "Kodlar dərhal gəlir – Nicat",
-    "İnstaqramda da aktivdirlər – Mədinə",
-    "Kartla ödəniş rahatdır – Cəfər",
-    "Panel rahat və sürətlidir – Kənan",
-    "Mobil uyğunlaşdırma əladır – Lətafət",
-    "Sayt peşəkar səviyyədə hazırlanıb – Taleh"
-  ];
-  let rIndex = 0;
-  const reviewText = document.getElementById("reviewText");
-
-  function showReview() {
-    reviewText.innerText = reviews[rIndex];
-    rIndex = (rIndex + 1) % reviews.length;
-  }
-
-  setInterval(showReview, 5000);
-  showReview();
-</script>
-<section style="padding: 30px; background-color: #121212; color: white; text-align: center;">
-<h2 style="color: #00e1ff;">Sifariş Tarixi</h2>
-<div class="heading-line"></div>
-<div id="orderHistory" style="font-size: 1.1rem; margin-top: 10px;"></div>
-</section>
-<script>
-  const orders = [
-    "Murad – 660 UC – 22 Aprel",
-    "Aysu – 3000 UC – 21 Aprel",
-    "Tunar – 1500 UC – 21 Aprel",
-    "Rəşad – 300 UC – 20 Aprel",
-    "Samir – 600 UC – 20 Aprel",
-    "Leyla – 1320 UC – 19 Aprel",
-    "Səid – 3850 UC – 19 Aprel"
-  ];
-  let oIdx = 0;
-  const orderText = document.getElementById("orderHistory");
-  function showOrder() {
-    orderText.innerText = orders[oIdx];
-    oIdx = (oIdx + 1) % orders.length;
-  }
-  setInterval(showOrder, 5000);
-  showOrder();
-</script>
-<footer>© 2025 NICE – Bütün hüquqlar qorunur.
-<div style="margin-top: 10px;">
-<img src="https://img.icons8.com/ios-filled/24/00e1ff/lock-2.png" title="SSL Qorunması"/>
-<img src="https://img.icons8.com/ios-filled/24/00e1ff/checked--v1.png" title="100% Güvənli Alış"/>
-<img src="https://img.icons8.com/ios-filled/24/00e1ff/phone.png" title="Canlı Dəstək"/>
-</div>
-</footer>
-<script>
-    
-function buyUC(packageName) {
-  const price = {
-    "30 UC": "0.80 AZN",
-    "60 UC": "1.60 AZN",
-    "300 UC": "7.70 AZN",
-    "600 UC": "15.40 AZN",
-    "1500 UC": "38.30 AZN",
-    "3000 UC": "76.60 AZN"
-  };
-  selectedUcPackage = packageName;
-  const modal = document.getElementById("ucOrderModal");
-  document.getElementById("ucOrderTitle").innerText = packageName + " – " + price[packageName];
-  modal.style.display = "flex";
-}
-
-
-    const usernames = [
-      "Murad 60 UC aldı", "Aysu 300 UC aldı", "Tunar 600 UC aldı", "Leyla 1500 UC aldı",
-      "Nihat 3000 UC aldı", "Emil 60 UC aldı", "Sahil 300 UC aldı", "Vüsal 600 UC aldı",
-      "Fatime 1500 UC aldı", "Zamiq 30 UC aldı", "Cavid 600 UC aldı", "Nərgiz 3000 UC aldı"
-    ];
-
-    let index = 0;
-    const popup = document.getElementById('orderPopup');
-
-    setInterval(() => {
-      popup.textContent = usernames[index];
-      popup.style.display = "block";
-      setTimeout(() => { popup.style.display = "none"; }, 5000);
-      index = (index + 1) % usernames.length;
-    }, 10000);
-  </script>
-<section id="faq" style="padding: 20px; background-color: #1e1e1e; color: white;">
-<h2 id="faqTitle">Tez-tez verilən suallar</h2>
-<div>
-<h4>Necə qeydiyyatdan keçim?</h4>
-<p>Facebook və ya Gmail hesabınızla asanlıqla qeydiyyatdan keçə bilərsiniz.</p>
-<h4>UC nə qədər müddətə gəlir?</h4>
-<p>Ödəniş təsdiqləndikdən sonra 5 dəqiqə ərzində UC-lər hesabınıza əlavə olunur.</p>
-</div>
-</section>
-<section id="uc-rotator" style="padding: 20px; background-color: #111; color: #00bfff; text-align: center;">
-<h2>Son UC Alanlar</h2>
-<div id="ucBuyers" style="font-size: 1.2em; margin-top: 10px;"></div>
-</section>
-<script>
-  const ucData = [
-    "Murad 660 UC aldı",
-    "Zaur 3000 UC aldı",
-    "Aysel 60 UC aldı",
-    "Nicat 1320 UC aldı",
-    "Elvin 1800 UC aldı",
-    "Leman 3850 UC aldı"
-  ];
-  let idx = 0;
-  function rotateUC() {
-    document.getElementById('ucBuyers').innerText = ucData[idx];
-    idx = (idx + 1) % ucData.length;
-  }
-  setInterval(rotateUC, 15000);
-  rotateUC();
-</script>
-<!-- Elfsight WhatsApp Chat Widget -->
-<script defer="" src="https://apps.elfsight.com/p/platform.js"></script>
-<div class="elfsight-app-dc730d9a-8251-4e4b-b7e5-f1aa3b2e9887"></div>
-<script>
-  const badgeSequence = [
-    "300 UC",
-    "60 UC",
-    "30 UC"
-  ];
-  let badgeIndex = 0;
-
-  function updateBadge() {
-    document.querySelectorAll(".uc-badge").forEach(el => el.remove());
-
-    const allItems = document.querySelectorAll(".uc-item");
-    allItems.forEach(item => {
-      if (item.textContent.includes(badgeSequence[badgeIndex])) {
-        const badge = document.createElement("div");
-        badge.className = "uc-badge";
-        badge.innerText = "Ən çox alınan";
-        item.appendChild(badge);
-      }
-    });
-
-    badgeIndex = (badgeIndex + 1) % badgeSequence.length;
-  }
-
-  setInterval(updateBadge, 30000);
-  updateBadge();
-</script>
-<div style="position:fixed; bottom:0; left:0; right:0; background:#001133; padding:10px; text-align:center; color:white; display:flex; justify-content:space-around; font-size:0.9rem; z-index:999;">
-<a href="#uc" style="color:white;">UC Paketləri</a>
-<a href="#faq" style="color:white;">FAQ</a>
-<a href="https://t.me/+RMFj5dO1Iis5ZWVi" style="color:white;" target="_blank">Dəstək</a>
-</div>
-<style>
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, #000010, #000022);
-}</style>
-<script>
-const canvas = document.getElementById('backgroundCanvas');
-const ctx = canvas.getContext('2d');
-let w, h;
-
-function resizeCanvas() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-// Matrix Rain
-const fontSize = 14;
-const columns = Math.floor(w / fontSize);
-const drops = Array(columns).fill(1);
-
-// Stars
-let stars = Array.from({ length: 150 }, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  r: Math.random() * 1.5 + 0.5,
-  dx: (Math.random() - 0.5) * 0.5,
-  dy: (Math.random() - 0.5) * 0.5
-}));
-
-// Neon Lines
-let neonX = 0;
-
-// Sparks
-let sparks = Array.from({ length: 80 }, () => ({
-  x: Math.random() * w,
-  y: h,
-  size: Math.random() * 2 + 1,
-  speedY: Math.random() * -2 - 1,
-  color: 'rgba(255, 165, 0, 0.7)'
-}));
-
-}
-
-function drawStars() {
-  ctx.fillStyle = "rgba(0, 0, 30, 0.15)";
-  ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = "white";
-  stars.forEach(s => {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
-    ctx.fill();
-    s.x += s.dx;
-    s.y += s.dy;
-    if (s.x < 0 || s.x > w || s.y < 0 || s.y > h) {
-      s.x = Math.random() * w;
-      s.y = Math.random() * h;
+function loginUser() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  firebase.database().ref('users').orderByChild('email').equalTo(email).once('value', snapshot => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const userId = Object.keys(data)[0];
+      const user = data[userId];
+      sessionStorage.setItem("loggedInUser", user.email);
+      sessionStorage.setItem("loggedInUserId", userId);
+      alert("Giriş uğurludur!");
+      location.reload();
+    } else {
+      alert("İstifadəçi tapılmadı!");
     }
   });
 }
 
-
-  });
+function askAdminPassword() {
+  const pass = prompt("Admin şifrəsini daxil edin:");
+  if (pass === "0001") {
+    alert("Admin Panel Açılacaq (hazırda demo rejimdə)");
+    // Burada admin.html-ə yönləndirmə edə bilərsən istəsən
+  } else {
+    alert("Şifrə yalnışdır!");
+  }
 }
 
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  drawStars();
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
-<canvas id="backgroundCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1;"></canvas>
-<script>
-const canvas = document.getElementById('backgroundCanvas');
-const ctx = canvas.getContext('2d');
-let w, h;
-
-function resizeCanvas() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-let stars = Array.from({ length: 150 }, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  r: Math.random() * 1.5 + 0.5,
-  dx: (Math.random() - 0.5) * 0.5,
-  dy: (Math.random() - 0.5) * 0.5
-}));
-
-function drawStars() {
-  ctx.fillStyle = "rgba(0, 0, 30, 0.15)";
-  ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = "white";
-  stars.forEach(s => {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
-    ctx.fill();
-    s.x += s.dx;
-    s.y += s.dy;
-    if (s.x < 0 || s.x > w || s.y < 0 || s.y > h) {
-      s.x = Math.random() * w;
-      s.y = Math.random() * h;
+const userId = sessionStorage.getItem("loggedInUserId");
+if (userId) {
+  firebase.database().ref('users/' + userId).on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data && data.balance !== undefined) {
+      document.getElementById('userBalance').innerText = "Balans: " + parseFloat(data.balance).toFixed(2) + " AZN";
     }
   });
+} else {
+  document.getElementById('userBalance').innerText = "Balans: 0.00 AZN";
 }
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  drawStars();
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
-<div id="onlineUsers" style="position:fixed; bottom:15px; right:15px; background:#0077ff; color:white; padding:6px 10px;
-border-radius:16px; font-weight:500; font-size:0.75rem; box-shadow:0 0 6px #00aaff; z-index:999;">
-12 nəfər indi UC axtarır
-</div>
-<script>
-const onlineDiv = document.getElementById("onlineUsers");
-let fakeUsers = 10 + Math.floor(Math.random() * 10);
-
-setInterval(() => {
-  fakeUsers = 10 + Math.floor(Math.random() * 20);
-  onlineDiv.innerText = `${fakeUsers} nəfər indi UC axtarır`;
-}, 5000);
-</script>
-<script>
-  const signupForm = document.querySelector('#signupModal form');
-  if (signupForm) {
-    signupForm.addEventListener('submit', () => {
-      const fullname = signupForm.fullname.value;
-      const email = signupForm.email.value;
-      const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-      users.push({ fullname, email });
-      localStorage.setItem("registeredUsers", JSON.stringify(users));
-    });
-  }
-</script>
-<script>
-  function showUserBalance() {
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const currentEmail = sessionStorage.getItem("loggedInUser");
-    const user = users.find(u => u.email === currentEmail);
-    if (user) {
-      const balance = user.balance || 0;
-      document.getElementById("userBalance").innerText = balance.toFixed(2) + " AZN";
-    }
-  }
-  window.onload = showUserBalance;
-</script>
-
-
-
-
-<script>
-  setInterval(() => {
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const currentEmail = sessionStorage.getItem("loggedInUser");
-    const user = users.find(u => u.email === currentEmail);
-    if (user && document.getElementById("userBalance")) {
-      document.getElementById("userBalance").innerText = "Balans: " + (user.balance || 0).toFixed(2) + " AZN";
-    }
-  }, 5000);
-</script>
-
-
-
-
-
-
-
-<div id="ucOrderModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
-  <div style="background:#111; padding:20px; border-radius:10px; text-align:center; color:white; width:300px;">
-    <h3 id="ucOrderTitle">UC Paketi</h3>
-    <input type="text" id="pubgIdInput" placeholder="PUBG Mobile ID" style="width:100%; padding:10px; margin:15px 0; border-radius:5px; border:none;" />
-    <button onclick="confirmUcOrder()" style="margin-top:10px;">Təsdiqlə</button><br><br>
-    <button onclick="document.getElementById('ucOrderModal').style.display='none'">Bağla</button>
-  </div>
-</div>
-
-<script>
-  let selectedUcPackage = "";
-
-  function buyUC(packageName) {
-    const price = {
-      "30 UC": "0.80 AZN",
-      "60 UC": "1.60 AZN",
-      "300 UC": "7.70 AZN",
-      "600 UC": "15.40 AZN",
-      "1500 UC": "38.30 AZN",
-      "3000 UC": "76.60 AZN"
-    };
-    selectedUcPackage = packageName;
-    const modal = document.getElementById("ucOrderModal");
-    document.getElementById("ucOrderTitle").innerText = packageName + " – " + price[packageName];
-    modal.style.display = "flex";
-  }
-
-  function confirmUcOrder() {
-    const pubgId = document.getElementById("pubgIdInput").value.trim();
-    if (!pubgId) return alert("Zəhmət olmasa PUBG ID daxil edin.");
-    const currentEmail = sessionStorage.getItem("loggedInUser");
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const user = users.find(u => u.email === currentEmail);
-    if (!user) return alert("İstifadəçi tapılmadı.");
-
-    const now = new Date().toLocaleString("az-AZ");
-    const history = JSON.parse(localStorage.getItem("ucOrders") || "[]");
-    history.unshift(`${user.fullname} – ${selectedUcPackage} – PUBG ID: ${pubgId} – ${now}`);
-    localStorage.setItem("ucOrders", JSON.stringify(history));
-
-    document.getElementById("ucOrderModal").style.display = "none";
-    alert("Sifariş qeydə alındı!");
-
-    if (typeof displayOrderHistory === "function") {
-      displayOrderHistory();
-    }
-  }
-
-  function displayOrderHistory() {
-    const history = JSON.parse(localStorage.getItem("ucOrders") || "[]");
-    document.getElementById("orderHistory").innerHTML = history.slice(0, 10).join("<br>");
-  }
-
-  document.addEventListener("DOMContentLoaded", displayOrderHistory);
 </script>
 
 </body>
