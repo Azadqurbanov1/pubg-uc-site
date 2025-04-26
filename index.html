@@ -1,170 +1,100 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-  <meta charset="UTF-8">
-  <title>NICE UC - Balans və Sifariş</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at center, #001133, #000010);
-      color: white;
-      overflow-x: hidden;
-    }
-    #loadingScreen {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 40px;
-      background: #000010;
-      color: #00ccff;
-    }
-    header {
-      background: #001f4d;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-    }
-    .menu-icon {
-      font-size: 28px;
-      cursor: pointer;
-    }
-    .title {
-      font-size: 22px;
-      font-weight: bold;
-    }
-    .balance-info {
-      text-align: right;
-    }
-    .balance-button {
-      background: linear-gradient(90deg, #00ccff, #0077ff);
-      padding: 6px 14px;
-      border-radius: 10px;
-      margin-bottom: 5px;
-      box-shadow: 0 0 10px #00ccff;
-    }
-    .menu {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 250px;
-      max-width: 80%;
-      height: 100%;
-      background: #002244;
-      padding: 20px;
-      transition: all 0.4s ease;
-      z-index: 1000;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-    }
-    .menu.active {
-      left: 0;
-    }
-    .menu button {
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-      background: #00ccff;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .container {
-      padding: 20px;
-      text-align: center;
-    }
-    .uc-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      margin-top: 30px;
-    }
-    .uc-item {
-      background: #001f4d;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #00ccff;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .uc-item:hover {
-      background: #003366;
-      transform: scale(1.05);
-    }
-    #orderForm, #addBalanceForm {
-      margin-top: 20px;
-      display: none;
-    }
-    input, select {
-      padding: 8px;
-      margin-top: 10px;
-      width: 80%;
-      border-radius: 6px;
-      border: none;
-    }
-    button.order-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #00ccff;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>NICE – PUBG UC Satışı</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script> <!-- Storage üçün əlavə edildi -->
+<style>
+body {
+  background: radial-gradient(circle at center, #001133, #000010);
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  text-align: center;
+}
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #0077ff, #00ccff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0077ff;
+}
+.uc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+  padding: 10px;
+}
+.uc-item {
+  background: #001f4d;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ccff;
+  transition: 0.3s;
+}
+.uc-item:hover {
+  transform: scale(1.05);
+  background: #003366;
+}
+</style>
 </head>
+<body>
 
-<body onclick="closeMenuOutside(event)">
+<h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
-<div id="loadingScreen">NICE UC</div>
+<button id="userBalance">Balans: 0.00 AZN</button>
+<br/>
+<button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
 
-<div id="mainApp" style="display:none;">
-  <header>
-    <div class="menu-icon" onclick="toggleMenu(); event.stopPropagation();">☰</div>
-    <div class="title">NICE UC</div>
-    <div class="balance-info">
-      <div id="userBalance" class="balance-button">0.00 AZN</div>
-      <div id="orderStatus">Sifariş: 0</div>
-    </div>
-  </header>
+<div class="uc-list">
+  <div class="uc-item" onclick="selectUC(30, '0.80')">30 UC - 0.80 AZN</div> <!-- 30 UC əlavə edildi -->
+  <div class="uc-item" onclick="selectUC(60, '1.60')">60 UC - 1.60 AZN</div>
+  <div class="uc-item" onclick="selectUC(300, '7.70')">300 UC - 7.70 AZN</div>
+  <div class="uc-item" onclick="selectUC(600, '15.40')">600 UC - 15.40 AZN</div>
+  <div class="uc-item" onclick="selectUC(1500, '38.30')">1500 UC - 38.30 AZN</div>
+  <div class="uc-item" onclick="selectUC(3000, '76.60')">3000 UC - 76.60 AZN</div>
+</div>
 
-  <div class="menu" id="sideMenu" onclick="event.stopPropagation()">
-    <button onclick="showUC()">UC Paketləri</button>
-    <button onclick="showAddBalanceForm()">Balans Artır</button>
-    <button onclick="showMyOrders()">Sifarişlərim</button>
-    <button onclick="logout()">Çıxış</button>
-  </div>
+<!-- Order Form -->
+<div id="orderForm" style="display:none; margin-top: 20px;">
+  <h2 id="ucInfo">UC Seçin</h2>
+  <input type="text" id="pubgId" placeholder="PUBG ID daxil edin"><br>
+  <button type="button" onclick="sendOrder()">Sifariş et</button>
+</div>
 
-  <div class="container" id="contentArea">
-    <div class="uc-list" id="ucList"></div>
+<!-- Balance Top-up Form -->
+<div id="topUpForm" style="margin-top: 40px;">
+  <h2>Balans artır</h2>
+  <p>Kart nömrəsi: <strong>LEO 4098 5844 6528 0079</strong></p>
+  <input type="number" id="topUpAmount" placeholder="Məbləğ (AZN)" style="margin:10px;"><br/>
+  <input type="file" id="receiptImage" accept="image/*" style="margin:10px;"><br/>
+  <button onclick="uploadTopUp()">Göndər</button>
+</div>
 
-    <div id="orderForm">
-      <h2 id="selectedUC"></h2>
-      <input type="text" id="pubgId" placeholder="PUBG ID yaz"><br>
-      <button class="order-btn" onclick="sendOrder()">Sifariş et</button><br><br>
-      <button class="order-btn" onclick="showUC()">Geri Qayıt</button>
-    </div>
-
-    <div id="addBalanceForm">
-      <h2>Balans Artır</h2>
-      <p><b>Kart nömrəsi:</b> 4098 5844 6528 0079</p>
-      <input type="number" id="paymentAmount" placeholder="Məbləğ (AZN)"><br>
-      <input type="file" id="paymentScreenshot"><br>
-      <button class="order-btn" onclick="sendPayment()">Göndər</button><br><br>
-      <button class="order-btn" onclick="closeAddBalanceForm()">Bağla</button>
-    </div>
-  </div>
+<!-- Login Modal -->
+<div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000a; justify-content:center; align-items:center;">
+<div style="background:#111; padding:20px; border-radius:10px;">
+<h2>Hesabına Daxil Ol</h2>
+<input type="email" id="loginEmail" placeholder="Email" style="margin-bottom:10px;"><br/>
+<input type="password" id="loginPassword" placeholder="Şifrə"><br/><br/>
+<button onclick="loginUser()">Giriş</button>
+<hr style="margin:10px 0;">
+<button onclick="googleLogin()">Google ilə Daxil Ol</button>
+<button onclick="facebookLogin()">Facebook ilə Daxil Ol</button>
+<br/><br/>
+<button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
+</div>
 </div>
 
 <script>
-// Firebase Konfiqurasiyası
 const firebaseConfig = {
   apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
   authDomain: "niceuc-28b6d.firebaseapp.com",
@@ -176,60 +106,14 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-// Loading
-setTimeout(() => {
-  document.getElementById('loadingScreen').style.display = "none";
-  document.getElementById('mainApp').style.display = "block";
-}, 4000);
-
-// Menu Aç/Bağla
-function toggleMenu() {
-  document.getElementById('sideMenu').classList.toggle('active');
-}
-
-// Çöldə kliklə menyunu bağla
-function closeMenuOutside(event) {
-  const menu = document.getElementById('sideMenu');
-  if (menu.classList.contains('active') && !menu.contains(event.target)) {
-    menu.classList.remove('active');
-  }
-}
-
-// UC Paketləri
-const ucList = document.getElementById('ucList');
-const ucPackages = [
-  { uc: "30+2 UC", price: "0.80" },
-  { uc: "60+3 UC", price: "1.60" },
-  { uc: "300+40 UC", price: "7.70" },
-  { uc: "600+90 UC", price: "15.40" },
-  { uc: "1500+375 UC", price: "38.30" },
-  { uc: "3000+1000 UC", price: "76.60" }
-];
-
-function showUC() {
-  document.getElementById('ucList').style.display = 'grid';
-  document.getElementById('orderForm').style.display = 'none';
-  document.getElementById('addBalanceForm').style.display = 'none';
-}
-
-ucPackages.forEach(pkg => {
-  const div = document.createElement('div');
-  div.className = "uc-item";
-  div.innerHTML = `<h3>${pkg.uc}</h3><p>${pkg.price} AZN</p>`;
-  div.onclick = () => selectUC(pkg.uc, pkg.price);
-  ucList.appendChild(div);
-});
-
 let selectedUC = "";
 let selectedPrice = "";
 
 function selectUC(uc, price) {
   selectedUC = uc;
   selectedPrice = price;
-  document.getElementById('selectedUC').innerText = uc + " - " + price + " AZN";
+  document.getElementById('ucInfo').innerText = uc + " UC - " + price + " AZN";
   document.getElementById('orderForm').style.display = 'block';
-  document.getElementById('ucList').style.display = 'none';
-  document.getElementById('addBalanceForm').style.display = 'none';
 }
 
 function sendOrder() {
@@ -240,95 +124,124 @@ function sendOrder() {
   }
   const now = new Date();
   const order = {
-    name: firebase.auth().currentUser.displayName || "İstifadəçi",
+    name: sessionStorage.getItem('loggedInUserName') || "Anonim",
     pubgId: pubgId,
     ucAmount: selectedUC,
     price: selectedPrice,
-    status: "gözləyir",
     time: now.toLocaleString()
   };
   firebase.database().ref('orders').push(order, () => {
     alert("Sifariş göndərildi!");
+    document.getElementById('orderForm').reset();
     document.getElementById('orderForm').style.display = 'none';
-    document.getElementById('pubgId').value = '';
-    showUC();
   });
 }
 
-function showAddBalanceForm() {
-  document.getElementById('addBalanceForm').style.display = 'block';
-  document.getElementById('ucList').style.display = 'none';
-  document.getElementById('orderForm').style.display = 'none';
-}
+function uploadTopUp() {
+  const amount = document.getElementById('topUpAmount').value.trim();
+  const file = document.getElementById('receiptImage').files[0];
 
-function closeAddBalanceForm() {
-  document.getElementById('addBalanceForm').style.display = 'none';
-  showUC();
-}
-
-function sendPayment() {
-  const amount = document.getElementById('paymentAmount').value.trim();
-  const screenshot = document.getElementById('paymentScreenshot').files[0];
-
-  if (!amount || !screenshot) {
-    alert("Məbləğ və şəkil əlavə edin!");
+  if (!amount || !file) {
+    alert("Məbləğ və şəkil seçin!");
     return;
   }
 
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    const paymentData = {
-      name: firebase.auth().currentUser.displayName || "İstifadəçi",
-      amount: amount,
-      screenshot: event.target.result,
-      time: new Date().toLocaleString()
-    };
-    firebase.database().ref('payments').push(paymentData, () => {
-      alert("Ödəniş göndərildi! Admin təsdiqləyəcək.");
-      document.getElementById('addBalanceForm').style.display = 'none';
-      document.getElementById('paymentAmount').value = '';
-      document.getElementById('paymentScreenshot').value = '';
-      showUC();
+  const userId = sessionStorage.getItem("loggedInUserId");
+  if (!userId) {
+    alert("İlk öncə daxil olun!");
+    return;
+  }
+
+  const storageRef = firebase.storage().ref('receipts/' + userId + '_' + Date.now());
+  storageRef.put(file).then(snapshot => {
+    snapshot.ref.getDownloadURL().then(url => {
+      firebase.database().ref('topups').push({
+        userId: userId,
+        amount: amount,
+        receiptUrl: url,
+        time: new Date().toLocaleString()
+      });
+      alert("Balans artırma istəyi göndərildi!");
+      document.getElementById('topUpAmount').value = "";
+      document.getElementById('receiptImage').value = "";
     });
-  };
-  reader.readAsDataURL(screenshot);
+  }).catch(error => {
+    alert("Xəta: " + error.message);
+  });
 }
 
-function showMyOrders() {
-  alert("Sifarişlərin admin tərəfindən təsdiqlənəcək.");
+function loginUser() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  firebase.database().ref('users').orderByChild('email').equalTo(email).once('value', snapshot => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const userId = Object.keys(data)[0];
+      const user = data[userId];
+      sessionStorage.setItem("loggedInUser", user.email);
+      sessionStorage.setItem("loggedInUserId", userId);
+      sessionStorage.setItem("loggedInUserName", user.name);
+      alert("Giriş uğurludur!");
+      location.reload();
+    } else {
+      alert("İstifadəçi tapılmadı!");
+    }
+  });
 }
 
-function logout() {
-  firebase.auth().signOut().then(() => {
-    alert("Çıxış edildi!");
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then(result => {
+      saveUser(result.user);
+    }).catch(error => {
+      alert("Xəta baş verdi: " + error.message);
+    });
+}
+
+function facebookLogin() {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then(result => {
+      saveUser(result.user);
+    }).catch(error => {
+      alert("Xəta baş verdi: " + error.message);
+    });
+}
+
+function saveUser(user) {
+  if (!user.email) return;
+  firebase.database().ref('users').orderByChild('email').equalTo(user.email).once('value', snapshot => {
+    if (!snapshot.exists()) {
+      firebase.database().ref('users/' + user.uid).set({
+        email: user.email,
+        name: user.displayName || "İstifadəçi",
+        balance: 0
+      });
+    }
+    sessionStorage.setItem("loggedInUser", user.email);
+    sessionStorage.setItem("loggedInUserId", user.uid);
+    sessionStorage.setItem("loggedInUserName", user.displayName || "İstifadəçi");
+    alert("Giriş uğurludur!");
     location.reload();
   });
 }
 
-// Gmail ilə giriş popup
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    firebase.database().ref('users/' + user.uid).on('value', snapshot => {
-      const data = snapshot.val();
-      if (data && data.balance !== undefined) {
-        document.getElementById('userBalance').innerText = parseFloat(data.balance).toFixed(2) + " AZN";
-      }
-    });
-
-    firebase.database().ref('orders').orderByChild('name').equalTo(user.displayName).on('value', snapshot => {
-      let total = 0;
-      snapshot.forEach(child => { total++; });
-      document.getElementById('orderStatus').innerText = "Sifariş: " + total;
-    });
-  } else {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      console.log("Google ilə giriş edildi:", result.user.displayName);
-    }).catch((error) => {
-      alert("Google ilə giriş xətası: " + error.message);
-    });
-  }
-});
+const userId = sessionStorage.getItem("loggedInUserId");
+const userName = sessionStorage.getItem("loggedInUserName");
+if (userName) {
+  document.getElementById('welcomeText').innerText = "Salam, " + userName + "!";
+}
+if (userId) {
+  firebase.database().ref('users/' + userId).on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data && data.balance !== undefined) {
+      document.getElementById('userBalance').innerText = "Balans: " + parseFloat(data.balance).toFixed(2) + " AZN";
+    }
+  });
+} else {
+  document.getElementById('userBalance').innerText = "Balans: 0.00 AZN";
+}
 </script>
 
 </body>
