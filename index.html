@@ -7,7 +7,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script> <!-- Storage üçün əlavə edildi -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
 <style>
 body {
   background: radial-gradient(circle at center, #001133, #000010);
@@ -55,7 +55,7 @@ button {
 <button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
 
 <div class="uc-list">
-  <div class="uc-item" onclick="selectUC(30, '0.80')">30 UC - 0.80 AZN</div> <!-- 30 UC əlavə edildi -->
+  <div class="uc-item" onclick="selectUC(30, '0.80')">30 UC - 0.80 AZN</div>
   <div class="uc-item" onclick="selectUC(60, '1.60')">60 UC - 1.60 AZN</div>
   <div class="uc-item" onclick="selectUC(300, '7.70')">300 UC - 7.70 AZN</div>
   <div class="uc-item" onclick="selectUC(600, '15.40')">600 UC - 15.40 AZN</div>
@@ -63,14 +63,14 @@ button {
   <div class="uc-item" onclick="selectUC(3000, '76.60')">3000 UC - 76.60 AZN</div>
 </div>
 
-<!-- Order Form -->
+<!-- UC Sifarişi -->
 <div id="orderForm" style="display:none; margin-top: 20px;">
   <h2 id="ucInfo">UC Seçin</h2>
   <input type="text" id="pubgId" placeholder="PUBG ID daxil edin"><br>
   <button type="button" onclick="sendOrder()">Sifariş et</button>
 </div>
 
-<!-- Balance Top-up Form -->
+<!-- Balans artırma -->
 <div id="topUpForm" style="margin-top: 40px;">
   <h2>Balans artır</h2>
   <p>Kart nömrəsi: <strong>LEO 4098 5844 6528 0079</strong></p>
@@ -142,7 +142,7 @@ function uploadTopUp() {
   const file = document.getElementById('receiptImage').files[0];
 
   if (!amount || !file) {
-    alert("Məbləğ və şəkil seçin!");
+    alert("Məbləğ və şəkil daxil edin!");
     return;
   }
 
@@ -161,7 +161,7 @@ function uploadTopUp() {
         receiptUrl: url,
         time: new Date().toLocaleString()
       });
-      alert("Balans artırma istəyi göndərildi!");
+      alert("Balans artırma sorğusu göndərildi!");
       document.getElementById('topUpAmount').value = "";
       document.getElementById('receiptImage').value = "";
     });
