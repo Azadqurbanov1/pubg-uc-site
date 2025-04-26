@@ -2,80 +2,43 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<title>NICE – PUBG UC Satışı</title>
+<title>NICE UC - Müştəri Paneli</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
 <style>
-body {
-  background: radial-gradient(circle at center, #001133, #000010);
-  font-family: 'Poppins', sans-serif;
-  color: white;
-  text-align: center;
-}
-button {
-  margin: 10px;
-  padding: 10px 20px;
-  background: linear-gradient(90deg, #0077ff, #00ccff);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 0 10px #0077ff;
-}
-.uc-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  margin-top: 30px;
-  padding: 10px;
-}
-.uc-item {
-  background: #001f4d;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #00ccff;
-  transition: 0.3s;
-}
-.uc-item:hover {
-  transform: scale(1.05);
-  background: #003366;
-}
+body { background: radial-gradient(circle at center, #001133, #000010); font-family: 'Poppins', sans-serif; color: white; text-align: center; padding: 20px; }
+button, input, select { margin: 8px; padding: 10px; border-radius: 8px; border: none; }
+button { background: linear-gradient(90deg, #0077ff, #00ccff); font-weight: bold; cursor: pointer; }
+.uc-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 30px; }
+.uc-item { background: #001f4d; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px #00ccff; transition: 0.3s; }
+.uc-item:hover { transform: scale(1.05); background: #003366; }
 </style>
 </head>
 <body>
 
 <h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
-<button id="userBalance">Balans: 0.00 AZN</button>
-<br/>
+<button id="userBalance">Balans: 0.00 AZN</button><br>
 <button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
 
-<div class="uc-list">
-  <div class="uc-item" onclick="selectUC(30, '0.80')">30 UC - 0.80 AZN</div>
-  <div class="uc-item" onclick="selectUC(60, '1.60')">60 UC - 1.60 AZN</div>
-  <div class="uc-item" onclick="selectUC(300, '7.70')">300 UC - 7.70 AZN</div>
-  <div class="uc-item" onclick="selectUC(600, '15.40')">600 UC - 15.40 AZN</div>
-  <div class="uc-item" onclick="selectUC(1500, '38.30')">1500 UC - 38.30 AZN</div>
-  <div class="uc-item" onclick="selectUC(3000, '76.60')">3000 UC - 76.60 AZN</div>
-</div>
+<div class="uc-list" id="ucPackages"></div>
 
 <!-- UC Sifarişi -->
-<div id="orderForm" style="display:none; margin-top: 20px;">
-  <h2 id="ucInfo">UC Seçin</h2>
+<div id="orderForm" style="display:none; margin-top:20px;">
+  <h2 id="ucInfo">UC Seçimi</h2>
   <input type="text" id="pubgId" placeholder="PUBG ID daxil edin"><br>
-  <button type="button" onclick="sendOrder()">Sifariş et</button>
+  <button onclick="sendOrder()">Sifariş et</button>
 </div>
 
 <!-- Balans artırma -->
 <div id="topUpForm" style="margin-top: 40px;">
-  <h2>Balans artır</h2>
+  <h2>Balans Artır</h2>
   <p>Kart nömrəsi: <strong>LEO 4098 5844 6528 0079</strong></p>
-  <input type="number" id="topUpAmount" placeholder="Məbləğ (AZN)" style="margin:10px;"><br/>
-  <input type="file" id="receiptImage" accept="image/*" style="margin:10px;"><br/>
+  <input type="number" id="topUpAmount" placeholder="Məbləğ (AZN)"><br/>
+  <input type="file" id="receiptImage" accept="image/*"><br/>
   <button onclick="uploadTopUp()">Göndər</button>
 </div>
 
@@ -83,18 +46,18 @@ button {
 <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000a; justify-content:center; align-items:center;">
 <div style="background:#111; padding:20px; border-radius:10px;">
 <h2>Hesabına Daxil Ol</h2>
-<input type="email" id="loginEmail" placeholder="Email" style="margin-bottom:10px;"><br/>
+<input type="email" id="loginEmail" placeholder="Email"><br/>
 <input type="password" id="loginPassword" placeholder="Şifrə"><br/><br/>
 <button onclick="loginUser()">Giriş</button>
 <hr style="margin:10px 0;">
 <button onclick="googleLogin()">Google ilə Daxil Ol</button>
-<button onclick="facebookLogin()">Facebook ilə Daxil Ol</button>
-<br/><br/>
+<button onclick="facebookLogin()">Facebook ilə Daxil Ol</button><br/><br/>
 <button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
 </div>
 </div>
 
 <script>
+// Firebase konfiqurasiya
 const firebaseConfig = {
   apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
   authDomain: "niceuc-28b6d.firebaseapp.com",
@@ -106,33 +69,62 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+const packages = [
+  { uc: 30, gift: 2, price: 0.80 },
+  { uc: 60, gift: 3, price: 1.60 },
+  { uc: 300, gift: 40, price: 7.70 },
+  { uc: 600, gift: 90, price: 15.40 },
+  { uc: 1500, gift: 375, price: 38.30 },
+  { uc: 3000, gift: 1000, price: 76.60 }
+];
+
+// Paketləri göstər
+const ucPackagesDiv = document.getElementById('ucPackages');
+packages.forEach(pkg => {
+  const div = document.createElement('div');
+  div.className = 'uc-item';
+  div.innerHTML = `${pkg.uc} UC + ${pkg.gift} Hədiyyə<br>${pkg.price} AZN`;
+  div.onclick = () => selectUC(pkg.uc, pkg.gift, pkg.price);
+  ucPackagesDiv.appendChild(div);
+});
+
 let selectedUC = "";
+let selectedGift = "";
 let selectedPrice = "";
 
-function selectUC(uc, price) {
+function selectUC(uc, gift, price) {
   selectedUC = uc;
+  selectedGift = gift;
   selectedPrice = price;
-  document.getElementById('ucInfo').innerText = uc + " UC - " + price + " AZN";
+  document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
   document.getElementById('orderForm').style.display = 'block';
 }
 
 function sendOrder() {
   const pubgId = document.getElementById('pubgId').value.trim();
-  if (!pubgId) {
-    alert("PUBG ID daxil edin!");
+  const userId = sessionStorage.getItem("loggedInUserId");
+  if (!pubgId || !userId) {
+    alert("PUBG ID daxil edin və ya daxil olun!");
     return;
   }
-  const now = new Date();
-  const order = {
-    name: sessionStorage.getItem('loggedInUserName') || "Anonim",
-    pubgId: pubgId,
-    ucAmount: selectedUC,
-    price: selectedPrice,
-    time: now.toLocaleString()
-  };
-  firebase.database().ref('orders').push(order, () => {
-    alert("Sifariş göndərildi!");
-    document.getElementById('orderForm').reset();
+  firebase.database().ref('users/' + userId).once('value').then(snapshot => {
+    const balance = snapshot.val()?.balance || 0;
+    if (balance < selectedPrice) {
+      alert("Balans kifayət etmir!");
+      return;
+    }
+    firebase.database().ref('orders').push({
+      userId: userId,
+      pubgId: pubgId,
+      ucAmount: selectedUC,
+      gift: selectedGift,
+      price: selectedPrice,
+      time: new Date().toLocaleString()
+    });
+    firebase.database().ref('users/' + userId).update({
+      balance: balance - selectedPrice
+    });
+    alert("Sifariş verildi!");
     document.getElementById('orderForm').style.display = 'none';
   });
 }
@@ -140,108 +132,64 @@ function sendOrder() {
 function uploadTopUp() {
   const amount = document.getElementById('topUpAmount').value.trim();
   const file = document.getElementById('receiptImage').files[0];
-
-  if (!amount || !file) {
-    alert("Məbləğ və şəkil daxil edin!");
-    return;
-  }
-
   const userId = sessionStorage.getItem("loggedInUserId");
-  if (!userId) {
-    alert("İlk öncə daxil olun!");
+  if (!amount || !file || !userId) {
+    alert("Məbləğ, şəkil və daxil olma tələb olunur!");
     return;
   }
-
   const storageRef = firebase.storage().ref('receipts/' + userId + '_' + Date.now());
-  storageRef.put(file).then(snapshot => {
-    snapshot.ref.getDownloadURL().then(url => {
-      firebase.database().ref('topups').push({
-        userId: userId,
-        amount: amount,
-        receiptUrl: url,
-        time: new Date().toLocaleString()
-      });
-      alert("Balans artırma sorğusu göndərildi!");
-      document.getElementById('topUpAmount').value = "";
-      document.getElementById('receiptImage').value = "";
+  storageRef.put(file).then(snapshot => snapshot.ref.getDownloadURL())
+  .then(url => {
+    firebase.database().ref('topups').push({
+      userId: userId,
+      amount: amount,
+      receiptUrl: url,
+      time: new Date().toLocaleString()
     });
-  }).catch(error => {
-    alert("Xəta: " + error.message);
+    alert("Balans artırma göndərildi!");
+    document.getElementById('topUpAmount').value = "";
+    document.getElementById('receiptImage').value = "";
   });
 }
 
 function loginUser() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
-  firebase.database().ref('users').orderByChild('email').equalTo(email).once('value', snapshot => {
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      const userId = Object.keys(data)[0];
-      const user = data[userId];
-      sessionStorage.setItem("loggedInUser", user.email);
-      sessionStorage.setItem("loggedInUserId", userId);
-      sessionStorage.setItem("loggedInUserName", user.name);
-      alert("Giriş uğurludur!");
-      location.reload();
-    } else {
-      alert("İstifadəçi tapılmadı!");
-    }
-  });
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(user => location.reload())
+    .catch(error => alert(error.message));
 }
 
 function googleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider)
-    .then(result => {
-      saveUser(result.user);
-    }).catch(error => {
-      alert("Xəta baş verdi: " + error.message);
-    });
+  firebase.auth().signInWithPopup(provider).then(result => saveUser(result.user));
 }
 
 function facebookLogin() {
   const provider = new firebase.auth.FacebookAuthProvider();
-  firebase.auth().signInWithPopup(provider)
-    .then(result => {
-      saveUser(result.user);
-    }).catch(error => {
-      alert("Xəta baş verdi: " + error.message);
-    });
+  firebase.auth().signInWithPopup(provider).then(result => saveUser(result.user));
 }
 
 function saveUser(user) {
-  if (!user.email) return;
-  firebase.database().ref('users').orderByChild('email').equalTo(user.email).once('value', snapshot => {
-    if (!snapshot.exists()) {
-      firebase.database().ref('users/' + user.uid).set({
-        email: user.email,
-        name: user.displayName || "İstifadəçi",
-        balance: 0
-      });
-    }
-    sessionStorage.setItem("loggedInUser", user.email);
-    sessionStorage.setItem("loggedInUserId", user.uid);
-    sessionStorage.setItem("loggedInUserName", user.displayName || "İstifadəçi");
-    alert("Giriş uğurludur!");
-    location.reload();
+  if (!user) return;
+  firebase.database().ref('users/' + user.uid).set({
+    email: user.email,
+    name: user.displayName || "İstifadəçi",
+    balance: 0
   });
+  location.reload();
 }
 
-const userId = sessionStorage.getItem("loggedInUserId");
-const userName = sessionStorage.getItem("loggedInUserName");
-if (userName) {
-  document.getElementById('welcomeText').innerText = "Salam, " + userName + "!";
-}
-if (userId) {
-  firebase.database().ref('users/' + userId).on('value', (snapshot) => {
-    const data = snapshot.val();
-    if (data && data.balance !== undefined) {
-      document.getElementById('userBalance').innerText = "Balans: " + parseFloat(data.balance).toFixed(2) + " AZN";
-    }
-  });
-} else {
-  document.getElementById('userBalance').innerText = "Balans: 0.00 AZN";
-}
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    sessionStorage.setItem("loggedInUserId", user.uid);
+    sessionStorage.setItem("loggedInUserName", user.displayName || "İstifadəçi");
+    document.getElementById('welcomeText').innerText = "Salam, " + (user.displayName || "İstifadəçi");
+    firebase.database().ref('users/' + user.uid).on('value', (snapshot) => {
+      document.getElementById('userBalance').innerText = "Balans: " + (snapshot.val()?.balance || 0).toFixed(2) + " AZN";
+    });
+  }
+});
 </script>
 
 </body>
