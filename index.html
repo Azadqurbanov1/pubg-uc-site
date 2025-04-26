@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -60,12 +61,11 @@ button {
 </head>
 <body>
 
-<h1>NICE UC - Balans Sistemi</h1>
+<h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
 <button id="userBalance">Balans: 0.00 AZN</button>
-
 <br/>
-<button onclick="document.getElementById('loginModal').style.display='block'">Daxil ol</button>
+<button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
 <button onclick="askAdminPassword()">Admin Panel</button>
 
 <div class="uc-list">
@@ -84,6 +84,10 @@ button {
 <input type="email" id="loginEmail" placeholder="Email" style="margin-bottom:10px;"><br/>
 <input type="password" id="loginPassword" placeholder="Şifrə"><br/><br/>
 <button onclick="loginUser()">Giriş</button>
+<hr style="margin:10px 0;">
+<button onclick="googleLogin()">Google ilə Daxil Ol</button>
+<button onclick="facebookLogin()">Facebook ilə Daxil Ol</button>
+<br/><br/>
 <button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
 </div>
 </div>
@@ -99,6 +103,7 @@ function loginUser() {
       const user = data[userId];
       sessionStorage.setItem("loggedInUser", user.email);
       sessionStorage.setItem("loggedInUserId", userId);
+      sessionStorage.setItem("loggedInUserName", user.name);
       alert("Giriş uğurludur!");
       location.reload();
     } else {
@@ -107,17 +112,58 @@ function loginUser() {
   });
 }
 
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then(result => {
+      saveUser(result.user);
+    }).catch(error => {
+      alert("Xəta baş verdi: " + error.message);
+    });
+}
+
+function facebookLogin() {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then(result => {
+      saveUser(result.user);
+    }).catch(error => {
+      alert("Xəta baş verdi: " + error.message);
+    });
+}
+
+function saveUser(user) {
+  if (!user.email) return;
+  firebase.database().ref('users').orderByChild('email').equalTo(user.email).once('value', snapshot => {
+    if (!snapshot.exists()) {
+      firebase.database().ref('users/' + user.uid).set({
+        email: user.email,
+        name: user.displayName || "İstifadəçi",
+        balance: 0
+      });
+    }
+    sessionStorage.setItem("loggedInUser", user.email);
+    sessionStorage.setItem("loggedInUserId", user.uid);
+    sessionStorage.setItem("loggedInUserName", user.displayName || "İstifadəçi");
+    alert("Giriş uğurludur!");
+    location.reload();
+  });
+}
+
 function askAdminPassword() {
   const pass = prompt("Admin şifrəsini daxil edin:");
   if (pass === "0001") {
     alert("Admin Panel Açılacaq (hazırda demo rejimdə)");
-    // Burada admin.html-ə yönləndirmə edə bilərsən istəsən
   } else {
     alert("Şifrə yalnışdır!");
   }
 }
 
 const userId = sessionStorage.getItem("loggedInUserId");
+const userName = sessionStorage.getItem("loggedInUserName");
+if (userName) {
+  document.getElementById('welcomeText').innerText = "Salam, " + userName + "!";
+}
 if (userId) {
   firebase.database().ref('users/' + userId).on('value', (snapshot) => {
     const data = snapshot.val();
