@@ -4,70 +4,78 @@
 <meta charset="UTF-8">
 <title>NICE UC - Müştəri Paneli</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
 <style>
-body { 
-    background: radial-gradient(circle at center, #001133, #000010); 
-    font-family: 'Poppins', sans-serif; 
-    color: white; 
-    text-align: center; 
-    padding: 20px; 
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #001133, #000010);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
-button, input, select { 
-    margin: 8px; 
-    padding: 10px; 
-    border-radius: 8px; 
-    border: none; 
+button, input {
+    margin: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg, #0077ff, #00ccff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
-button { 
-    background: linear-gradient(90deg, #0077ff, #00ccff); 
-    font-weight: bold; 
-    cursor: pointer; 
+.uc-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
 }
-.uc-list { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-    gap: 15px; 
-    margin-top: 30px; 
+.uc-item {
+    background: #001f4d;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #00ccff;
+    transition: 0.3s;
 }
-.uc-item { 
-    background: #001f4d; 
-    padding: 20px; 
-    border-radius: 12px; 
-    box-shadow: 0 0 10px #00ccff; 
-    transition: 0.3s; 
+.uc-item:hover {
+    transform: scale(1.05);
+    background: #003366;
 }
-.uc-item:hover { 
-    transform: scale(1.05); 
-    background: #003366; 
-}
-#loginModal {
-    display: none; 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: #000a; 
-    justify-content: center; 
+#balanceModal, #loginModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
     align-items: center;
+    z-index: 9999;
 }
-#loginModal > div {
-    background: #111; 
-    padding: 20px; 
-    border-radius: 10px;
+#balanceModalContent, #loginModalContent {
+    background: #001f4d;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 20px #00ccff;
+    color: white;
+}
+#balanceModalContent input, #loginModalContent button {
+    margin-top: 10px;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
-<button id="userBalance" onclick="redirectToWhatsApp()">Balans: 0.00 AZN</button><br>
-<button onclick="document.getElementById('loginModal').style.display='flex'">Daxil ol</button>
+<button id="userBalance" onclick="openBalanceModal()">Balans: 0.00 AZN</button><br>
+<button onclick="openLoginModal()">Daxil ol (Google)</button>
 
 <div class="uc-list" id="ucPackages"></div>
 
@@ -80,14 +88,22 @@ button {
 
 <!-- Login Modal -->
 <div id="loginModal">
-  <div>
-    <h2>Hesabına Daxil Ol</h2>
-    <input type="email" id="loginEmail" placeholder="Email"><br/>
-    <input type="password" id="loginPassword" placeholder="Şifrə"><br/><br/>
-    <button onclick="loginUser()">Giriş</button>
-    <hr style="margin:10px 0;">
+  <div id="loginModalContent">
+    <h2>Google ilə Daxil Ol</h2>
     <button onclick="googleLogin()">Google ilə Daxil Ol</button><br/><br/>
-    <button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
+    <button onclick="closeLoginModal()">Bağla</button>
+  </div>
+</div>
+
+<!-- Balans Modalı -->
+<div id="balanceModal">
+  <div id="balanceModalContent">
+    <h2>Kart Məlumatı</h2>
+    <p>LEO 4098 5844 6528 0079</p>
+    <p>Ödəniş etdikdən sonra çek şəklini seçib göndərin!</p>
+    <input type="file" id="receiptImage" accept="image/*"><br><br>
+    <button onclick="sendReceipt()">Göndər</button>
+    <button onclick="closeBalanceModal()">Bağla</button>
   </div>
 </div>
 
@@ -104,7 +120,46 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+const auth = firebase.auth();
+const db = firebase.database();
+const storage = firebase.storage();
+
+// Modal funksiyaları
+function openLoginModal() {
+  document.getElementById('loginModal').style.display = 'flex';
+}
+function closeLoginModal() {
+  document.getElementById('loginModal').style.display = 'none';
+}
+function openBalanceModal() {
+  document.getElementById('balanceModal').style.display = 'flex';
+}
+function closeBalanceModal() {
+  document.getElementById('balanceModal').style.display = 'none';
+}
+
+// Google ilə login
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).then(result => saveUser(result.user))
+  .catch(error => alert(error.message));
+}
+
+// İstifadəçi məlumatlarını yadda saxla
+function saveUser(user) {
+  if (!user) return;
+  db.ref('users/' + user.uid).set({
+    email: user.email,
+    name: user.displayName || "İstifadəçi",
+    balance: 0
+  });
+  sessionStorage.setItem("loggedInUserId", user.uid);
+  sessionStorage.setItem("loggedInUserEmail", user.email);
+  location.reload();
+}
+
 // UC paketləri
+const ucPackagesDiv = document.getElementById('ucPackages');
 const packages = [
   { uc: 30, gift: 2, price: 0.80 },
   { uc: 60, gift: 3, price: 1.60 },
@@ -113,9 +168,6 @@ const packages = [
   { uc: 1500, gift: 375, price: 38.30 },
   { uc: 3000, gift: 1000, price: 76.60 }
 ];
-
-// Paketləri göstər
-const ucPackagesDiv = document.getElementById('ucPackages');
 packages.forEach(pkg => {
   const div = document.createElement('div');
   div.className = 'uc-item';
@@ -132,33 +184,34 @@ function selectUC(uc, gift, price) {
   selectedUC = uc;
   selectedGift = gift;
   selectedPrice = price;
-  document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
   document.getElementById('orderForm').style.display = 'block';
+  document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
 }
 
+// UC Sifarişi göndərmək
 function sendOrder() {
   const pubgId = document.getElementById('pubgId').value.trim();
   const userId = sessionStorage.getItem("loggedInUserId");
-  const userEmail = sessionStorage.getItem("loggedInUserEmail");
-  if (!pubgId || !userId || !userEmail) {
-    alert("PUBG ID daxil edin və ya daxil olun!");
+  if (!pubgId || !userId) {
+    alert("PUBG ID daxil edin və ya hesabınıza daxil olun!");
     return;
   }
-  firebase.database().ref('users/' + userId).once('value').then(snapshot => {
+  db.ref('users/' + userId).once('value').then(snapshot => {
     const balance = snapshot.val()?.balance || 0;
     if (balance < selectedPrice) {
       alert("Balans kifayət etmir!");
       return;
     }
-    firebase.database().ref('orders').push({
+    db.ref('orders').push({
       userId: userId,
       pubgId: pubgId,
       ucAmount: selectedUC,
       gift: selectedGift,
       price: selectedPrice,
+      status: "Gözləyir",
       time: new Date().toLocaleString()
     });
-    firebase.database().ref('users/' + userId).update({
+    db.ref('users/' + userId).update({
       balance: balance - selectedPrice
     });
     alert("Sifarişiniz uğurla göndərildi!");
@@ -166,47 +219,40 @@ function sendOrder() {
   });
 }
 
-// Balansa klikləyəndə kart nömrəsini göstər
-function redirectToWhatsApp() {
-  alert("Balans artırmaq üçün kart nömrəsi:\nLEO 4098 5844 6528 0079");
-}
-
-function loginUser() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value.trim();
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(user => location.reload())
-    .catch(error => alert(error.message));
-}
-
-function googleLogin() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(result => saveUser(result.user))
-  .catch(error => alert(error.message));
-}
-
-function saveUser(user) {
-  if (!user) return;
-  firebase.database().ref('users/' + user.uid).set({
-    email: user.email,
-    name: user.displayName || "İstifadəçi",
-    balance: 0
+// Çek şəkli göndərmək
+function sendReceipt() {
+  const file = document.getElementById('receiptImage').files[0];
+  const userId = sessionStorage.getItem("loggedInUserId");
+  if (!file || !userId) {
+    alert("Şəkil seçin və hesabınıza daxil olun!");
+    return;
+  }
+  const storageRef = storage.ref('receipts/' + userId + '_' + Date.now());
+  storageRef.put(file).then(snapshot => {
+    snapshot.ref.getDownloadURL().then(url => {
+      db.ref('receipts').push({
+        userId: userId,
+        imageUrl: url,
+        status: "Gözləyir",
+        time: new Date().toLocaleString()
+      });
+      alert("Çek şəkli uğurla göndərildi!");
+      document.getElementById('receiptImage').value = "";
+      closeBalanceModal();
+    });
+  }).catch(error => {
+    alert("Xəta baş verdi: " + error.message);
   });
-  sessionStorage.setItem("loggedInUserId", user.uid);
-  sessionStorage.setItem("loggedInUserEmail", user.email);
-  location.reload();
 }
 
-// İstifadəçinin girişini yoxla
-firebase.auth().onAuthStateChanged(user => {
+// İstifadəçi login olubsa balansı göstər
+auth.onAuthStateChanged(user => {
   if (user) {
     document.getElementById('welcomeText').innerText = `Xoş gəlmisən, ${user.displayName || user.email}`;
     document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('userBalance').style.display = 'block';
     sessionStorage.setItem("loggedInUserId", user.uid);
     sessionStorage.setItem("loggedInUserEmail", user.email);
-    // Balansı yüklə
-    firebase.database().ref('users/' + user.uid + '/balance').on('value', snapshot => {
+    db.ref('users/' + user.uid + '/balance').on('value', snapshot => {
       const balance = snapshot.val() || 0;
       document.getElementById('userBalance').innerText = `Balans: ${balance.toFixed(2)} AZN`;
     });
