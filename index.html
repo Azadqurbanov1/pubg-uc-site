@@ -20,7 +20,7 @@ body {
     text-align: center;
 }
 
-/* Hamburger menyü */
+/* Hamburger Menyü */
 #menuToggle {
     position: fixed;
     top: 15px;
@@ -48,10 +48,22 @@ body {
     background: white;
     color: #0077ff;
     font-weight: bold;
-    padding: 8px;
+    padding: 8px 15px;
+    font-size: 15px;
     border-radius: 8px;
     cursor: pointer;
     border: none;
+    position: relative;
+}
+.badge {
+    background: #00ccff;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 10px;
+    position: absolute;
+    top: -6px;
+    right: -8px;
 }
 
 /* UC paketləri */
@@ -73,7 +85,7 @@ body {
     background: #003366;
 }
 
-/* Sifarişlər bölməsi */
+/* Sifarişlər */
 #ordersSection {
     margin-top: 90px;
 }
@@ -89,7 +101,7 @@ body {
     box-shadow: 0 0 5px #00ccff;
 }
 
-/* Balans Modal */
+/* Modal'lar */
 #balanceModal, #loginModal {
     display: none;
     position: fixed;
@@ -126,34 +138,31 @@ button, input {
 <!-- Hamburger Menyü -->
 <div id="menuToggle" onclick="toggleMenu()">≡</div>
 <div id="menuItems">
-  <button onclick="showOrders('pending')">Gözləyir</button>
-  <button onclick="showOrders('approved')">Təsdiqləndi</button>
+  <button id="pendingBtn" onclick="showOrders('pending')">Gözləyir <span class="badge" id="pendingCount">0</span></button>
+  <button id="approvedBtn" onclick="showOrders('approved')">Təsdiqləndi <span class="badge" id="approvedCount">0</span></button>
 </div>
 
-<!-- Sayt Başlığı -->
 <h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
-<!-- Balans və Giriş Düymələri -->
 <button id="userBalance" onclick="openBalanceModal()">Balans: 0.00 AZN</button><br>
 <button onclick="openLoginModal()">Daxil ol (Google)</button>
 
-<!-- UC Paketləri -->
 <div class="uc-list" id="ucPackages"></div>
 
-<!-- UC Sifarişi Formu -->
+<!-- UC Sifarişi -->
 <div id="orderForm" style="display:none; margin-top:20px;">
   <h2 id="ucInfo">UC Seçimi</h2>
   <input type="text" id="pubgId" placeholder="PUBG ID daxil edin"><br>
   <button onclick="sendOrder()">Sifariş et</button>
 </div>
 
-<!-- Sifarişlər Bölməsi -->
+<!-- Sifarişlər -->
 <div id="ordersSection">
   <h2 id="ordersTitle">Sifarişlərim</h2>
   <div id="ordersList"></div>
 </div>
 
-<!-- Login Modal -->
+<!-- Modal'lar -->
 <div id="loginModal">
   <div id="loginModalContent">
     <h2>Google ilə Daxil Ol</h2>
@@ -162,20 +171,19 @@ button, input {
   </div>
 </div>
 
-<!-- Balans Modal -->
 <div id="balanceModal">
   <div id="balanceModalContent">
     <h2>Kart Məlumatı</h2>
     <p>LEO 4098 5844 6528 0079</p>
-    <p>Ödəniş etdikdən sonra çək şəklinizi WhatsApp ilə göndərin.</p>
-    <p style="font-size:14px;">Çək şəklini göndərin, 5-10 dəqiqə ərzində balans artırılacaq.</p>
+    <p>Çək şəklinizi WhatsApp ilə göndərin.</p>
+    <p style="font-size:14px;">Çək göndərin, 5-10 dəq ərzində balans artırılacaq.</p>
     <button onclick="sendToWhatsApp()">WhatsApp ilə Göndər</button><br><br>
     <button onclick="closeBalanceModal()">Bağla</button>
   </div>
 </div>
 
 <script>
-// Firebase Konfiqurasiya
+// Firebase konfiqurasiya
 const firebaseConfig = {
   apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
   authDomain: "niceuc-28b6d.firebaseapp.com",
@@ -227,7 +235,7 @@ function saveUser(user) {
   location.reload();
 }
 
-// UC Paketləri
+// UC paketləri
 const ucPackagesDiv = document.getElementById('ucPackages');
 const packages = [
   { uc: 30, gift: 2, price: 0.80 },
@@ -299,7 +307,12 @@ function loadOrders() {
     const orders = snapshot.val() || {};
     const list = document.getElementById('ordersList');
     list.innerHTML = "";
+    let pendingCount = 0;
+    let approvedCount = 0;
     Object.entries(orders).forEach(([key, order]) => {
+      if (order.status === "Gözləyir") pendingCount++;
+      if (order.status === "Təsdiqləndi") approvedCount++;
+
       if ((currentView === 'pending' && order.status === "Gözləyir") ||
           (currentView === 'approved' && order.status === "Təsdiqləndi")) {
         const div = document.createElement('div');
@@ -313,6 +326,8 @@ function loadOrders() {
         list.appendChild(div);
       }
     });
+    document.getElementById('pendingCount').innerText = pendingCount;
+    document.getElementById('approvedCount').innerText = approvedCount;
   });
 }
 
