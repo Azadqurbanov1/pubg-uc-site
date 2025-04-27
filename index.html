@@ -5,6 +5,7 @@
 <title>NICE UC - Müştəri Paneli</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Firebase Kitabxanaları -->
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
@@ -46,6 +47,36 @@ button, input {
     transform: scale(1.05);
     background: #003366;
 }
+#menu {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(90deg, #0077ff, #00ccff);
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    gap: 10px;
+    z-index: 999;
+}
+#menu button {
+    background: white;
+    color: #0077ff;
+    font-weight: bold;
+}
+#ordersSection {
+    margin-top: 90px;
+}
+#ordersList {
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
+}
+.orderItem {
+    background: #002244;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #00ccff;
+}
 #balanceModal, #loginModal {
     display: none;
     position: fixed;
@@ -72,6 +103,11 @@ button, input {
 </head>
 <body>
 
+<div id="menu">
+  <button onclick="showOrders('pending')">Gözləyir</button>
+  <button onclick="showOrders('approved')">Təsdiqləndi</button>
+</div>
+
 <h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
 <button id="userBalance" onclick="openBalanceModal()">Balans: 0.00 AZN</button><br>
@@ -84,6 +120,12 @@ button, input {
   <h2 id="ucInfo">UC Seçimi</h2>
   <input type="text" id="pubgId" placeholder="PUBG ID daxil edin"><br>
   <button onclick="sendOrder()">Sifariş et</button>
+</div>
+
+<!-- Sifarişlər -->
+<div id="ordersSection">
+  <h2 id="ordersTitle">Sifarişlərim</h2>
+  <div id="ordersList"></div>
 </div>
 
 <!-- Login Modal -->
@@ -100,15 +142,15 @@ button, input {
   <div id="balanceModalContent">
     <h2>Kart Məlumatı</h2>
     <p>LEO 4098 5844 6528 0079</p>
-    <p>Ödəniş etdikdən sonra çek şəklinizi WhatsApp ilə göndərin.</p>
-    <p style="margin-top:10px; font-size:14px;">Çək şəklini göndərin, 5-10 dəqiqə ərzində balans artırılacaq.</p>
+    <p>Ödəniş etdikdən sonra çək şəklinizi WhatsApp ilə göndərin.</p>
+    <p style="margin-top:10px; font-size:14px;">Çək şəkilini göndərin, 5-10 dəqiqə ərzində balans artırılacaq.</p>
     <button onclick="sendToWhatsApp()">WhatsApp ilə Göndər</button><br><br>
     <button onclick="closeBalanceModal()">Bağla</button>
   </div>
 </div>
 
 <script>
-// Firebase Konfiqurasiyası
+// Firebase konfiqurasiyası
 const firebaseConfig = {
   apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
   authDomain: "niceuc-28b6d.firebaseapp.com",
@@ -123,7 +165,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-// Modal funksiyaları
 function openLoginModal() {
   document.getElementById('loginModal').style.display = 'flex';
 }
@@ -136,21 +177,15 @@ function openBalanceModal() {
 function closeBalanceModal() {
   document.getElementById('balanceModal').style.display = 'none';
 }
-
-// WhatsApp-a göndərmək
 function sendToWhatsApp() {
   const message = "Salam, ödəniş etdim. Çək şəklini göndərirəm, balansım artsın.";
   window.location.href = `https://wa.me/994513239857?text=${encodeURIComponent(message)}`;
 }
-
-// Google ilə login
 function googleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider).then(result => saveUser(result.user))
   .catch(error => alert(error.message));
 }
-
-// İstifadəçi məlumatlarını yadda saxla
 function saveUser(user) {
   if (!user) return;
   db.ref('users/' + user.uid).set({
@@ -163,7 +198,6 @@ function saveUser(user) {
   location.reload();
 }
 
-// UC paketləri
 const ucPackagesDiv = document.getElementById('ucPackages');
 const packages = [
   { uc: 30, gift: 2, price: 0.80 },
@@ -193,7 +227,6 @@ function selectUC(uc, gift, price) {
   document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
 }
 
-// UC Sifarişi göndərmək
 function sendOrder() {
   const pubgId = document.getElementById('pubgId').value.trim();
   const userId = sessionStorage.getItem("loggedInUserId");
@@ -224,7 +257,35 @@ function sendOrder() {
   });
 }
 
-// İstifadəçi login olubsa balansı göstər
+let currentView = "pending";
+function showOrders(view) {
+  currentView = view;
+  loadOrders();
+}
+function loadOrders() {
+  const userId = sessionStorage.getItem("loggedInUserId");
+  if (!userId) return;
+  db.ref('orders').orderByChild('userId').equalTo(userId).on('value', snapshot => {
+    const orders = snapshot.val() || {};
+    const list = document.getElementById('ordersList');
+    list.innerHTML = "";
+    Object.entries(orders).forEach(([key, order]) => {
+      if ((currentView === 'pending' && order.status === "Gözləyir") ||
+          (currentView === 'approved' && order.status === "Təsdiqləndi")) {
+        const div = document.createElement('div');
+        div.className = 'orderItem';
+        div.innerHTML = `
+          <strong>ID:</strong> ${order.pubgId}<br>
+          <strong>UC:</strong> ${order.ucAmount}+${order.gift} Hədiyyə<br>
+          <strong>Qiymət:</strong> ${order.price} AZN<br>
+          <strong>Tarix:</strong> ${order.time}
+        `;
+        list.appendChild(div);
+      }
+    });
+  });
+}
+
 auth.onAuthStateChanged(user => {
   if (user) {
     document.getElementById('welcomeText').innerText = `Xoş gəlmisən, ${user.displayName || user.email}`;
@@ -235,6 +296,7 @@ auth.onAuthStateChanged(user => {
       const balance = snapshot.val() || 0;
       document.getElementById('userBalance').innerText = `Balans: ${balance.toFixed(2)} AZN`;
     });
+    loadOrders();
   }
 });
 </script>
