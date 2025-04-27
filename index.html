@@ -5,121 +5,155 @@
 <title>NICE UC - Müştəri Paneli</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Firebase -->
+<!-- Firebase Kitabxanaları -->
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
 <style>
 body {
-  margin: 0;
-  padding: 0;
-  background: radial-gradient(circle at center, #001133, #000010);
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #001133, #000010);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+button {
+    margin: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg, #0077ff, #00ccff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+input {
+    margin: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
 }
 #menuToggle {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  background: #0077ff;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1000;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: #0077ff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
 }
 #menuItems {
-  position: fixed;
-  top: 65px;
-  left: 15px;
-  background: #003366;
-  border-radius: 8px;
-  padding: 10px;
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 999;
+    position: fixed;
+    top: 65px;
+    left: 15px;
+    background: #003366;
+    border-radius: 8px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 999;
 }
 #menuItems button {
-  background: white;
-  color: #0077ff;
-  font-weight: bold;
-  padding: 8px 15px;
-  font-size: 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: none;
-  position: relative;
+    background: white;
+    color: #0077ff;
+    font-weight: bold;
+    padding: 8px 15px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    position: relative;
 }
 .badge {
-  background: #00ccff;
-  color: white;
-  border-radius: 50%;
-  padding: 3px 7px;
-  font-size: 10px;
-  position: absolute;
-  top: -6px;
-  right: -8px;
+    background: #00ccff;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 10px;
+    position: absolute;
+    top: -6px;
+    right: -8px;
 }
 .uc-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
 }
 .uc-item {
-  background: #001f4d;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #00ccff;
-  transition: 0.3s;
+    background: #001f4d;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #00ccff;
+    transition: 0.3s;
 }
 .uc-item:hover {
-  transform: scale(1.05);
-  background: #003366;
+    transform: scale(1.05);
+    background: #003366;
 }
 #ordersSection {
-  margin-top: 90px;
+    margin-top: 90px;
 }
 #ordersList {
-  margin-top: 20px;
-  display: grid;
-  gap: 10px;
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
 }
 .orderItem {
-  background: #002244;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px #00ccff;
+    background: #002244;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #00ccff;
 }
 #popup {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #00ccff;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-weight: bold;
-  display: none;
-  z-index: 9999;
-  box-shadow: 0 0 15px #00ccff;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #002244;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #00ccff;
+    z-index: 1000;
+    width: 90%;
+    max-width: 350px;
+}
+#popup h2 {
+    margin-bottom: 15px;
+}
+#popup p {
+    margin: 8px 0;
+}
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+}
+#popupSuccess {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00ccff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    display: none;
+    z-index: 9999;
 }
 .popup-error {
-  background: #ff3333;
-}
-button, input {
-  margin: 8px;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  background: linear-gradient(90deg, #0077ff, #00ccff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+    background: #ff3333;
 }
 </style>
 </head>
@@ -135,8 +169,8 @@ button, input {
 
 <h1 id="welcomeText">NICE UC - Balans Sistemi</h1>
 
-<button id="userBalance" onclick="openBalanceModal()">Balans: 0.00 AZN</button><br>
-<button onclick="openLoginModal()">Daxil ol (Google)</button>
+<button id="userBalance" onclick="openPopup()">Balans: 0.00 AZN</button><br>
+<button onclick="openLoginModal()">Google ilə Daxil Ol</button>
 
 <div class="uc-list" id="ucPackages"></div>
 
@@ -153,77 +187,92 @@ button, input {
   <div id="ordersList"></div>
 </div>
 
-<!-- Popup -->
-<div id="popup"></div>
+<!-- Kart Popup -->
+<div id="overlay" onclick="closePopup()"></div>
+<div id="popup">
+    <h2>Kart Məlumatı</h2>
+    <p><b>LEO 4098 5844 6528 0079</b></p>
+    <p>Ödəniş etdikdən sonra çek şəklinizi WhatsApp ilə göndərin.</p>
+    <p>Çek şəklini göndərin, 5-10 dəqiqəyə balans artırılacaq.</p>
+    <button onclick="sendWhatsApp()">WhatsApp ilə Göndər</button><br/>
+    <button onclick="closePopup()">Bağla</button>
+</div>
 
+<!-- Popup uğurlu/səhv -->
+<div id="popupSuccess"></div>
 <script>
-// Firebase konfiqurasiya
+// Firebase Ayarları
 const firebaseConfig = {
-  apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
-  authDomain: "niceuc-28b6d.firebaseapp.com",
-  databaseURL: "https://niceuc-28b6d-default-rtdb.firebaseio.com",
-  projectId: "niceuc-28b6d",
-  storageBucket: "niceuc-28b6d.appspot.com",
-  messagingSenderId: "968041426898",
-  appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
+    apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
+    authDomain: "niceuc-28b6d.firebaseapp.com",
+    databaseURL: "https://niceuc-28b6d-default-rtdb.firebaseio.com",
+    projectId: "niceuc-28b6d",
+    storageBucket: "niceuc-28b6d.appspot.com",
+    messagingSenderId: "968041426898",
+    appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
 };
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.database();
 
+// Menyünü Aç/Bağla
 function toggleMenu() {
-  const menu = document.getElementById('menuItems');
-  menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    const menu = document.getElementById('menuItems');
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
 }
+
+// Popup Aç/Bağla
+function openPopup() {
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+// WhatsApp göndər
+function sendWhatsApp() {
+    window.location.href = "https://wa.me/994513239857?text=Salam, ödəniş etdiyim çek şəklini göndərirəm.";
+}
+
+// Google ilə daxil ol
 function openLoginModal() {
-  showPopup("Google ilə daxil olmaq üçün düyməyə basın.");
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(result => saveUser(result.user))
+    .catch(error => showPopup(error.message, true));
 }
-function openBalanceModal() {
-  showPopup("Balans artırmaq üçün WhatsApp ilə əlaqə saxlayın.");
-}
-function showPopup(message, isError = false) {
-  const popup = document.getElementById('popup');
-  popup.innerText = message;
-  popup.className = isError ? 'popup-error' : '';
-  popup.style.display = 'block';
-  setTimeout(() => {
-    popup.style.display = 'none';
-  }, 3000);
-}
-function googleLogin() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).then(result => saveUser(result.user))
-  .catch(error => showPopup(error.message, true));
-}
+
+// İstifadəçini Yadda Saxla
 function saveUser(user) {
-  if (!user) return;
-  db.ref('users/' + user.uid).set({
-    email: user.email,
-    name: user.displayName || "İstifadəçi",
-    balance: 0
-  });
-  sessionStorage.setItem("loggedInUserId", user.uid);
-  sessionStorage.setItem("loggedInUserEmail", user.email);
-  location.reload();
+    if (!user) return;
+    db.ref('users/' + user.uid).set({
+        email: user.email,
+        name: user.displayName || "İstifadəçi",
+        balance: 0
+    });
+    sessionStorage.setItem("loggedInUserId", user.uid);
+    sessionStorage.setItem("loggedInUserEmail", user.email);
+    location.reload();
 }
 
 // UC Paketləri
 const ucPackagesDiv = document.getElementById('ucPackages');
 const packages = [
-  { uc: 30, gift: 2, price: 0.80 },
-  { uc: 60, gift: 3, price: 1.60 },
-  { uc: 300, gift: 40, price: 7.70 },
-  { uc: 600, gift: 90, price: 15.40 },
-  { uc: 1500, gift: 375, price: 38.30 },
-  { uc: 3000, gift: 1000, price: 76.60 }
+    { uc: 30, gift: 2, price: 0.80 },
+    { uc: 60, gift: 3, price: 1.60 },
+    { uc: 300, gift: 40, price: 7.70 },
+    { uc: 600, gift: 90, price: 15.40 },
+    { uc: 1500, gift: 375, price: 38.30 },
+    { uc: 3000, gift: 1000, price: 76.60 }
 ];
 packages.forEach(pkg => {
-  const div = document.createElement('div');
-  div.className = 'uc-item';
-  div.innerHTML = `${pkg.uc} UC + ${pkg.gift} Hədiyyə<br>${pkg.price} AZN`;
-  div.onclick = () => selectUC(pkg.uc, pkg.gift, pkg.price);
-  ucPackagesDiv.appendChild(div);
+    const div = document.createElement('div');
+    div.className = 'uc-item';
+    div.innerHTML = `${pkg.uc} UC + ${pkg.gift} Hədiyyə<br>${pkg.price} AZN`;
+    div.onclick = () => selectUC(pkg.uc, pkg.gift, pkg.price);
+    ucPackagesDiv.appendChild(div);
 });
 
 let selectedUC = "";
@@ -231,90 +280,105 @@ let selectedGift = "";
 let selectedPrice = "";
 
 function selectUC(uc, gift, price) {
-  selectedUC = uc;
-  selectedGift = gift;
-  selectedPrice = price;
-  document.getElementById('orderForm').style.display = 'block';
-  document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
+    selectedUC = uc;
+    selectedGift = gift;
+    selectedPrice = price;
+    document.getElementById('orderForm').style.display = 'block';
+    document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
 }
 
 function sendOrder() {
-  const pubgId = document.getElementById('pubgId').value.trim();
-  const userId = sessionStorage.getItem("loggedInUserId");
-  if (!pubgId || !userId) {
-    showPopup("PUBG ID daxil edin və ya daxil olun!", true);
-    return;
-  }
-  db.ref('users/' + userId).once('value').then(snapshot => {
-    const balance = snapshot.val()?.balance || 0;
-    if (balance < selectedPrice) {
-      showPopup("Balans kifayət etmir!", true);
-      return;
+    const pubgId = document.getElementById('pubgId').value.trim();
+    const userId = sessionStorage.getItem("loggedInUserId");
+    if (!pubgId || !userId) {
+        showPopup("PUBG ID daxil edin və ya daxil olun!", true);
+        return;
     }
-    db.ref('orders').push({
-      userId: userId,
-      pubgId: pubgId,
-      ucAmount: selectedUC,
-      gift: selectedGift,
-      price: selectedPrice,
-      status: "Gözləyir",
-      time: new Date().toLocaleString()
+    db.ref('users/' + userId).once('value').then(snapshot => {
+        const balance = snapshot.val()?.balance || 0;
+        if (balance < selectedPrice) {
+            showPopup("Balans kifayət etmir!", true);
+            return;
+        }
+        db.ref('orders').push({
+            userId: userId,
+            pubgId: pubgId,
+            ucAmount: selectedUC,
+            gift: selectedGift,
+            price: selectedPrice,
+            status: "Gözləyir",
+            time: new Date().toLocaleString()
+        });
+        db.ref('users/' + userId).update({
+            balance: balance - selectedPrice
+        });
+        showPopup("Sifarişiniz uğurla göndərildi!");
+        document.getElementById('orderForm').style.display = 'none';
     });
-    db.ref('users/' + userId).update({
-      balance: balance - selectedPrice
-    });
-    showPopup("Sifarişiniz uğurla göndərildi!");
-    document.getElementById('orderForm').style.display = 'none';
-  });
+}
+
+// Popup Mesajları
+function showPopup(message, isError = false) {
+    const popup = document.getElementById('popupSuccess');
+    popup.innerText = message;
+    popup.className = isError ? 'popup-error' : '';
+    popup.style.display = 'block';
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000);
 }
 
 let currentView = "pending";
+
 function showOrders(view) {
-  currentView = view;
-  loadOrders();
-}
-function loadOrders() {
-  const userId = sessionStorage.getItem("loggedInUserId");
-  if (!userId) return;
-  db.ref('orders').orderByChild('userId').equalTo(userId).on('value', snapshot => {
-    const orders = snapshot.val() || {};
-    const list = document.getElementById('ordersList');
-    list.innerHTML = "";
-    let pendingCount = 0;
-    let approvedCount = 0;
-    Object.entries(orders).forEach(([key, order]) => {
-      if (order.status === "Gözləyir") pendingCount++;
-      if (order.status === "Təsdiqləndi") approvedCount++;
-
-      if ((currentView === 'pending' && order.status === "Gözləyir") ||
-          (currentView === 'approved' && order.status === "Təsdiqləndi")) {
-        const div = document.createElement('div');
-        div.className = 'orderItem';
-        div.innerHTML = `
-          <strong>ID:</strong> ${order.pubgId}<br>
-          <strong>UC:</strong> ${order.ucAmount}+${order.gift} Hədiyyə<br>
-          <strong>Qiymət:</strong> ${order.price} AZN<br>
-          <strong>Tarix:</strong> ${order.time}
-        `;
-        list.appendChild(div);
-      }
-    });
-    document.getElementById('pendingCount').innerText = pendingCount;
-    document.getElementById('approvedCount').innerText = approvedCount;
-  });
-}
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    document.getElementById('welcomeText').innerText = `Xoş gəlmisən, ${user.displayName || user.email}`;
-    sessionStorage.setItem("loggedInUserId", user.uid);
-    sessionStorage.setItem("loggedInUserEmail", user.email);
-    db.ref('users/' + user.uid + '/balance').on('value', snapshot => {
-      const balance = snapshot.val() || 0;
-      document.getElementById('userBalance').innerText = `Balans: ${balance.toFixed(2)} AZN`;
-    });
+    currentView = view;
     loadOrders();
-  }
+}
+
+// Sifarişləri yüklə
+function loadOrders() {
+    const userId = sessionStorage.getItem("loggedInUserId");
+    if (!userId) return;
+    db.ref('orders').orderByChild('userId').equalTo(userId).on('value', snapshot => {
+        const orders = snapshot.val() || {};
+        const list = document.getElementById('ordersList');
+        list.innerHTML = "";
+        let pendingCount = 0;
+        let approvedCount = 0;
+        Object.entries(orders).forEach(([key, order]) => {
+            if (order.status === "Gözləyir") pendingCount++;
+            if (order.status === "Təsdiqləndi") approvedCount++;
+
+            if ((currentView === 'pending' && order.status === "Gözləyir") ||
+                (currentView === 'approved' && order.status === "Təsdiqləndi")) {
+                const div = document.createElement('div');
+                div.className = 'orderItem';
+                div.innerHTML = `
+                    <strong>ID:</strong> ${order.pubgId}<br>
+                    <strong>UC:</strong> ${order.ucAmount}+${order.gift} Hədiyyə<br>
+                    <strong>Qiymət:</strong> ${order.price} AZN<br>
+                    <strong>Tarix:</strong> ${order.time}
+                `;
+                list.appendChild(div);
+            }
+        });
+        document.getElementById('pendingCount').innerText = pendingCount;
+        document.getElementById('approvedCount').innerText = approvedCount;
+    });
+}
+
+// İstifadəçi girişdə yoxla
+auth.onAuthStateChanged(user => {
+    if (user) {
+        document.getElementById('welcomeText').innerText = `Xoş gəlmisən, ${user.displayName || user.email}`;
+        sessionStorage.setItem("loggedInUserId", user.uid);
+        sessionStorage.setItem("loggedInUserEmail", user.email);
+        db.ref('users/' + user.uid + '/balance').on('value', snapshot => {
+            const balance = snapshot.val() || 0;
+            document.getElementById('userBalance').innerText = `Balans: ${balance.toFixed(2)} AZN`;
+        });
+        loadOrders();
+    }
 });
 </script>
 
