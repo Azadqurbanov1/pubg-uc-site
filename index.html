@@ -100,15 +100,15 @@ button, input {
   <div id="balanceModalContent">
     <h2>Kart Məlumatı</h2>
     <p>LEO 4098 5844 6528 0079</p>
-    <p>Ödəniş etdikdən sonra çek şəklini seçib göndərin!</p>
-    <input type="file" id="receiptImage" accept="image/*"><br><br>
-    <button onclick="sendReceipt()">Göndər</button>
+    <p>Ödəniş etdikdən sonra çek şəklinizi WhatsApp ilə göndərin.</p>
+    <p style="margin-top:10px; font-size:14px;">Çək şəklini göndərin, 5-10 dəqiqə ərzində balans artırılacaq.</p>
+    <button onclick="sendToWhatsApp()">WhatsApp ilə Göndər</button><br><br>
     <button onclick="closeBalanceModal()">Bağla</button>
   </div>
 </div>
 
 <script>
-// Firebase konfiqurasiyası
+// Firebase Konfiqurasiyası
 const firebaseConfig = {
   apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
   authDomain: "niceuc-28b6d.firebaseapp.com",
@@ -122,7 +122,6 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.database();
-const storage = firebase.storage();
 
 // Modal funksiyaları
 function openLoginModal() {
@@ -136,6 +135,12 @@ function openBalanceModal() {
 }
 function closeBalanceModal() {
   document.getElementById('balanceModal').style.display = 'none';
+}
+
+// WhatsApp-a göndərmək
+function sendToWhatsApp() {
+  const message = "Salam, ödəniş etdim. Çək şəklini göndərirəm, balansım artsın.";
+  window.location.href = `https://wa.me/994513239857?text=${encodeURIComponent(message)}`;
 }
 
 // Google ilə login
@@ -216,32 +221,6 @@ function sendOrder() {
     });
     alert("Sifarişiniz uğurla göndərildi!");
     document.getElementById('orderForm').style.display = 'none';
-  });
-}
-
-// Çek şəkli göndərmək
-function sendReceipt() {
-  const file = document.getElementById('receiptImage').files[0];
-  const userId = sessionStorage.getItem("loggedInUserId");
-  if (!file || !userId) {
-    alert("Şəkil seçin və hesabınıza daxil olun!");
-    return;
-  }
-  const storageRef = storage.ref('receipts/' + userId + '_' + Date.now());
-  storageRef.put(file).then(snapshot => {
-    snapshot.ref.getDownloadURL().then(url => {
-      db.ref('receipts').push({
-        userId: userId,
-        imageUrl: url,
-        status: "Gözləyir",
-        time: new Date().toLocaleString()
-      });
-      alert("Çek şəkli uğurla göndərildi!");
-      document.getElementById('receiptImage').value = "";
-      closeBalanceModal();
-    });
-  }).catch(error => {
-    alert("Xəta baş verdi: " + error.message);
   });
 }
 
