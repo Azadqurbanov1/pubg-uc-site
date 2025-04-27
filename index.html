@@ -232,14 +232,18 @@ function saveUser(user) {
   location.reload();
 }
 
+// İstifadəçinin girişini yoxla
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
+    document.getElementById('welcomeText').innerText = `Xoş gəlmisən, ${user.displayName || user.email}`;
     sessionStorage.setItem("loggedInUserId", user.uid);
-    sessionStorage.setItem("loggedInUserName", user.displayName || "İstifadəçi");
-    document.getElementById('welcomeText').innerText = "Salam, " + (user.displayName || "İstifadəçi");
-    firebase.database().ref('users/' + user.uid).on('value', (snapshot) => {
-      document.getElementById('userBalance').innerText = "Balans: " + (snapshot.val()?.balance || 0).toFixed(2) + " AZN";
+    firebase.database().ref('users/' + user.uid).once('value').then(snapshot => {
+      const balance = snapshot.val()?.balance || 0;
+      document.getElementById('userBalance').innerText = `Balans: ${balance.toFixed(2)} AZN`;
     });
+    document.getElementById('loginModal').style.display = 'none';
+  } else {
+    sessionStorage.removeItem("loggedInUserId");
   }
 });
 </script>
