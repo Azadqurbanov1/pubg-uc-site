@@ -86,13 +86,13 @@ button {
     <input type="password" id="loginPassword" placeholder="Şifrə"><br/><br/>
     <button onclick="loginUser()">Giriş</button>
     <hr style="margin:10px 0;">
-    <button onclick="googleLogin()">Google ilə Daxil Ol</button>
-    <button onclick="facebookLogin()">Facebook ilə Daxil Ol</button><br/><br/>
+    <button onclick="googleLogin()">Google ilə Daxil Ol</button><br/><br/>
     <button onclick="document.getElementById('loginModal').style.display='none'">Bağla</button>
   </div>
 </div>
 
 <script>
+// Firebase konfiqurasiyası
 const firebaseConfig = {
   apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
   authDomain: "niceuc-28b6d.firebaseapp.com",
@@ -161,31 +161,14 @@ function sendOrder() {
     firebase.database().ref('users/' + userId).update({
       balance: balance - selectedPrice
     });
-    alert("Sifariş verildi!");
-    redirectToWhatsApp(userEmail, selectedPrice);
+    alert("Sifarişiniz uğurla göndərildi!");
     document.getElementById('orderForm').style.display = 'none';
   });
 }
 
-function redirectToWhatsApp(userEmail, price) {
-  const message = `Salam, ${userEmail} - ${price} AZN göndərdiyinizi təsdiqləyirəm. UC sifarişi üçün təşəkkürlər!`;
-  window.location.href = `https://wa.me/994513239857?text=${encodeURIComponent(message)}`;
-}
-
-function uploadTopUp() {
-  const amount = document.getElementById('topUpAmount').value.trim();
-  const userId = sessionStorage.getItem("loggedInUserId");
-  if (!amount || !userId) {
-    alert("Məbləğ daxil edin və ya daxil olun!");
-    return;
-  }
-  firebase.database().ref('topups').push({
-    userId: userId,
-    amount: amount,
-    time: new Date().toLocaleString()
-  });
-  alert("Balans artırılması göndərildi!");
-  document.getElementById('topUpAmount').value = "";
+// Balansa klikləyəndə kart nömrəsini göstər
+function redirectToWhatsApp() {
+  alert("Balans artırmaq üçün kart nömrəsi:\nLEO 4098 5844 6528 0079");
 }
 
 function loginUser() {
@@ -202,12 +185,6 @@ function googleLogin() {
   .catch(error => alert(error.message));
 }
 
-function facebookLogin() {
-  const provider = new firebase.auth.FacebookAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(result => saveUser(result.user))
-  .catch(error => alert(error.message));
-}
-
 function saveUser(user) {
   if (!user) return;
   firebase.database().ref('users/' + user.uid).set({
@@ -220,16 +197,19 @@ function saveUser(user) {
   location.reload();
 }
 
-function redirectToWhatsApp() {
-  window.location.href = "https://wa.me/994513239857?text=Salam,%20balans%20və%20UC%20almaq%20istəyirəm.";
-}
-
 // İstifadəçinin girişini yoxla
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     document.getElementById('welcomeText').innerText = `Xoş gəlmisən, ${user.displayName || user.email}`;
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('userBalance').style.display = 'block';
     sessionStorage.setItem("loggedInUserId", user.uid);
     sessionStorage.setItem("loggedInUserEmail", user.email);
+    // Balansı yüklə
+    firebase.database().ref('users/' + user.uid + '/balance').on('value', snapshot => {
+      const balance = snapshot.val() || 0;
+      document.getElementById('userBalance').innerText = `Balans: ${balance.toFixed(2)} AZN`;
+    });
   }
 });
 </script>
