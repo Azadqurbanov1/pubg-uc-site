@@ -388,3 +388,128 @@ auth.onAuthStateChanged(user => {
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İstifadə Qaydaları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333; /* Arxa fonu qaranlıq etmək */
+        }
+
+        .main-content {
+            padding: 20px;
+            color: #fff; /* Yazıların ağ rəngdə olması üçün */
+        }
+
+        /* Panelin tərtibatı */
+        .accordion {
+            background-color: #444; /* Panelin fonu tünd qara olur */
+            color: #fff; /* Yazılar ağ rəngdə olacaq */
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 16px;
+            transition: 0.4s;
+            margin-top: 20px;
+        }
+
+        .accordion:hover {
+            background-color: #555; /* Hover vəziyyətində fon rəngi dəyişəcək */
+        }
+
+        .active, .accordion:focus {
+            background-color: #666;
+        }
+
+        .panel {
+            padding: 0 15px;
+            display: block; /* Default olaraq, tüm paneller gösterilir */
+            overflow: hidden;
+            background-color: transparent; /* Panelin fonu şəffafdır */
+            color: #fff; /* Panelin yazıları ağ olacaq */
+            max-height: 0;
+            transition: max-height 0.4s ease-out;
+        }
+
+        /* Saytın alt hissəsini saxlamaq üçün stil */
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <h2>İstifadə Qaydaları</h2>
+
+        <button class="accordion">1. Ümumi Şərtlər</button>
+        <div class="panel">
+            <p>Saytımızda təqdim olunan xidmətlər yalnız şəxsi istifadə üçün nəzərdə tutulmuşdur.</p>
+        </div>
+
+        <button class="accordion">2. Xidmətlər və Qiymətlər</button>
+        <div class="panel">
+            <p>Qiymətlər zamanla yenilənə bilər və saytımızda göstərilən qiymətlərə əsaslanır.</p>
+        </div>
+
+        <button class="accordion">3. Qeydiyyat və Hesab</button>
+        <div class="panel">
+            <p>Qeydiyyat zamanı daxil edilən məlumatlar doğru olmalıdır.</p>
+        </div>
+
+        <button class="accordion">4. Ödəniş və Əməliyyatlar</button>
+        <div class="panel">
+            <p>Ödənişlər yalnız təsdiqlənmiş ödəniş metodları ilə qəbul edilir.</p>
+        </div>
+
+        <button class="accordion">5. Məxfilik və Təhlükəsizlik</button>
+        <div class="panel">
+            <p>Şəxsi məlumatlar qorunur və yalnız xidmətlərimizin təmin edilməsi üçün istifadə olunur.</p>
+        </div>
+
+        <!-- 6-cı qayda -->
+        <button class="accordion">6. Ödəniş və Çek Göndərmə</button>
+        <div class="panel">
+            <p>Balası üzərinə toxunmaqla kart məlumatlarını əldə edin, ödənişi tamamlayın və WhatsApp üzərindən çek şəkilini göndərin.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 NICE UC - Bütün Hüquqlar Qorunur</p>
+    </div>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    // Panel açıqdırsa, bağlayın
+                    panel.style.maxHeight = null;
+                } else {
+                    // Panel bağlanmışdırsa, açın
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
