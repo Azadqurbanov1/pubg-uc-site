@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aşağıdan Yuxarıya Kaydırma</title>
+    <style>
+        /* Ümumi səhifə tərtibatı */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Sayfanın məzmunu */
+        .content {
+            padding: 40px;
+            height: 2000px; /* Uzun məzmun üçün səhifəni uzadır */
+            background-color: white;
+        }
+
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        // Sayfa yükləndikdən sonra aşağıya kaydırma və sonra yuxarıya doğru kaydırma
+        window.onload = function() {
+            // Sayfanın altına kaydırmaq üçün
+            window.scrollTo({
+                top: document.body.scrollHeight, // Səhifəni ən aşağıya kaydırır
+                behavior: "smooth" // Yavaş kaydırma efekti
+            });
+
+            // Bir neçə saniyə sonra yuxarıya kaydırma
+            setTimeout(function() {
+                window.scrollTo({
+                    top: 0, // Sayfanın başına kaydırır
+                    behavior: "smooth" // Yavaş kaydırma efekti
+                });
+            }, 1000); // 1 saniyəlik gözləmə sonra yuxarıya kaydırır
+        };
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="az">
+<head>
 <meta charset="UTF-8">
 <title>NICE UC - Müştəri Paneli</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
