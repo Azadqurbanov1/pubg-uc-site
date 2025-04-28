@@ -513,3 +513,86 @@ auth.onAuthStateChanged(user => {
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<title>NICE UC</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Stil -->
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #001133, #000010);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+/* Giriş Animasiya və Glow Line */
+@keyframes popFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-30px);
+    filter: blur(5px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05) translateY(10px);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes glowLine {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    width: 50%;
+    opacity: 0.7;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.nice-uc-animation {
+  animation: popFadeIn 1.2s ease-out forwards;
+  font-size: 36px;
+  background: linear-gradient(90deg, #00ccff, #0077ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-top: 100px;
+  position: relative;
+  display: inline-block;
+}
+
+.nice-uc-animation::after {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, #00ccff, #0077ff);
+  margin-top: 8px;
+  animation: glowLine 1s ease-out forwards;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Başlıq Animasiya ilə -->
+<h1 id="welcomeText" class="nice-uc-animation">NICE UC</h1>
+
+    
