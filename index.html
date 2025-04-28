@@ -11,6 +11,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
 <style>
+/* Bütün CSS kodun burda olduğu kimi qalır */
 body {
     margin: 0;
     padding: 0;
@@ -35,6 +36,7 @@ input {
     border-radius: 8px;
     border: none;
 }
+/* Digər CSS kodların da olduğu kimi saxlanılıb */
 #menuToggle {
     position: fixed;
     top: 15px;
@@ -200,16 +202,18 @@ input {
 
 <!-- Popup uğurlu/səhv -->
 <div id="popupSuccess"></div>
+
 <script>
-// Firebase Ayarları
+// Firebase Ayarları (YENİ KONFİQURASİYA)
 const firebaseConfig = {
-    apiKey: "AIzaSyCnhvUqahE3tRafDNRnbM7KpfoOyCtYPoo",
-    authDomain: "niceuc-28b6d.firebaseapp.com",
-    databaseURL: "https://niceuc-28b6d-default-rtdb.firebaseio.com",
-    projectId: "niceuc-28b6d",
-    storageBucket: "niceuc-28b6d.appspot.com",
-    messagingSenderId: "968041426898",
-    appId: "1:968041426898:web:a5430935f2aeea76b7a20b"
+  apiKey: "AIzaSyC4sGTK_P4KperVswrxxmt69H5cocsgnNw",
+  authDomain: "niceuc-e5986.firebaseapp.com",
+  databaseURL: "https://niceuc-e5986-default-rtdb.firebaseio.com",
+  projectId: "niceuc-e5986",
+  storageBucket: "niceuc-e5986.firebasestorage.app",
+  messagingSenderId: "242221260650",
+  appId: "1:242221260650:web:2f72e10b119786878dcf13",
+  measurementId: "G-Z4RJHNXKLV"
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -384,47 +388,3 @@ auth.onAuthStateChanged(user => {
 
 </body>
 </html>
-<!-- Saytın İşləmə Qaydası Bölməsi -->
-<footer>
-    <div class="footer-container">
-        <h3>Saytın İşləmə Qaydası</h3>
-        <ul>
-            <li><strong>Qeydiyyat və Giriş:</strong> Saytımıza Gmail və ya Facebook hesabınızla asanlıqla qeydiyyatdan keçə və ya daxil ola bilərsiniz. Giriş etdikdən sonra şəxsi hesabınızda balansınızı və digər məlumatları izləyə bilərsiniz.</li>
-            <li><strong>Balansın Görülməsi:</strong> Saytın yuxarı sağ küncündə balansınızı görə bilərsiniz. Bu hissədə mövcud balansınızı və yeni paketlər almaq üçün lazımlı məlumatları tapacaqsınız.</li>
-            <li><strong>Ödəniş və Balansın Artırılması:</strong> İstədiyiniz UC paketini seçdikdən sonra, göstərilən ödəniş kartı məlumatları ilə balansınızı artıra bilərsiniz. Müvafiq ödəniş etdikdən sonra balansınız dərhal hesabınıza yansıyacaq.</li>
-            <li><strong>Sifarişlərin Təsdiqi:</strong> Admin panelindən sifarişlər izlənə bilər. Adminlər, müştərilərin sifarişlərini təsdiq edib balanslarını azaldır. Sifariş təsdiqindən sonra müştəriyə ödənişin uğurla alındığı barədə məlumat göndəriləcək.</li>
-            <li><strong>Gizlilik və Təhlükəsizlik:</strong> Saytımız, istifadəçi məlumatlarını qorumağa və təhlükəsizliyə önəm verir. Qeydiyyat zamanı təqdim etdiyiniz məlumatlar yalnız öz məqsədiniz üçün istifadə olunacaq və heç bir halda üçüncü tərəflərlə paylaşılmayacaqdır.</li>
-            <li><strong>Dəstək və Yardım:</strong> Hər hansı bir sualınız və ya problemi olduğu təqdirdə, müştəri dəstəyimizlə əlaqə saxlaya bilərsiniz. Bizimlə əlaqə qurmaq üçün saytın əlaqə bölməsinə baş çəkə bilərsiniz.</li>
-        </ul>
-    </div>
-</footer>
-
-<!-- Stil üçün CSS əlavə edək -->
-<style>
-    footer {
-        background-color: #212121;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        margin-top: 50px;
-    }
-    .footer-container {
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-    .footer-container h3 {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
-    .footer-container ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    .footer-container li {
-        font-size: 16px;
-        margin-bottom: 15px;
-    }
-    .footer-container li strong {
-        color: #4CAF50;
-    }
-</style>
