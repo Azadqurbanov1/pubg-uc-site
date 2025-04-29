@@ -311,44 +311,36 @@ function saveUser(user) {
     location.reload();
 }
 
+// UC Paketləri
 const ucPackagesDiv = document.getElementById('ucPackages');
 const packages = [
-    { uc: 60, price: 1.78 },
-    { uc: 325, price: 7.89 },
-    { uc: 660, price: 15.71 },
-    { uc: 1800, price: 38.99 },
-    { uc: 3850, price: 79.22 },
-    { uc: 8100, price: 159.84 }
+    { uc: 30, gift: 2, price: 0.80 },
+    { uc: 60, gift: 3, price: 1.60 },
+    { uc: 300, gift: 40, price: 7.70 },
+    { uc: 600, gift: 90, price: 15.40 },
+    { uc: 1500, gift: 375, price: 38.30 },
+    { uc: 3000, gift: 1000, price: 76.60 }
 ];
-
-packages.forEach((pkg, index) => {
+packages.forEach(pkg => {
     const div = document.createElement('div');
     div.className = 'uc-item';
-    div.innerHTML = `<strong>${pkg.uc} UC</strong><br><span style="font-size: 16px;">${pkg.price} AZN</span>`;
-    div.onclick = () => selectUC(pkg.uc, pkg.price);
-
-    // Gecikmiş animasiya ilə görsən
-    setTimeout(() => {
-        div.classList.add('visible');
-    }, index * 150);
-
+    div.innerHTML = `${pkg.uc} UC + ${pkg.gift} Hədiyyə<br>${pkg.price} AZN`;
+    div.onclick = () => selectUC(pkg.uc, pkg.gift, pkg.price);
     ucPackagesDiv.appendChild(div);
 });
 
 let selectedUC = "";
+let selectedGift = "";
 let selectedPrice = "";
 
-function selectUC(uc, price) {
+function selectUC(uc, gift, price) {
     selectedUC = uc;
+    selectedGift = gift;
     selectedPrice = price;
     document.getElementById('orderForm').style.display = 'block';
-    document.getElementById('ucInfo').innerText = `${uc} UC - ${price} AZN`;
+    document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
 }
-
-function confirmOrder() {
-    alert(`Sifariş təsdiqləndi: ${selectedUC} UC - ${selectedPrice} AZN`);
-}
-
+    
 function sendOrder() {
     const pubgId = document.getElementById('pubgId').value.trim();
     const userId = sessionStorage.getItem("loggedInUserId");
