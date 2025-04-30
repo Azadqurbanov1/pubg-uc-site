@@ -328,18 +328,12 @@ packages.forEach(pkg => {
     div.onclick = () => selectUC(pkg.uc, pkg.price);
     ucPackagesDiv.appendChild(div);
 });
-
-let selectedUC = "";
-let selectedGift = "";
-let selectedPrice = "";
-
 function selectUC(uc, gift, price) {
     selectedUC = uc;
     selectedGift = gift;
     selectedPrice = price;
     document.getElementById('orderForm').style.display = 'block';
     document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
-}
     
 function sendOrder() {
     const pubgId = document.getElementById('pubgId').value.trim();
