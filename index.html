@@ -71,14 +71,47 @@ body {
     text-align: center;
 }
 button {
-    margin: 8px;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(90deg, #0077ff, #00ccff);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+  margin: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #0077ff, #00ccff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 140, 255, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+  animation: glow 2s infinite alternate, wave 1.5s ease-in-out infinite;
+}
+
+/* Buton üzerine gelindiğinde büyüme ve ışık geçişi */
+button:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 50px rgba(0, 200, 255, 1);
+  background: linear-gradient(90deg, #00ccff, #0077ff);
+}
+
+/* Parlayan animasiya */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 140, 255, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(0, 200, 255, 1);
+  }
+}
+
+/* Dalga hareketi efekti */
+@keyframes wave {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.05) translateY(-5px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
 }
 input {
     margin: 8px;
