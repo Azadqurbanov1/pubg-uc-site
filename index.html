@@ -338,7 +338,7 @@ function selectUC(uc, gift, price) {
     selectedGift = gift;
     selectedPrice = price;
     document.getElementById('orderForm').style.display = 'block';
-    document.getElementById('ucInfo').innerText = `${uc} UC - ${gift} AZN`;
+    document.getElementById('ucInfo').innerText = `${uc}+${gift} UC - ${price} AZN`;
 }
     
 function sendOrder() {
