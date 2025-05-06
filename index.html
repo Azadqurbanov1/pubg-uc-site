@@ -373,12 +373,91 @@ badge {
 
 <body>
 
-<!-- Hamburger Menyü -->
-<div id="menuToggle" onclick="toggleMenu()">≡</div>
-<div id="menuItems">
-  <button id="pendingBtn" onclick="showOrders('pending')">Gözləyir <span class="badge" id="pendingCount">0</span></button>
-  <button id="approvedBtn" onclick="showOrders('approved')">Təsdiqləndi <span class="badge" id="approvedCount">0</span></button>
-</div>
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hamburger Menyu</title>
+  <style>
+    /* Hamburger menyu stil */
+    #menuToggle {
+      font-size: 30px;
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    #menuItems {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      background-color: #333;
+      width: 200px;
+      padding: 10px;
+    }
+
+    #menuItems button {
+      color: white;
+      background-color: #444;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      text-align: left;
+    }
+
+    #menuItems button:hover {
+      background-color: #555;
+    }
+
+    #ordersContainer {
+      margin-top: 100px;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hamburger Menyü -->
+  <div id="menuToggle" onclick="toggleMenu()">≡</div>
+  <div id="menuItems">
+    <button id="pendingBtn" onclick="showOrders('pending')">Gözləyir <span class="badge" id="pendingCount">0</span></button>
+    <button id="approvedBtn" onclick="showOrders('approved')">Təsdiqləndi <span class="badge" id="approvedCount">0</span></button>
+  </div>
+
+  <!-- Sifarişlər -->
+  <div id="ordersContainer"></div>
+
+  <script>
+    // Hamburger menyusunu açıb-bağlama funksiyası
+    function toggleMenu() {
+      var menuItems = document.getElementById("menuItems");
+      menuItems.style.display = menuItems.style.display === "block" ? "none" : "block";
+    }
+
+    // Sifarişləri göstərmək funksiyası
+    function showOrders(status) {
+      let ordersContainer = document.getElementById("ordersContainer");
+      ordersContainer.innerHTML = "";  // Mövcud sifarişləri təmizləyin
+
+      // Statusa uyğun sifarişləri əlavə edin
+      if (status === 'pending') {
+        // Gözləyən sifarişləri göstərmək
+        let orderItem = document.createElement("div");
+        orderItem.innerText = "Sifariş 1 (Gözləyir)";
+        ordersContainer.appendChild(orderItem);
+      } else if (status === 'approved') {
+        // Təsdiqlənmiş sifarişləri göstərmək
+        let orderItem = document.createElement("div");
+        orderItem.innerText = "Sifariş 1 (Təsdiqlənmiş)";
+        ordersContainer.appendChild(orderItem);
+      }
+    }
+  </script>
+
+</body>
+</html>
 
 <h1 id="welcomeText" class="nice-uc-animation">NICE UC</h1>
 
