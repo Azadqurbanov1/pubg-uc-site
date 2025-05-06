@@ -385,6 +385,7 @@ badge {
 <button id="userBalance" onclick="openPopup()">Balans: 0.00 AZN</button><br>
 <button onclick="openLoginModal()">Google ilə Daxil Ol</button>
 
+<!-- UC listi -->
 <div class="uc-list" id="ucPackages"></div>
 
 <!-- UC Sifarişi -->
@@ -395,10 +396,52 @@ badge {
 </div>
 
 <!-- Sifarişlər -->
-<div id="ordersSection">
+<div id="ordersSection" style="display:none;">
   <h2 id="ordersTitle">Sifarişlərim</h2>
   <div id="ordersList"></div>
 </div>
+
+<!-- CSS Animasiya -->
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animated {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+</style>
+
+<!-- JavaScript -->
+<script>
+  function sendOrder() {
+    const pubgId = document.getElementById('pubgId').value;
+    if (!pubgId) {
+      alert("PUBG ID daxil edin.");
+      return;
+    }
+
+    // Formu gizlət
+    document.getElementById('orderForm').style.display = 'none';
+
+    // Sifariş bölməsini göstər və animasiya əlavə et
+    const ordersSection = document.getElementById('ordersSection');
+    ordersSection.style.display = 'block';
+    ordersSection.classList.add('animated');
+
+    const ordersList = document.getElementById('ordersList');
+    const newOrder = document.createElement('div');
+    newOrder.textContent = `PUBG ID: ${pubgId} - Sifariş qəbul edildi.`;
+    ordersList.appendChild(newOrder);
+  }
+</script>
 
 <!-- Kart Popup -->
 <div id="overlay" onclick="closePopup()"></div>
