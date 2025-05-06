@@ -130,47 +130,62 @@ body {
     text-align: center;
 }
 button {
-  margin: 8px;
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  background: linear-gradient(90deg, #0077ff, #00ccff);
+  margin: 10px;
+  padding: 14px 32px;
+  font-size: 18px;
+  font-weight: 600;
   color: white;
-  font-weight: bold;
+  background: linear-gradient(135deg, #00d4ff, #0072ff);
+  border: 2px solid white;
+  border-radius: 50px;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 140, 255, 0.6);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
-  animation: glow 2s infinite alternate, wave 1.5s ease-in-out infinite;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Buton üzerine gelindiğinde büyüme ve ışık geçişi */
+/* Hover effekti */
 button:hover {
-  transform: scale(1.1) translateY(-5px);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 50px rgba(0, 200, 255, 1);
-  background: linear-gradient(90deg, #00ccff, #0077ff);
+  background: linear-gradient(135deg, #0072ff, #00d4ff);
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.9);
 }
 
-/* Parlayan animasiya */
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 10px rgba(0, 140, 255, 0.6);
-  }
-  100% {
-    box-shadow: 0 0 30px rgba(0, 200, 255, 1);
-  }
+/* Parlayan iç animasiya */
+button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 10%, transparent 10.01%);
+  background-size: 10px 10px;
+  animation: rotateGlow 6s linear infinite;
+  z-index: 0;
 }
 
-/* Dalga hareketi efekti */
-@keyframes wave {
+button span {
+  position: relative;
+  z-index: 1;
+}
+
+/* İşıqlı dönən animasiya */
+@keyframes rotateGlow {
   0% {
-    transform: scale(1) translateY(0);
-  }
-  50% {
-    transform: scale(1.05) translateY(-5px);
+    transform: rotate(0deg);
   }
   100% {
-    transform: scale(1) translateY(0);
+    transform: rotate(360deg);
   }
+
+  }
+}
+input {
+    margin: 8px;
+    padding: 10px;
+    borde  }
 }
 input {
     margin: 8px;
@@ -213,32 +228,86 @@ input {
     border: none;
     position: relative;
 }
-.badge {
-    background: #00ccff;
-    color: white;
-    border-radius: 50%;
-    padding: 3px 7px;
-    font-size: 10px;
-    position: absolute;
-    top: -6px;
-    right: -8px;
+badge {
+  background: #00ccff;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 7px;
+  font-size: 11px;
+  font-weight: bold;
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.7);
+  border: 1px solid white;
 }
+
 .uc-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
 }
+
 .uc-item {
-    background: #001f4d;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px #00ccff;
-    transition: 0.3s;
+  background: #001f4d;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ccff;
+  transition: 0.3s;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
+
+/* Hover zamanı rəng dəyişir */
 .uc-item:hover {
-    transform: scale(1.05);
-    background: #003366;
+  transform: scale(1.05);
+  background: #003366;
+}
+
+/* Glow effekti üçün animasiyalı overlay */
+.uc-item::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0,255,255,0.1) 10%, transparent 10.01%);
+  background-size: 20px 20px;
+  animation: glowMove 6s linear infinite;
+  z-index: 0;
+}
+
+/* Məzmun ön planda qalsın deyə */
+.uc-item * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Animasiya */
+@keyframes glowMove {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Badge */
+.badge {
+  background: #00ccff;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 7px;
+  font-size: 10px;
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  z-index: 2;
 }
 #ordersSection {
     margin-top: 90px;
@@ -654,7 +723,7 @@ body {
     padding: 0;
     background: radial-gradient(circle at center, #001133, #000010);
     color: white;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppin sans-serif;
     text-align: center;
 }
 
@@ -709,12 +778,4 @@ body {
   content: "";
   display: block;
   height: 3px;
-  background: linear-gradient(90deg, #00ccff, #0077ff);
-  margin-top: 8px;
-  animation: glowLine 1s ease-out forwards;
-}
-
-</style>
-</head>
-
-<body>
+  background: linear-gradient(90deg, #00c
