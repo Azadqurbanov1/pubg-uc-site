@@ -1,4 +1,82 @@
 <!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NICE UC Panel</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%; /* Tam ekran */
+      overflow: auto; /* Kaydırmanı aktiv edirik */
+      background: radial-gradient(circle at center, #001133, #000010);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    {
+      margin-top: 60px;
+    }
+
+    /* Animasiya ilə parlayan sahib adı */
+    #siteOwner {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #00ccff;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 14px;
+      z-index: 9999;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      animation: glowText 2s ease-in-out infinite;
+      cursor: pointer; /* Kliklənə biləcəyini bildirir */
+    }
+
+    @keyframes glowText {
+      0%, 100% {
+        text-shadow: 0 0 8px #00ccff, 0 0 12px #00ccff;
+        box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+      }
+      50% {
+        text-shadow: 0 0 16px #00ffff, 0 0 22px #00ffff;
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+      }
+    }
+
+    button {
+      margin: 20px;
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #00d4ff, #0072ff);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00ccff;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  
+  <!-- Animasiya ilə sayt sahibi -->
+  <div id="siteOwner" onclick="window.open('https://wa.me/+994775435053?text=Z%C9%99hm%C9%99t%20olmasa%20k%C3%B6m%C9%99klik%20g%C3%B6st%C9%99rin', '_blank')">CANLI DƏSTƏK:7/24</div>
+
+</body>
+</html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
