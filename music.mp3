@@ -1,4 +1,20 @@
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-  Tarayıcınız audio elementini desteklemiyor.
-</audio>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC Satışı</title>
+</head>
+<body>
+    <!-- Musiqi Çalınması -->
+    <audio autoplay loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Tarayıcınız audio elementini desteklemiyor.
+    </audio>
+
+    <h1>UCI Satışı - PUBG</h1>
+    <p>Bu sayfada PUBG UC satışını tapa bilərsiniz.</p>
+
+    <!-- Digər saytın məzmunu burada olacaq -->
+</body>
+</html>
