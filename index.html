@@ -1,4 +1,61 @@
 <!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <title>Canlı Saat</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #222; /* Arxa fon qaranlıq */
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+    }
+
+    #clock {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      font-size: 20px; /* Daha balaca saat */
+      color: #00f0ff; /* İşıqlı mavi rəng */
+      font-weight: bold;
+      letter-spacing: 1px; /* Kiçik hərf aralığı */
+      text-shadow: 0px 0px 10px rgba(0, 255, 255, 0.6), 0px 0px 5px rgba(0, 255, 255, 0.3); /* Kiçik işıq effekti */
+      z-index: 9999;
+      transition: all 0.3s ease-in-out; /* Animasiya effekti */
+    }
+
+    /* Hover effekti: saatın üzərinə gələndə rəng dəyişir */
+    #clock:hover {
+      color: #ffcc00; /* Sarı rəng */
+      text-shadow: 0px 0px 15px rgba(255, 204, 0, 0.8), 0px 0px 8px rgba(255, 204, 0, 0.5);
+      transform: scale(1.1); /* Bir az böyümə */
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="clock">00:00:00</div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
