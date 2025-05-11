@@ -1,4 +1,113 @@
 <!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UC Satışı</title>
+  <style>
+    /* Bildirimlerin genel stilini belirliyoruz */
+    .notification-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: auto;
+      z-index: 9999;
+    }
+
+    .notification {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.7); /* Arka plan siyah */
+      color: #00f1ff; /* Mavi parlak yazı rengi */
+      font-size: 16px;
+      border-radius: 5px;
+      animation: slide-up 5s forwards, glow 1.5s ease-in-out infinite alternate;
+    }
+
+    /* Animasyon: Sağdan sola kayma */
+    @keyframes slide-up {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      25% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      75% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+    }
+
+    /* Parlama efekti */
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px #00f1ff, 0 0 10px #00f1ff, 0 0 15px #00f1ff;
+      }
+      100% {
+        text-shadow: 0 0 10px #00f1ff, 0 0 20px #00f1ff, 0 0 30px #00f1ff;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="notification-container" id="notificationContainer"></div>
+
+  <script>
+    function showNotification(name, ucAmount) {
+      let notification = document.createElement("div");
+      notification.classList.add("notification");
+      notification.innerText = `${name} ${ucAmount} UC aldı`;
+
+      const container = document.getElementById("notificationContainer");
+      container.appendChild(notification);
+
+      // 5 saniye sonra bildirim kaybolur
+      setTimeout(() => {
+        notification.remove();
+      }, 5000);
+    }
+
+    const users = [
+      { name: " Nigar", ucAmount: 60 },
+      { name: "Ali Veli", ucAmount: 30 },
+      { name: "Ayşe Yılmaz", ucAmount: 30 },
+      { name: "Kemal Can", ucAmount: 300 },
+      { name: "Ömer Faruk", ucAmount: 600 },
+      { name: "Zeynep Arslan", ucAmount: 3000 },
+      { name: "Fatma Kaya", ucAmount: 60 },
+      { name: "Mustafa Demir", ucAmount: 200 },
+      { name: "İbrahim Kara", ucAmount: 90 },
+      { name: "Hüseyin Çelik", ucAmount: 150 },
+      { name: "Elif Aslan", ucAmount: 130 },
+      { name: "Mehmet Yıldız", ucAmount: 180 },
+      { name: "Gülcan Koç", ucAmount: 110 },
+      { name: "Seda Güler", ucAmount: 100 },
+      { name: "Emre Taş", ucAmount: 70 }
+    ];
+
+    let currentIndex = 0;
+
+    function displayNotifications() {
+      showNotification(users[currentIndex].name, users[currentIndex].ucAmount);
+      currentIndex = (currentIndex + 1) % users.length;
+    }
+
+    // 10 saniyede bir bildirim gösterilecek şekilde ayarlandı
+    setInterval(displayNotifications, 10000);
+  </script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
 <html lang="az">
 <head>
   <meta charset="UTF-8" />
