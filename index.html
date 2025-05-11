@@ -726,7 +726,7 @@ function loadOrders() {
 // İstifadəçi girişdə yoxla
 auth.onAuthStateChanged(user => {
     if (user) {
-        document.getElementById('welcomeText').innerText = `Xoş gəlmisən, ${user.displayName || user.email}`;
+        document.getElementById('welcomeText').innerText = `✈️UC SƏNİ GÖZLÜYÜR, ${user.displayName || user.email}`;
         sessionStorage.setItem("loggedInUserId", user.uid);
         sessionStorage.setItem("loggedInUserEmail", user.email);
         db.ref('users/' + user.uid + '/balance').on('value', snapshot => {
